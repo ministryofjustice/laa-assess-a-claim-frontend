@@ -1,0 +1,101 @@
+{% extends "govuk/template.njk" %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "moj/components/header/macro.njk" import mojHeader %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% set govukRebrand = true %}
+
+{% block pageTitle %}{{config.SERVICE_NAME}} – GOV.UK{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="/css/{{getAsset('main','css')}}">
+  <meta name="description" content="{{config.SERVICE_NAME}}">
+  <meta name="keywords" content="GOV.UK, govuk, gov, government, uk, frontend, ui, user interface, jinja, python, flask, port, template, templating, macro, component, design system, html, forms, wtf, wtforms, widget, widgets, demo, example">
+  <meta name="author" content="{{config.DEPARTMENT_NAME}}">
+  <script type="module" nonce="{{ cspNonce }}" src="/js/{{getAsset('custom','min.js')}}"></script>
+{% endblock %}
+
+{% block bodyStart %}
+  <script nonce="{{ cspNonce }}">document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+  {# cookie policy #}
+{% endblock %}
+
+{% block header %}
+{{ mojHeader({
+    organisationLabel: {
+      text: config.DEPARTMENT_NAME,
+      href: "#"
+    },
+    navigation: {
+      label: "Account navigation",
+      items: [{
+        text: "Account name",
+        href: "#",
+        active: true
+      }, {
+        text: "Sign out",
+        href: "#"
+      }]
+    }
+  }) }}
+   {{ govukServiceNavigation({
+    serviceName: config.SERVICE_NAME,
+    serviceUrl: "#",
+    navigation: [
+      {
+        href: "#",
+        text: "Your submissions",
+        active: true
+      },
+      {
+        href: "#",
+        text: "Matter starts"
+      },
+      {
+        href: "#",
+        text: "Search"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: config.SERVICE_PHASE
+    },
+    html: 'This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Default page template</h1>
+{% endblock %}
+
+{% block footer %}
+  {{ govukFooter({
+    rebrand: govukRebrand,
+    meta: {
+      items: [
+        {
+          href: "#",
+          text: "Accessibility"
+        },
+        {
+          href: "#",
+          text: "Cookies"
+        },
+        {
+          href: "#",
+          text: "Privacy"
+        }
+      ],
+      html: 'Built by <a href="' + config.DEPARTMENT_URL +'" class="govuk-footer__link">' + config.DEPARTMENT_NAME + '</a>'
+    }
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
+  <script type="module" nonce="{{ cspNonce }}" src="/js/{{getAsset('frontend-packages','min.js')}}"></script>
+{% endblock %}
