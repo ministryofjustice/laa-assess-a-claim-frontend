@@ -77,7 +77,7 @@ runs:
     - name: Set environment variables
       shell: bash
       run: |
-        echo "SERVICE_NAME=${{ inputs.service_name || 'Assess a claim' }}" >> $GITHUB_ENV
+        echo "SERVICE_NAME=${{ inputs.service_name || 'Assess a Claim' }}" >> $GITHUB_ENV
         echo "SERVICE_PHASE=${{ inputs.service_phase || 'Alpha' }}" >> $GITHUB_ENV
         echo "DEPARTMENT_NAME=${{ inputs.department_name || 'Legal Aid Agency' }}" >> $GITHUB_ENV
         echo "DEPARTMENT_URL=${{ inputs.department_url || 'https://www.gov.uk/government/organisations/legal-aid-agency' }}" >> $GITHUB_ENV
@@ -107,6 +107,6 @@ runs:
       shell: bash
       if: failure()
       run: |
-        curl -X POST -H 'Content-type: application/json' --data '{"text":"Manage Civil Cases deployment to ${{ inputs.app-environment }} failed!"}' ${{ inputs.slack_webhook_url }}
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Assess a Claim deployment to ${{ inputs.app-environment }} failed!"}' ${{ inputs.slack_webhook_url }}
       env:
         SLACK_WEBHOOK_URL: ${{ inputs.slack_webhook_url }}
