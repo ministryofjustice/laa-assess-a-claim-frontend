@@ -1,4 +1,4 @@
-# Legal Aid Agency - Express with Typescript Template (ETT)
+# Legal Aid Agency - Assess a Claim
 
 [![Standards Icon]][Standards Link]
 
@@ -8,7 +8,7 @@ Express.js is a fast, unopinionated, minimalist web framework for Node.js.
 
 ## Contents
 
-- [Legal Aid Agency - Express with Typescript Template (ETT)](#legal-aid-agency---express-with-typescript-template-ett)
+- [Legal Aid Agency - Assess a Claim](#legal-aid-agency---express-with-typescript-template-ett)
   - [Contents](#contents)
   - [Prerequisites](#prerequisites)
     - [Installing Yarn](#installing-yarn)
