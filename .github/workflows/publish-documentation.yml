@@ -20,7 +20,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ministryofjustice/tech-docs-github-pages-publisher:v3
+      image: ministryofjustice/tech-docs-github-pages-publisher:v4.0.0
     permissions:
       contents: read
     steps:
@@ -41,7 +41,7 @@ jobs:
       - name: Compile Markdown to HTML and create artifact
         # Script to deploy is not in the repo, but in this image: `ministryofjustice/tech-docs-github-pages-publisher:v3`
         run: |
-          /scripts/deploy.sh
+          /usr/local/bin/package
       - name: Upload artifact to be published
         uses: actions/upload-artifact@v4
         with:
