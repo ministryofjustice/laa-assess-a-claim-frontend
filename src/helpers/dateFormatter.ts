@@ -16,8 +16,8 @@ export function formatDate(dateString: string): string {
     return dateString;
   }
 
-  const day = date.toLocaleString('en-GB', { day: '2-digit' });;
-  const month = date.toLocaleString('en-GB', { month: '2-digit' });
+  const day = date.toLocaleString("en-GB", { day: "2-digit" });
+  const month = date.toLocaleString("en-GB", { month: "2-digit" });
   const year = date.getFullYear();
 
   return `${day}/${month}/${year}`;
