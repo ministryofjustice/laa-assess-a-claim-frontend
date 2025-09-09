@@ -11,15 +11,15 @@
  */
 export function safeString(value: unknown): string {
   if (value === null || value === undefined) {
-    return '';
+    return "";
   }
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     return value;
   }
-  if (typeof value === 'number' || typeof value === 'boolean') {
+  if (typeof value === "number" || typeof value === "boolean") {
     return String(value);
   }
-  return '';
+  return "";
 }
 
 /**
@@ -31,10 +31,10 @@ export function safeOptionalString(value: unknown): string | undefined {
   if (value === null || value === undefined) {
     return undefined;
   }
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     return value;
   }
-  if (typeof value === 'number' || typeof value === 'boolean') {
+  if (typeof value === "number" || typeof value === "boolean") {
     return String(value);
   }
   return undefined;
@@ -46,7 +46,7 @@ export function safeOptionalString(value: unknown): string | undefined {
  * @returns {boolean} True if value is a record object
  */
 export function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /**
@@ -61,7 +61,7 @@ export function safeStringFromRecord(obj: unknown, key: string): string | null {
   }
 
   const { [key]: value } = obj;
-  return typeof value === 'string' && value.trim() !== '' ? value : null;
+  return typeof value === "string" && value.trim() !== "" ? value : null;
 }
 
 /**
@@ -70,6 +70,9 @@ export function safeStringFromRecord(obj: unknown, key: string): string | null {
  * @param {string} key - Key to check for
  * @returns {boolean} True if object has the property
  */
-export function hasProperty(obj: unknown, key: string): obj is Record<string, unknown> {
+export function hasProperty(
+  obj: unknown,
+  key: string,
+): obj is Record<string, unknown> {
   return isRecord(obj) && key in obj;
 }
