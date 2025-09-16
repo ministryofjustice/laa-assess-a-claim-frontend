@@ -29,3 +29,5 @@ public/
 
 # Prettier Ignore
 .prettierignore
+
+dist/
