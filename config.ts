@@ -1,11 +1,30 @@
 import dotenv from "dotenv";
-import type { Config } from "#src/types/config-types.js";
+import type { Config, RedisEnvConfig, RedisLocalConfig } from "#src/types/config-types.js";
+import { getRequiredEnv } from "#utils/envHelper.js";
 dotenv.config();
 
 const DEFAULT_RATE_LIMIT_MAX = 100;
 const DEFAULT_RATE_WINDOW_MS_MINUTE = 15;
 const MILLISECONDS_IN_A_MINUTE = 60000;
 const DEFAULT_PORT = 3000;
+const DEFAULT_NUMBER_OF_RESULTS_PER_PAGE = 20;
+
+function getRedisConfig(): RedisLocalConfig | RedisEnvConfig {
+  if (process.env.REDIS_URL == null) {
+    return {
+      local: false,
+      token: getRequiredEnv('REDIS_AUTH_TOKEN'),
+      host: process.env.REDIS_HOST ?? "localhost",
+      port: Number(process.env.REDIS_PORT ?? 6379),
+    }
+  }
+  else {
+    return {
+      local: true,
+      url: process.env.REDIS_URL
+    }
+  }
+}
 
 // Validate required session env vars
 // if (process.env.SESSION_SECRET == null || process.env.SESSION_SECRET === '' ||
@@ -53,6 +72,17 @@ const config: Config = {
   api: {
     baseUrl: process.env.API_URL ?? "",
   },
+  ...(process.env.REDIS_DISABLED === "true"
+    ? {}
+    : { redis: getRedisConfig() }),
+  pagination: {
+    numberOfClaimsPerPage: Number(
+      process.env.NUMBER_OF_CLAIMS_PER_PAGE ?? DEFAULT_NUMBER_OF_RESULTS_PER_PAGE
+    ),
+  },
 };
+
+
+
 
 export default config;
