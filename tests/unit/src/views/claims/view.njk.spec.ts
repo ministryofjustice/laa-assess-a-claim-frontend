@@ -54,8 +54,8 @@ describe("views/main/claims/view.njk", () => {
 
     it("Edit button links to edit page", () => {
       const edit = $(".govuk-button-group .govuk-button").first();
-      expect(edit.text().trim()).to.match(/^Amend claim$/);
-      expect(edit.attr("href")).to.equal(`/claim/${encodeURIComponent(String(claim.id))}/amend`);
+      expect(edit.text().trim()).to.match(/^Assess claim$/);
+      expect(edit.attr("href")).to.equal(`/claim/${encodeURIComponent(String(claim.id))}/assess`);
     });
 
     it("Secondary button links back to claims", () => {

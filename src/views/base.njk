@@ -24,7 +24,7 @@
 {{ mojHeader({
     organisationLabel: {
       text: config.DEPARTMENT_NAME,
-      href: "#"
+      href: config.DEPARTMENT_URL
     },
     navigation: {
       label: "Account navigation",
@@ -44,16 +44,8 @@
     navigation: [
       {
         href: "#",
-        text: "Your submissions",
+        text: "Your Assessments",
         active: true
-      },
-      {
-        href: "#",
-        text: "Matter starts"
-      },
-      {
-        href: "#",
-        text: "Search"
       }
     ]
   }) }}
@@ -66,24 +58,6 @@
     },
     html: 'This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.'
   }) }}
-
-<div class="govuk-!-text-align-right govuk-body-s govuk-!-margin-top-2">
-  {% if lang == "en" %}
-    <span aria-current="true">English</span>
-    |
-    <a class="govuk-link" href="?lng=cy" lang="cy" hreflang="cy" rel="alternate">
-      <span class="govuk-visually-hidden">Newid yr iaith i’r Gymraeg</span>
-      <span aria-hidden="true">Cymraeg</span>
-    </a>
-  {% else %}
-    <a class="govuk-link" href="?lng=en" lang="en" hreflang="en" rel="alternate">
-      <span class="govuk-visually-hidden">Switch language to English</span>
-      <span aria-hidden="true">English</span>
-    </a>
-    |
-    <span aria-current="true">Cymraeg</span>
-  {% endif %}
-</div>
 
 {% endblock %}
 

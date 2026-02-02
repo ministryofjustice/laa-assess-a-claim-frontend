@@ -19,10 +19,10 @@ import { LanguageDetector } from '#node_modules/i18next-http-middleware/esm/inde
  */
 export function initializeI18nextSync(): void {
   const enPath = path.join(process.cwd(), 'locales', 'en.json');
-  const cyPath = path.join(process.cwd(), 'locales', 'cy.json');
+  // const cyPath = path.join(process.cwd(), 'locales', 'cy.json');
 
   const en = JSON.parse(readFileSync(enPath, 'utf8'));
-  const cy = JSON.parse(readFileSync(cyPath, 'utf8'));
+  // const cy = JSON.parse(readFileSync(cyPath, 'utf8'));
 
   void i18next
     .use(LanguageDetector)
@@ -51,7 +51,7 @@ export function initializeI18nextSync(): void {
 
       resources: {
         en,
-        cy
+        // cy
       }
     });
 }

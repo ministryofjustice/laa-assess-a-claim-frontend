@@ -9,26 +9,16 @@
 {% block content %}
   <h1 class="govuk-heading-xl">{{ t('pages.home.title') }}</h1>
 
-  <div class="govuk-button-group">
-    {{ govukButton({
-      text: "Import claim"
-    }) }}
-    {{ govukButton({
-      text: "Create a new claim",
-      classes: "govuk-button--secondary"
-    }) }}
-  </div>
-
   {{ mojSubNavigation({
     label: "Sub navigation",
     items: [
       {
-        text: "Submitted",
+        text: "Open",
         href: "#1",
         active: true
       },
       {
-        text: "In progress",
+        text: "Closed",
         href: "#2"
       }
     ]

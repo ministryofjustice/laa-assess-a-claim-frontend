@@ -14,7 +14,7 @@ export class ClaimViewModel {
   readonly rows: SummaryListRow[];
   readonly title: string;
   readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
-  readonly amendLink: string;
+  readonly assessLink: string;
 
   /**
    * Creates a view model containing the summary rows derived from the claim data
@@ -22,7 +22,7 @@ export class ClaimViewModel {
    */
   constructor(claim: Claim) {
     this.title = formatClaimId(claim.id);
-    this.amendLink = `/claim/${claim.id}/amend`
+    this.assessLink = `/claim/${claim.id}/assess`
     const rows: SummaryListRow[] = [];
 
     rows.push({ key: { text: "Claim ID" }, value: { text: String(claim.id) } });

@@ -40,17 +40,9 @@ describe("views/main/index.njk", () => {
     const h1 = $("h1.govuk-heading-xl").text().trim();
     expect(h1).to.equal("pages.home.title");
     const enValue = getEnValue(h1);
-    expect(enValue).to.equal("Your Claims");
-    // expect(cyValue).to.equal("eich hawliadau");
+    expect(enValue).to.equal("Your Assessments");
   });
 
-  it("renders the create claim buttons", () => {
-    const importButton = $(".govuk-button").first().text().trim();
-    const createButton = $(".govuk-button--secondary").text().trim();
-
-    expect(importButton).to.equal("Import claim");
-    expect(createButton).to.equal("Create a new claim");
-  });
 
   it("renders the sub navigation", () => {
     const subNav = $("Sub navigation");
