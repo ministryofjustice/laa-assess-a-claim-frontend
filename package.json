@@ -19,9 +19,9 @@
     "tsc": "tsc --noEmit",
     "build:ts": "tsc",
     "test": "yarn test:unit && yarn test:e2e",
-    "test:unit": "mocha",
+    "test:unit": "mocha -r dotenv/config",
     "test:e2e": "yarn playwright test --config=playwright.config.ts",
-    "coverage": "TS_NODE_TRANSPILE_ONLY=true NODE_OPTIONS='--import ts-node/esm' c8 mocha -r tsconfig-paths/register 'tests/unit/**/*.spec.ts'"
+    "coverage": "TS_NODE_TRANSPILE_ONLY=true NODE_OPTIONS='--import ts-node/esm' c8 mocha -r dotenv/config -r tsconfig-paths/register 'tests/unit/**/*.spec.ts'"
   },
   "engines": {
     "node": "24.10.0"
