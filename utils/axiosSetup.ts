@@ -47,7 +47,11 @@ export const axiosMiddleware = (req: Request, _res: Response, next: NextFunction
   const { axiosInstance: axiosInstanceMain } = client;
   const { axiosInstance: axiosRetryInstance } = retryClient;
 
-  // Attach current access token to every request
+  /**
+   * Attach current access token to every request
+   * @param {InternalAxiosRequestConfig} config the config to add to 
+   * @returns {InternalAxiosRequestConfig} the amended config
+   */
   const attachToken = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const access = req.session.oidc?.tokens?.access_token;
 
@@ -65,6 +69,11 @@ export const axiosMiddleware = (req: Request, _res: Response, next: NextFunction
   // Single-flight refresh gate per incoming HTTP request
   let refreshing: Promise<void> | null = null;
 
+  /**
+   * Get tokens
+   * @param {string} rt the refresh token
+   * @returns {TokenEndpointResponse} the token response
+   */
   async function getTokens(rt: string): Promise<TokenEndpointResponse> {
     const cfg = await getConfig();
     const refreshed = await refreshTokenGrant(cfg, rt);

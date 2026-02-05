@@ -9,6 +9,11 @@ const MILLISECONDS_IN_A_MINUTE = 60000;
 const DEFAULT_PORT = 3000;
 const DEFAULT_NUMBER_OF_RESULTS_PER_PAGE = 20;
 
+/**
+ * Get the redis config object
+ *
+ * @returns {RedisLocalConfig | RedisEnvConfig} The redis config
+ */
 function getRedisConfig(): RedisLocalConfig | RedisEnvConfig {
   if (process.env.REDIS_URL == null) {
     return {

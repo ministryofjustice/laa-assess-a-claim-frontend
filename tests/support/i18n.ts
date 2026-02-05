@@ -1,5 +1,10 @@
 import en from "#locales/en.json" with { type: "json" };
 
+/**
+ * checks if is a record
+ * @param {unknown} val the potential record
+ * @returns {boolean} is record
+ */
 const isRecord = (val: unknown): val is Record<string, unknown> =>
   typeof val === "object" && val !== null;
 

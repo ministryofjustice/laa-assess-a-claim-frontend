@@ -112,8 +112,14 @@ const createApp = async (): Promise<express.Application> => {
     // Use dev format for development (colored, more readable)
     app.use(morgan('dev'));
   }
-
-  // This middleware copies the OIDC user into res.locals for views
+  
+  /**
+   * This middleware copies the OIDC user into res.locals for views
+   *
+   * @param {Request} req - the request
+   * @param {Response} res - the response
+   * @param {NextFunction} next - what to do next
+   */
   function injectUser(req: Request, res: Response, next: NextFunction): void {
     res.locals.user = req.session.oidc?.userinfo;
     next();

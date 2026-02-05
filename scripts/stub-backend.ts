@@ -18,6 +18,11 @@ const VALID_METHODS = ['get', 'post', 'put', 'patch', 'delete'] as const
 type ValidMethod = (typeof VALID_METHODS)[number]
 
 // Utility to convert MSW handlers into Express routes
+/**
+ *
+ * @param app
+ * @param handlers
+ */
 function applyHandlers(app: express.Express, handlers: any[]) {
    
   for (const handler of handlers) {
