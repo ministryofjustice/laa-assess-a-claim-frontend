@@ -1,9 +1,9 @@
-import type { Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
 import express from "express";
 import chalk from "chalk";
 import morgan from "morgan";
 import compression from "compression";
-import { setupCsrf, setupMiddlewares, setupConfig } from "#middleware/index.js";
+import { setupCsrf, setupMiddlewares, setupConfig, setupLocaleMiddleware } from "#middleware/index.js";
 import session from "express-session";
 import {
   nunjucksSetup,
@@ -11,12 +11,23 @@ import {
   helmetSetup,
   axiosMiddleware,
   displayAsciiBanner,
+  oidcSetup,
+  setupRedisSession,
+  buildRedisClient
 } from "#utils/index.js";
 import config from "#config.js";
 import indexRouter from "#routes/index.js";
 import livereload from "connect-livereload";
+import { requiresAuth } from "#utils/openidSetup.js";
+import { initializeI18nextSync } from "./scripts/helpers/i18nLoader.js";
+import { initRedis } from "#utils/redisClient.js";
+
+
+
 
 const TRUST_FIRST_PROXY = 1;
+const SUCCESSFUL_REQUEST = 200;
+const UNSUCCESSFUL_REQUEST = 500;
 
 /**
  * Creates and configures an Express application.
@@ -24,13 +35,26 @@ const TRUST_FIRST_PROXY = 1;
  *
  * @returns {import('express').Application} The configured Express application
  */
-const createApp = (): express.Application => {
+const createApp = async (): Promise<express.Application> => {
+  // Initialise i18next synchronously before setting up the app
+  initializeI18nextSync();
+
   const app = express();
 
   // Set up common middleware for handling cookies, body parsing, etc.
   setupMiddlewares(app);
 
+  if (config.redis === undefined) {
+    app.use(session(config.session));
+  } else {
+    const redisClient = buildRedisClient(config.redis);
+    await initRedis(redisClient);
+    setupRedisSession(app, redisClient);
+  }
+
   app.use(axiosMiddleware);
+
+  app.use(setupLocaleMiddleware);
 
   // Response compression setup
   app.use(
@@ -49,7 +73,7 @@ const createApp = (): express.Application => {
         }
         return compression.filter(req, res);
       },
-    }),
+    })
   );
 
   // Set up security headers
@@ -60,7 +84,7 @@ const createApp = (): express.Application => {
 
   // Set up cookie security for sessions
   app.set("trust proxy", TRUST_FIRST_PROXY);
-  app.use(session(config.session));
+
 
   // Set up Cross-Site Request Forgery (CSRF) protection
   setupCsrf(app);
@@ -74,17 +98,52 @@ const createApp = (): express.Application => {
   // Set up application-specific configurations
   setupConfig(app);
 
-  // Set up request logging based on environment
-  if (process.env.NODE_ENV === "production") {
-    // Use combined format for production (more structured, less verbose)
-    app.use(morgan("combined"));
-  } else {
-    // Use dev format for development (colored, more readable)
-    app.use(morgan("dev"));
+  if (process.env.AUTH_ENABLED === 'true') {
+    // Set up the OIDC authentication
+    oidcSetup(app);
+
   }
 
+  // Set up request logging based on environment
+  if (process.env.NODE_ENV === 'production') {
+    // Use combined format for production (more structured, less verbose)
+    app.use(morgan('combined'));
+  } else {
+    // Use dev format for development (colored, more readable)
+    app.use(morgan('dev'));
+  }
+  
+  /**
+   * This middleware copies the OIDC user into res.locals for views
+   *
+   * @param {Request} req - the request
+   * @param {Response} res - the response
+   * @param {NextFunction} next - what to do next
+   */
+  function injectUser(req: Request, res: Response, next: NextFunction): void {
+    res.locals.user = req.session.oidc?.userinfo;
+    next();
+  }
+
+  // liveness and readiness probes for Helm deployments. Has to happen before the main router
+  app.get("/status", function (req: Request, res: Response): void {
+    res.status(SUCCESSFUL_REQUEST).send("OK");
+  });
+
+  app.get("/health", function (req: Request, res: Response): void {
+    res.status(SUCCESSFUL_REQUEST).send("Healthy");
+  });
+
+  app.get("/error", function (req: Request, res: Response): void {
+    // Simulate an error
+    res
+      .set("X-Error-Tag", "TEST_500_ALERT")
+      .status(UNSUCCESSFUL_REQUEST)
+      .send("Internal Server Error");
+  });
+
   // Register the main router
-  app.use("/", indexRouter);
+  app.use('/', requiresAuth(), injectUser, indexRouter);
 
   // Enable live-reload middleware in development mode
   if (process.env.NODE_ENV === "development") {
@@ -103,7 +162,10 @@ const createApp = (): express.Application => {
 };
 
 // Self-execute the app directly to allow app.js to be executed directly
-createApp();
+createApp().catch((err: unknown) => {
+  console.error(err);
+  process.exit(1);
+});
 
 // Export the createApp function for testing/import purposes
 export default createApp;

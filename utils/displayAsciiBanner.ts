@@ -1,3 +1,5 @@
+ 
+
 /**
  * @file Displays an ASCII Art banner on application startup.
  * Uses `figlet` for ASCII rendering and `chalk` for color formatting.

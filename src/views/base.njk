@@ -24,17 +24,17 @@
 {{ mojHeader({
     organisationLabel: {
       text: config.DEPARTMENT_NAME,
-      href: "#"
+      href: config.DEPARTMENT_URL
     },
     navigation: {
       label: "Account navigation",
       items: [{
-        text: "Account name",
+        text: user.email,
         href: "#",
         active: true
       }, {
         text: "Sign out",
-        href: "#"
+        href: "/logout"
       }]
     }
   }) }}
@@ -44,16 +44,8 @@
     navigation: [
       {
         href: "#",
-        text: "Your submissions",
+        text: "Your Assessments",
         active: true
-      },
-      {
-        href: "#",
-        text: "Matter starts"
-      },
-      {
-        href: "#",
-        text: "Search"
       }
     ]
   }) }}
@@ -66,6 +58,7 @@
     },
     html: 'This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.'
   }) }}
+
 {% endblock %}
 
 {% block content %}

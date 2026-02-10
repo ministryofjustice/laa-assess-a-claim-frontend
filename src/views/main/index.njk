@@ -1,76 +1,40 @@
 {% extends "base.njk" %}
 
+{%- from "govuk/components/table/macro.njk" import govukTable -%}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{%- from "moj/components/pagination/macro.njk" import mojPagination -%}
+
 {% block content %}
-    <h1 class="govuk-heading-xl">My Claims</h1>
+  <h1 class="govuk-heading-xl">{{ t('pages.home.title') }}</h1>
 
+  {{ mojSubNavigation({
+    label: "Sub navigation",
+    items: [
+      {
+        text: "Open",
+        href: "#1",
+        active: true
+      },
+      {
+        text: "Closed",
+        href: "#2"
+      }
+    ]
+  }) }}
 
-    {%- from "govuk/components/table/macro.njk" import govukTable -%}
-    {% from "govuk/components/tabs/macro.njk" import govukTabs %}
-    {% from "govuk/components/button/macro.njk" import govukButton %}
-    {% from "govuk/components/pagination/macro.njk" import govukPagination %}
-    {% from "govuk/components/details/macro.njk" import govukDetails %}
+  <h2 class="govuk-heading-m">Submitted</h2>
 
-        {{ govukDetails({
-        summaryText: "Filter claims"
-        }) }}
+  {{ govukTable({
+    attributes: {
+      "data-module": "moj-sortable-table"
+    },
+    head: head,
+    firstCellIsHeader: true,
+    rows: rows
+  }) }}
 
-    <div class="govuk-button-group">
-        {{ govukButton({
-            text: "Assign new claim"
-        }) }}
-    </div>
-
-    
-
-
-    {{ govukTable({
-        attributes: {
-            "data-module": "moj-sortable-table"
-        },
-        head: [
-            { text: "Ref no", attributes: { "aria-sort": "ascending" } },
-            { text: "Client", attributes: { "aria-sort": "none" } },
-            { text: "Firm", attributes: { "aria-sort": "none" } },
-            { text: "Claim type", attributes: { "aria-sort": "none" } },
-            { text: "Date submitted / received", attributes: { "aria-sort": "none" } },
-            { text: "Total", attributes: { "aria-sort": "none" } },
-            { text: "Status", attributes: { "aria-sort": "none" } }
-        ],
-        rows: [
-            [ { text: "1000010CV" }, { text: "Teckla Berenk" }, { text: "Civil & Legal" }, { text: "Type A" }, { text: "8 August 2023" }, { text: "£786.89" }, { text: "Submitted" } ],
-            [ { text: "1000014CV" }, { text: "Daro Ancim" }, { text: "Civil Law LLP" }, { text: "Type C" }, { text: "12 February 2024" }, { text: "£1447.13" }, { text: "Paid" } ],
-            [ { text: "1000032CV" }, { text: "Verse Minne" }, { text: "Civil Helpers PLC" }, { text: "Type A" }, { text: "14 March 2024" }, { text: "£4566.11" }, { text: "Paid" } ],
-            [ { text: "1000045CV" }, { text: "Jaa Baize" }, { text: "Civil Law LLP" }, { text: "Type A" }, { text: "15 March 2024" }, { text: "£5673.11" }, { text: "Paid" } ]
-        ]
-        }) }}
-
-    {{ govukPagination({ 
-        previous: {
-            href: "#"
-        },
-        next: {
-            href: "#"
-        },
-        items: [
-            {
-            number: 1,
-            current: true,
-            href: "#"
-            },
-            {
-            number: 2,
-            href: "#"
-            },
-            {
-            number: 3,
-            href: "#"
-            },
-            {ellipsis: "true"},
-            {
-            number: 5,
-            href: "#"
-            }
-        ]
-        }) }}
+  {{ mojPagination(pagination) }}
 
 {% endblock %}

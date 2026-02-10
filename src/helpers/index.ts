@@ -5,29 +5,19 @@
  * This allows for cleaner imports throughout the application.
  *
  * Usage:
- * import { devLog, safeString, formatDate } from '#src/scripts/helpers';
+ * import { devLog, formatDate } from '#src/helpers/index.js';
  */
 
 // Development logging utilities
-export {
-  devLog,
-  devWarn,
-  devError,
-  devDebug,
-  isDevelopment,
-} from "./devLogger.js";
+export { devLog, devWarn, devError, devDebug, isDevelopment } from "./devLogger.js";
 
-// Data transformation utilities
+// Data formatting utilities
 export {
-  safeString,
-  safeOptionalString,
-  isRecord,
-  safeStringFromRecord,
-  hasProperty,
-} from "./dataTransformers.js";
-
-// Date formatting utilities
-export { formatDate } from "./dateFormatter.js";
+  formatClaimed,
+  formatClaimId,
+  formatDate,
+  formatOptionalString,
+} from "./dataFormatters.js";
 
 // Error handling utilities
 export {
@@ -40,3 +30,5 @@ export {
   createProcessedError,
   extractAndLogError,
 } from "./errorHandler.js";
+
+export { parseNumberQueryParam } from "./queryParsers.js";

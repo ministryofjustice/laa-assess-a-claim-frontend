@@ -29,6 +29,9 @@ jobs:
 
       - name: Run Mocha unit tests
         run: yarn coverage
+        env:
+          DOTENV_CONFIG_PATH: .env.test
+          NODE_ENV: test
 
       - name: Upload coverage report
         if: always()
