@@ -75,8 +75,8 @@ jobs:
       - name: Set up AWS credentials for ECR and Kubernetes
         uses: aws-actions/configure-aws-credentials@v5.0.0
         with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ vars.ECR_REGION }}
+          role-to-assume: ${{ secrets.LAA_ASSESS_A_CLAIM_FRONTEND_ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.LAA_ASSESS_A_CLAIM_FRONTEND_ECR_REGION }}
 
       - uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076
         id: login-ecr
@@ -98,7 +98,7 @@ jobs:
         uses: ./.github/actions/build_and_push
         with:
           image_registry: ${{ secrets.ECR_REGISTRY_URL }}
-          image_repo: ${{ vars.ECR_REPOSITORY }}
+          image_repo: ${{ vars.LAA_ASSESS_A_CLAIM_FRONTEND_ECR_REPOSITORY }}
           dockerfile_path: Dockerfile
           image_tag: ${{ github.sha }}
 
@@ -136,7 +136,7 @@ jobs:
       - name: Deploy to UAT
         uses: ./.github/actions/deploy
         with:
-          ecr-repository: ${{ vars.ECR_REPOSITORY }}
+          ecr-repository: ${{ vars.LAA_ASSESS_A_CLAIM_FRONTEND_ECR_REPOSITORY }}
           ecr-registry_url: ${{ secrets.ECR_REGISTRY_URL }}
           kube-cert: ${{ secrets.KUBE_CERT }}
           kube-token: ${{ secrets.KUBE_TOKEN }}
@@ -169,7 +169,7 @@ jobs:
       - name: Deploy to staging
         uses: ./.github/actions/deploy
         with:
-          ecr-repository: ${{ vars.ECR_REPOSITORY }}
+          ecr-repository: ${{ vars.LAA_ASSESS_A_CLAIM_FRONTEND_ECR_REPOSITORY }}
           ecr-registry_url: ${{ secrets.ECR_REGISTRY_URL }}
           kube-cert: ${{ secrets.KUBE_CERT }}
           kube-token: ${{ secrets.KUBE_TOKEN }}
@@ -203,7 +203,7 @@ jobs:
   #     - name: Deploy to production
   #       uses: ./.github/actions/deploy
   #       with:
-  #         ecr-repository: ${{ vars.ECR_REPOSITORY }}
+  #         ecr-repository: ${{ vars.LAA_ASSESS_A_CLAIM_FRONTEND_ECR_REPOSITORY }}
   #         ecr-registry_url: ${{ secrets.ECR_REGISTRY_URL }}
   #         kube-cert: ${{ secrets.KUBE_CERT }}
   #         kube-token: ${{ secrets.KUBE_TOKEN }}
