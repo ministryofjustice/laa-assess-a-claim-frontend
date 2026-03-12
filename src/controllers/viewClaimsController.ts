@@ -20,7 +20,7 @@ export async function handleYourClaimsPage(
   next: NextFunction
 ): Promise<void> {
   try {
-    const currentPage = parseNumberQueryParam(req.query.page, 1);
+    const currentPage = 0;
     const limit = 10; //todo get this from somewhere, probs config
     const response = await claimService.getClaims(req.axiosMiddleware, currentPage, limit);
 
