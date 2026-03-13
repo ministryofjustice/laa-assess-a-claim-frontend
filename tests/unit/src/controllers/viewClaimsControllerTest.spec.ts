@@ -26,7 +26,7 @@ import { getClaimsSuccessResponseData } from "#tests/assets/getClaimsResponseDat
 import { ApiResponse, Paginated } from "#src/types/api-types.js";
 import { Claim } from "#src/types/Claim.js";
 
-describe("Claim Service Controller", () => {
+describe("view claims Controller", () => {
   let req: Partial<Request>;
   let res: any;
   let next: any;
@@ -62,7 +62,7 @@ describe("Claim Service Controller", () => {
     sinon.restore();
   });
 
-  describe("Claims controller test", () => {
+  describe("View Claims controller test", () => {
     it("should render home your claim page with data and correct template", async () => {
       // Arrange
       const mockApiResponse = getClaimsSuccessResponseData;

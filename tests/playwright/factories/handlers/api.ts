@@ -25,13 +25,20 @@ export function makeFakeClaim(id: number, overrides = {}): object {
 export const apiHandlers = [
   // match any host or protocol
   http.get('/api/v1/claims', ({ request }) => {
-    const url = new URL(request.url);
-    const page = url.searchParams.get('page');
-    const limit = url.searchParams.get('limit');
+    const url = new URL(request.url, 'http://localhost:8080');
+    const page = Number(url.searchParams.get('page'));
+    const limit = Number(url.searchParams.get('limit'));
 
     console.log('🧩 MSW matched: GET /api/v1/claims');
     const claims = [makeFakeClaim(1), makeFakeClaim(2), makeFakeClaim(3)];
-    return HttpResponse.json({claims, page, limit, total: 3, totalPages: 1 });
+
+    return HttpResponse.json({
+      claims,
+      page,
+      limit,
+      total: 3,
+      totalPages: 1,
+    });
   }),
 
   http.get('/api/v1/claims/:id', ({ params }) => {
