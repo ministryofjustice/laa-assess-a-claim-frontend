@@ -2,8 +2,8 @@ import { createProcessedError } from "#src/helpers/errorHandler.js";
 import { claimService } from "#src/services/claimService.js";
 import type { Request, Response, NextFunction } from "express";
 import { ClaimsTableViewModel } from "#src/viewmodels/claimsViewModel.js";
-import { parseNumberQueryParam } from "#src/helpers/index.js";
 import { InvalidPageError } from "#src/types/errors.js";
+import { parseNumberQueryParam } from "#src/helpers/queryParsers.js";
 
 const NOT_FOUND = 404;
 
@@ -20,10 +20,9 @@ export async function handleYourClaimsPage(
   next: NextFunction
 ): Promise<void> {
   try {
-    // Fetch client details from API
-
-    const currentPage = parseNumberQueryParam(req.query.page, 1);
-    const response = await claimService.getClaims(req.axiosMiddleware, currentPage);
+    const requestPage = parseNumberQueryParam(req.query.page, 1)-1;
+    const limit = 10; //todo get this from somewhere, probs config
+    const response = await claimService.getClaims(req.axiosMiddleware, requestPage, limit);
 
     if (response.status === "success") {
       const claimsTableViewModel: ClaimsTableViewModel = new ClaimsTableViewModel(

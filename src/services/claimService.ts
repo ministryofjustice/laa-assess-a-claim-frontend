@@ -1,44 +1,40 @@
 import { getClaimsEndpoint } from "#src/api/apiEndpointConstants.js";
 import { extractAndLogError } from "#src/helpers/index.js";
-import type { ApiResponse, Paginated, PaginationMeta } from "#src/types/api-types.js";
+import type { ApiResponse, Paginated } from "#src/types/api-types.js";
 import type { AxiosInstanceWrapper } from "#src/types/axios-instance-wrapper.js";
-import { type Claim, ClaimSchema } from "#src/types/Claim.js";
+import { type Claim, ClaimsResponseSchema } from "#src/types/Claim.js";
 import config from "../../config.js";
-import { z } from "zod";
 
 /**
- * Service to interact with the Claims API.
+ *
  */
 class ClaimService {
   /**
    * Get submissions from API using axios middleware
    * @param {AxiosInstanceWrapper} axiosMiddleware - Axios middleware from request
    * @param {number} page - The current page
+   * @param {number} limit - the number of claims per page 
    * @returns {Promise<ApiResponse<Paginated<Claim>>>} API response with submission data and pagination
    */
   static async getClaims(
     axiosMiddleware: AxiosInstanceWrapper,
-    page: number
+    page?: number,
+    limit?: number
   ): Promise<ApiResponse<Paginated<Claim>>> {
     try {
       const configuredAxios = this.configureAxiosInstance(axiosMiddleware);
       console.log(`API: GET ${getClaimsEndpoint}`);
 
-      // Call API endpoint
-      const response = await configuredAxios.get(getClaimsEndpoint);
+      const response = await configuredAxios.get(getClaimsEndpoint, { params: { limit, page }});
+      const parsed = ClaimsResponseSchema.parse(response.data);
 
-      // Validate and transform the data against the schema
-      const data = z.array(ClaimSchema).parse(response.data);
-
-      // TODO: Pagination not currently implemented. Update `data.length` when API response body includes the pagination data.
-      const paginationMeta = ClaimService.extractPaginationMeta(data.length, page);
-
-      console.log(`API: Returning ${data.length} claims`);
+      const { claims: data } = parsed;
+      const meta = parsed;
 
       return {
         body: {
           data,
-          meta: paginationMeta,
+          meta
         },
         status: "success",
       };
@@ -87,20 +83,6 @@ class ClaimService {
   }
 
   /**
-   * Extract pagination metadata from response body
-   * @param {number} total - The total number of unpaginated results
-   * @param {number} page - The current page
-   * @returns {PaginationMeta} Pagination metadata
-   */
-  private static extractPaginationMeta(total: number, page: number): PaginationMeta { // todo does this actually do anything?
-    return {
-      total,
-      page,
-      limit: config.pagination.numberOfClaimsPerPage,
-    };
-  }
-
-  /**
    * Create configured axios instance with API credentials
    * @param {AxiosInstanceWrapper} axiosMiddleware - Axios middleware from request
    * @returns {AxiosInstanceWrapper} Configured axios instance
@@ -127,5 +109,4 @@ class ClaimService {
   }
 }
 
-// Export the service
 export const claimService = ClaimService;

@@ -30,6 +30,50 @@ describe("Claim Service:", () => {
       sinon.assert.calledWith(configureAxiosStub, {});
     });
 
+    it("should call axios with the claim endpoint with data", async () => {
+      const mockData = { data: {
+        claims: [
+            {
+              id: 0,
+              ufn: "string",
+              providerUserId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              client: "string",
+              category: "string",
+              concluded: "2026-03-12",
+              feeType: "string",
+              claimed: 0,
+              submissionId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            }
+          ],
+          page: 1,
+          limit: 0,
+          total: 0,
+          totalPages: 0
+        }
+      }
+
+      const expectedData = {
+              id: 0,
+              ufn: "string",
+              providerUserId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              client: "string",
+              category: "string",
+              concluded: new Date("2026-03-12"),
+              feeType: "string",
+              claimed: 0,
+              submissionId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            }
+
+      axiosStub.get.resolves(mockData);
+
+      const result = await claimService.getClaims({} as any, {} as any);
+
+      sinon.assert.calledWith(axiosStub.get, getClaimsEndpoint);
+      sinon.assert.calledWith(configureAxiosStub, {});
+      expect(result.body?.meta).to.include({page: 1, limit: 0, total: 0, totalPages: 0})
+      expect(result.body?.data).to.deep.include(expectedData)
+    });
+
     it("returns empty data if the response is not an array", async () => {
       const mockData = { data: "just a string" };
       axiosStub.get.resolves(mockData);
