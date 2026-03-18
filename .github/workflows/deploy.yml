@@ -12,6 +12,7 @@ on:
 permissions:
   contents: read
   packages: write
+  security-events: write
 
 jobs:
   code-linting:
@@ -59,8 +60,6 @@ jobs:
   snyk:
     name: Snyk Security Scan
     uses: ./.github/workflows/snyk.yml
-#    permissions:
-#      security-events: write
     with:
       tag: "laa-assess-a-claim-frontend"
     secrets:
