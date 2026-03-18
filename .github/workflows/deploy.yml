@@ -163,6 +163,7 @@ jobs:
   run-e2e:
     needs: deploy-uat
     runs-on: ubuntu-latest
+    if: github.ref_name == 'main'
     steps:
       - name: Generate GitHub App Token
         id: generate_token
