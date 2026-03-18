@@ -36,14 +36,15 @@ runs:
   steps:
     - name: Docker Build & Push with Cache
       id: build_and_push
-      uses: docker/build-push-action@v7
-      with:
-        push: true
-        context: .
-        file: ${{ inputs.dockerfile_path }}
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache
-        tags: ${{ inputs.image_registry }}/${{ inputs.image_repo }}:${{ inputs.image_tag }}
+      run: |
+        docker buildx build \
+          --push \
+          --cache-from=type=local,src=/tmp/.buildx-cache \
+          --cache-to=type=local,dest=/tmp/.buildx-cache \
+          -t ${{ inputs.image_registry }}/${{ inputs.image_repo }}:${{ inputs.image_tag }} \
+          -f ${{ inputs.dockerfile_path }} .
+
+      shell: bash
 
     - name: Output
       id: output
