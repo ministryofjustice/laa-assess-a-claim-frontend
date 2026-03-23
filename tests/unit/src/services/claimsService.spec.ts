@@ -30,6 +30,7 @@ describe("Claim Service:", () => {
       sinon.assert.calledWith(configureAxiosStub, {});
     });
 
+
     it("should call axios with the claim endpoint with data", async () => {
       const mockData = { data: {
         claims: [
@@ -72,6 +73,33 @@ describe("Claim Service:", () => {
       sinon.assert.calledWith(configureAxiosStub, {});
       expect(result.body?.meta).to.include({page: 1, limit: 0, total: 0, totalPages: 0})
       expect(result.body?.data).to.deep.include(expectedData)
+    });
+
+    it("should call axios with page and limit query params", async () => {
+      const mockData = {
+        data: {
+          claims: [],
+          page: 1,
+          limit: 10,
+          total: 0,
+          totalPages: 0,
+        },
+      };
+
+      axiosStub.get.resolves(mockData);
+
+      await claimService.getClaims({} as any, 2, 10);
+
+      sinon.assert.calledWith(
+        axiosStub.get,
+        getClaimsEndpoint,
+        {
+          params: {
+            page: 2,
+            limit: 10,
+          },
+        }
+      );
     });
 
     it("returns empty data if the response is not an array", async () => {
