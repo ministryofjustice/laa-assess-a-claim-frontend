@@ -4516,15 +4516,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^9.1.7":
-  version: 9.1.7
-  resolution: "husky@npm:9.1.7"
-  bin:
-    husky: bin.js
-  checksum: 10c0/35bb110a71086c48906aa7cd3ed4913fb913823715359d65e32e0b964cb1e255593b0ae8014a5005c66a68e6fa66c38dcfa8056dbbdfb8b0187c0ffe7ee3a58f
-  languageName: node
-  linkType: hard
-
 "i18next-http-middleware@npm:^3.9.2":
   version: 3.9.2
   resolution: "i18next-http-middleware@npm:3.9.2"
@@ -5202,7 +5193,6 @@ __metadata:
     govuk-frontend: "npm:^5.13.0"
     helmet: "npm:^8.1.0"
     http-errors: "npm:~2.0.0"
-    husky: "npm:^9.1.7"
     i18next: "npm:^25.8.0"
     i18next-http-middleware: "npm:^3.9.2"
     jsdom: "npm:^27.4.0"
