@@ -17,6 +17,7 @@
     "deploy": "./scripts/deploy.sh",
     "prepare": "pre-commit install",
     "tsc": "tsc --noEmit",
+    "generate:api": "openapi-ts",
     "build:ts": "tsc",
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "mocha -r dotenv/config",
@@ -27,6 +28,7 @@
     "node": "24.10.0"
   },
   "dependencies": {
+    "@hey-api/client-axios": "^0.9.1",
     "@ministryofjustice/frontend": "^7.1.0",
     "axios": "^1.13.4",
     "body-parser": "^2.2.2",
@@ -58,6 +60,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
     "@eslint/js": "^9.32.0",
+    "@hey-api/openapi-ts": "0.94.5",
     "@playwright/test": "^1.55.0",
     "@types/chai": "^5.2.2",
     "@types/compression": "^1.7.5",
