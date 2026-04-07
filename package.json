@@ -116,6 +116,7 @@
   },
   "packageManager": "yarn@4.9.2",
   "resolutions": {
+    "dotenv": "17.2.3",
     "defu": "6.1.6"
   }
 }
