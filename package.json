@@ -11,7 +11,7 @@
   "scripts": {
     "start": "node public/app.js",
     "clean": "rimraf public",
-    "build": "yarn clean && yarn build:ts && node public/esbuild.js",
+    "build": "yarn clean && openapi-ts && yarn build:ts && node public/esbuild.js",
     "lint": "yarn eslint . --fix",
     "dev": "PORT=3001 yarn build:ts && concurrently \"tsc --watch\" \"node public/esbuild.js --watch\" \"PORT=3001 nodemon\"",
     "deploy": "./scripts/deploy.sh",
