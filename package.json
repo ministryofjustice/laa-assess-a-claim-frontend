@@ -11,12 +11,13 @@
   "scripts": {
     "start": "node public/app.js",
     "clean": "rimraf public",
-    "build": "yarn clean && yarn build:ts && node public/esbuild.js",
+    "build": "yarn clean && openapi-ts && yarn build:ts && node public/esbuild.js",
     "lint": "yarn eslint . --fix",
-    "dev": "yarn build:ts && concurrently \"tsc --watch\" \"node public/esbuild.js --watch\" \"nodemon\"",
+    "dev": "PORT=3001 yarn build:ts && concurrently \"tsc --watch\" \"node public/esbuild.js --watch\" \"PORT=3001 nodemon\"",
     "deploy": "./scripts/deploy.sh",
     "prepare": "pre-commit install",
     "tsc": "tsc --noEmit",
+    "generate:api": "openapi-ts",
     "build:ts": "tsc",
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "mocha -r dotenv/config",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
     "@eslint/js": "^9.32.0",
+    "@hey-api/openapi-ts": "0.95.0",
     "@playwright/test": "^1.55.0",
     "@types/chai": "^5.2.2",
     "@types/compression": "^1.7.5",
@@ -112,5 +114,9 @@
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.44.1"
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.9.2",
+  "resolutions": {
+    "dotenv": "17.2.3",
+    "defu": "6.1.6"
+  }
 }
