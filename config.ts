@@ -58,6 +58,11 @@ const config: Config = {
     name: process.env.SESSION_NAME ?? "",
     resave: false,
     saveUninitialized: false,
+    cookie : {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: 'lax'
+    }
   },
   app: {
     port: Number(process.env.PORT ?? DEFAULT_PORT),
