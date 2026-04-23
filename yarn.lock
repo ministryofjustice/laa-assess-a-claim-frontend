@@ -4813,10 +4813,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-http-middleware@npm:^3.9.2":
-  version: 3.9.2
-  resolution: "i18next-http-middleware@npm:3.9.2"
-  checksum: 10c0/9f7e7717f5355088e9d0e1d3e4d88eb1af83576fbae668a1a646f3ee7c39242146b7641f7e23eb951b029c5ba7a129a279ac7d8fd7baaf9949bf43619e741999
+"i18next-http-middleware@npm:^3.9.4":
+  version: 3.9.4
+  resolution: "i18next-http-middleware@npm:3.9.4"
+  checksum: 10c0/388981470a756386661c38d6bc9c8dd94d0e227569204a48583bea72a5591fe577c8e81cc5331960780f2eb53feef4b2ffc4fd0fa14d3b6ac4d30153fc90ed2c
   languageName: node
   linkType: hard
 
@@ -5549,7 +5549,7 @@ __metadata:
     helmet: "npm:^8.1.0"
     http-errors: "npm:~2.0.0"
     i18next: "npm:^25.8.0"
-    i18next-http-middleware: "npm:^3.9.2"
+    i18next-http-middleware: "npm:^3.9.4"
     jsdom: "npm:^27.4.0"
     lint-staged: "npm:^16.2.3"
     livereload: "npm:^0.10.3"
