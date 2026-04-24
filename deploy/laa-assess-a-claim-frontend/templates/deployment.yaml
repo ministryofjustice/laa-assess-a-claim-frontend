@@ -40,6 +40,9 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
+            - name: management
+              containerPort: 2998
+              protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
@@ -142,7 +145,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.env.REDIS_AUTH_TOKEN.name }}
-                  key: {{ .Values.env.REDIS_AUTH_TOKEN.key }}      
+                  key: {{ .Values.env.REDIS_AUTH_TOKEN.key }}
+            - name: MANAGEMENT_PORT
+              value: "{{ .Values.env.MANAGEMENT_PORT }}"   
 
       {{- with .Values.volumes }}
       volumes:

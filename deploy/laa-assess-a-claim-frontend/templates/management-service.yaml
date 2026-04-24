@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "laa-assess-a-claim-frontend.fullname" . }}-management
+  labels:
+    {{- include "laa-assess-a-claim-frontend.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.managementService.port }}
+      targetPort: management
+      protocol: TCP
+      name: management
+  selector:
+    {{- include "laa-assess-a-claim-frontend.selectorLabels" . | nindent 4 }}
