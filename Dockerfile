@@ -34,7 +34,7 @@ USER 1001
 ENV HOME=/app
 
 # Expose the ports the apps runs on
-EXPOSE 3000 2998
+EXPOSE 3001 2998
 
 # Define the command to run the application
 CMD ["node", "public/app.js"]
