@@ -30,7 +30,6 @@ import { initRedis } from "#utils/redisClient.js";
 
 const TRUST_FIRST_PROXY = 1;
 const SUCCESSFUL_REQUEST = 200;
-const UNSUCCESSFUL_REQUEST = 500;
 
 /**
  * Creates and configures an Express application.
@@ -81,9 +80,6 @@ const createApp = async (): Promise<express.Application> => {
 
   // Set up security headers
   helmetSetup(app);
-
-  // Set up metrics
-  prometheusSetup(app);
 
   // Reducing fingerprinting by removing the 'x-powered-by' header
   app.disable("x-powered-by");
@@ -138,14 +134,6 @@ const createApp = async (): Promise<express.Application> => {
     res.status(SUCCESSFUL_REQUEST).send("Healthy");
   });
 
-  app.get("/error", function (req: Request, res: Response): void {
-    // Simulate an error
-    res
-      .set("X-Error-Tag", "TEST_500_ALERT")
-      .status(UNSUCCESSFUL_REQUEST)
-      .send("Internal Server Error");
-  });
-
   // Register the main router
   app.use("/", requiresAuth(), injectUser, indexRouter);
 
@@ -169,11 +157,67 @@ const createApp = async (): Promise<express.Application> => {
   return app;
 };
 
+/**
+ * Creates and configures an internal management Express application.
+ *
+ * @returns {import('express').Application} The configured management application
+ */
+const createManagementApp = (): express.Application => {
+  const app = express();
+
+  // Reducing fingerprinting by removing the 'x-powered-by' header
+  app.disable("x-powered-by");
+
+  // Set up cookie security for sessions
+  app.set("trust proxy", TRUST_FIRST_PROXY);
+
+  // Set up request logging based on environment
+  if (process.env.NODE_ENV === "production") {
+    app.use(morgan("combined"));
+  } else {
+    app.use(morgan("dev"));
+  }
+
+  // Set up metrics
+  prometheusSetup(app);
+
+  app.use((req, res, next) => {
+    res.status(404).send("Page not found");
+  });
+
+  return app;
+};
+
+/**
+ * Starts the public app and management app together on their respective ports
+ * 
+ * @returns {Promise<void>} the running apps
+ */
+const startApps = async (): Promise<void> => {
+  const app = await createApp();
+  const managementApp = createManagementApp();
+
+  // Display ASCII Art banner
+  displayAsciiBanner(config);
+
+  // Starts the Express server on the specified port
+  app.listen(config.app.port, () => {
+    console.log(chalk.yellow(`Listening on port ${config.app.port}...`));
+  });
+
+  managementApp.listen(config.app.managementPort, () => {
+    console.log(
+      chalk.yellow(`Management listening on port ${config.app.managementPort}...`),
+    );
+  });
+};
+
 // Self-execute the app directly to allow app.js to be executed directly
-createApp().catch((err: unknown) => {
+startApps().catch((err: unknown) => {
   console.error(err);
   process.exit(1);
 });
 
 // Export the createApp function for testing/import purposes
-export default createApp;
+export { createApp, createManagementApp };
+export default startApps;

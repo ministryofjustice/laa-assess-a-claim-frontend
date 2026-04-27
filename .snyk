@@ -27,3 +27,8 @@ ignore:
     - '*':
         reason: "No direct fix available in dependency tree"
         expires: 2026-12-31
+
+  SNYK-JS-FOLLOWREDIRECTS-16032162:
+    - '*':
+        reason: "No direct fix available in dependency tree"
+        expires: 2026-12-31

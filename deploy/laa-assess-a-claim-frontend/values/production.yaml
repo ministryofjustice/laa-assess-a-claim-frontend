@@ -60,6 +60,7 @@ env:
   RATE_WINDOW_MS: ""
   NODE_ENV: ""
   API_URL: ""
+  MANAGEMENT_PORT: 2998
 
 ingress:
   enabled: true
@@ -75,6 +76,10 @@ ingress:
 service:
   type: ClusterIP
   port: 80
+
+managementService:
+  type: ClusterIP
+  port: 2998
 
 resources:
   limits:
