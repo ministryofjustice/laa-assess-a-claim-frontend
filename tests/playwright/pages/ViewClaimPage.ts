@@ -14,7 +14,7 @@ export class ViewClaimPage {
    */
   constructor(page: Page, id: number) {
     this.page = page;
-    this.url = 'http://localhost:3000' + '/claims/' + id;
+    this.url = 'http://localhost:3001' + '/claims/' + id;
   }
 
   /**
