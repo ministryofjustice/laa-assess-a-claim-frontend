@@ -208,7 +208,7 @@ yarn build
 yarn dev
 ```
 
-Then, load http://localhost:3000/ in your browser to access the app.
+Then, load http://localhost:3001/ in your browser to access the app.
 
 ### Install dependencies and run application for production
 
@@ -239,7 +239,7 @@ Prerequisites, Docker Desktop
 - To run the docker image
 
   ```shell
-  docker run -d -p 8888:3000 laa-assess-a-claim-frontend:latest
+  docker run -d -p 8888:3001 laa-assess-a-claim-frontend:latest
   ```
 
   (The application should be running at http://localhost:8888)

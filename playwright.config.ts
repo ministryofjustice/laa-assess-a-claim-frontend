@@ -5,7 +5,7 @@ const TRY_ONCE = 1;
 const TRY_TWICE = 2;
 
 export const PLAYWRIGHT_TEST_ENV = {
-  BASE_URL: 'http://localhost:3000',
+  BASE_URL: 'http://localhost:3001',
   API_URL:'http://localhost:8080/',
   SERVICE_NAME: 'Assess Claim for Civil Work',
   MANAGEMENT_PORT: '2998'
@@ -22,7 +22,7 @@ export default defineConfig({
   workers: process.env.CI === 'true' ? TRY_ONCE : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3001',
     trace: process.env.CI === 'true' ? 'on' : 'on-first-retry',
   },
   projects: [
@@ -33,7 +33,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'concurrently "yarn tsx scripts/stub-backend.ts" "yarn tsx scripts/test-server-with-msw.ts"',
-    url: 'http://127.0.0.1:3000',
+    url: 'http://127.0.0.1:3001',
     reuseExistingServer: process.env.CI !== 'true',
     stdout: 'pipe',
     stderr: 'pipe',
