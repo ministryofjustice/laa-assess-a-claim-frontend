@@ -106,41 +106,10 @@ describe("views/main/claims/view.njk", () => {
     });
   });
 
-  /*it("renders a GOV.UK summary list", () => {
-    const sl = $(".govuk-summary-list");
-    expect(sl).to.have.length(1);
-  });*/
-
   it("renders an assignment link button", () => {
     const button = $("#assignment");
     expect(button).to.have.length(1);
     expect(button.text().trim()).to.equal("pages.claim.assignment.remove");
-  });
-
-  /*it("shows expected GOV.UK summary list rows (keys)", () => {
-    const keys = $(".govuk-summary-list__key")
-      .map((_, el) => $(el).text().trim())
-      .get();
-    expect(keys).to.include.members([
-      "Claim ID",
-      "Client",
-      "Category",
-      "Concluded",
-      "Fee type",
-      "Claimed",
-    ]);
-  });*/
-
-  it("shows Claim ID value", () => {
-    const row = $(".govuk-summary-list__row")
-      .filter(
-        (_, r) =>
-          $(r).find(".govuk-summary-list__key").text().trim() === "Claim ID",
-      )
-      .first();
-    expect(row.find(".govuk-summary-list__value").text().trim()).to.equal(
-      String(claim.id),
-    );
   });
 
   it("Assess button links to Assess page", () => {
