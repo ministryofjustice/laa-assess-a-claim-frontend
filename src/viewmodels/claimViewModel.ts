@@ -13,6 +13,7 @@ import type { Message } from "#src/viewmodels/components/message.js";
  */
 export class ClaimViewModel {
   readonly summary: SummaryListRow[];
+  readonly costsAndAllocationsRows: SummaryListRow[];
   readonly rows: SummaryListRow[];
   readonly title: string;
   readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
@@ -44,8 +45,12 @@ export class ClaimViewModel {
     // TODO - default to 'Low' if 'provider risk' is undefined
     summary.push({ key: { message: { key: "pages.claim.summary.providerRisk" } }, value: { text: "Low" }, action: { href: "#" } } );
     summary.push({ key: { message: { key: "pages.claim.summary.claimTimeStandard" } }, value: { message: formatMinutes(15) } } );
-
     this.summary = summary;
+
+    const costsAndAllocationsRows: SummaryListRow[] = [];
+    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
+    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36) }, action: { tag: { text: "Escaped", classes: "govuk-tag--blue" } } } );
+    this.costsAndAllocationsRows = costsAndAllocationsRows;
 
     const rows: SummaryListRow[] = [];
 

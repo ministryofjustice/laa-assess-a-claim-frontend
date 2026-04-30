@@ -1,17 +1,85 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
 
 {% macro summaryCard(t, cardTitleKey, rows, cardAction) %}
-{{ govukSummaryList({
-    card: {
-      title: {
-        text: t(cardTitleKey)
-      },
-      actions: {
-        items: [
-          cardAction
-        ]
-      }
+
+{% set govukRows = [] %}
+
+{% for row in rows %}
+
+  {% if row.key.message %}
+    {% set keyText = t(row.key.message.key, row.key.message.args) %}
+  {% else %}
+    {% set keyText = row.key.text %}
+  {% endif %}
+
+  {% if row.value.message %}
+    {% set valueText = t(row.value.message.key, row.value.message.args) %}
+  {% else %}
+    {% set valueText = row.value.text %}
+  {% endif %}
+
+  {% set govukRow = {
+    key: {
+      text: keyText
     },
-    rows: rows
-  }) }}
+    value: {
+      text: valueText,
+      html: row.value.html
+    }
+  } %}
+
+  {% if row.action %}
+
+    {% set actionItem = {} %}
+
+    {% if row.action.tag %}
+
+      {% set actionItem = {
+        html: govukTag({
+          text: row.action.tag.text,
+          classes: row.action.tag.classes
+        })
+      } %}
+
+    {% else %}
+
+      {% set actionItem = {
+        href: row.action.href,
+        text: t('common.change')
+      } %}
+
+    {% endif %}
+
+    {% set govukRow = {
+      key: govukRow.key,
+      value: govukRow.value,
+      actions: {
+        items: [actionItem]
+      }
+    } %}
+
+  {% endif %}
+
+  {% set govukRows = govukRows.concat([govukRow]) %}
+
+{% endfor %}
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: t(cardTitleKey)
+    },
+    actions: {
+      items: [
+        {
+          href: cardAction.href,
+          text: t(cardAction.text)
+        }
+      ]
+    }
+  },
+  rows: govukRows
+}) }}
+
 {% endmacro %}
