@@ -4,10 +4,12 @@
  * Utility functions for formatting claim data in a consistent way across the application.
  */
 
+import type { Message } from "#src/viewmodels/components/message.js";
+
 /**
- * Format date for display in table cells and UI components
+ * Format date for compact display
  * @param {Date} date Date object
- * @returns {string} Formatted date in DD/MM/YYYY format (e.g., "6 Jan 1986")
+ * @returns {string} Formatted date in DD/MM/YYYY format (e.g., "06/01/1986")
  */
 export function formatDate(date: Date | undefined): string {
   if (date === undefined) {
@@ -18,6 +20,36 @@ export function formatDate(date: Date | undefined): string {
     const year = date.getFullYear();
 
     return `${day}/${month}/${year}`;
+  }
+}
+
+/**
+ * Format date for readable display
+ * @param {Date} date Date object
+ * @returns {string} Formatted date in D MMMM YYYY format (e.g., "6 January 1986")
+ */
+export function formatDateReadable(date: Date | undefined): string {
+  if (date === undefined) {
+    return "No data available";
+  } else {
+    return date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  }
+}
+
+/**
+ * Format minutes for readable display
+ * @param {number} minutes number object
+ * @returns {string} Formatted minutes (e.g., "6 minutes")
+ */
+export function formatMinutes(minutes: number | undefined): Message {
+  if (minutes === undefined) {
+    return { key: "common.noDataAvailable" };
+  } else {
+    return { key: "common.minutes", args: { minutes } };
   }
 }
 

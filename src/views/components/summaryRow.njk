@@ -1,0 +1,21 @@
+{% macro summaryRow(t, row) %}
+  <p class="govuk-body govuk-!-margin-0">
+    <strong>{{ t(row.key.message.key, row.key.message.args) }}:</strong>
+
+    {% if row.value.text %}
+      {{ row.value.text }}
+    {% elif row.value.html %}
+      {{ row.value.html | safe }}
+    {% else %}
+      {{ t(row.value.message.key, row.value.message.args) }}
+    {% endif %}
+
+    {% if row.action %}
+      <span class="govuk-body-s">
+        <a class="govuk-link" href="{{ row.action.href }}">
+          {{ t('common.change') }}
+        </a>
+      </span>
+    {% endif %}
+  </p>
+{% endmacro %}
