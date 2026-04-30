@@ -2,7 +2,14 @@
  * @description Tests for the utility functions in dataFormatters work as expected
  */
 
-import { formatClaimed, formatClaimId, formatDate, formatDateReadable, formatOptionalString } from '#src/helpers/dataFormatters.js';
+import {
+  formatClaimed,
+  formatClaimId,
+  formatDate,
+  formatDateReadable,
+  formatMinutes,
+  formatOptionalString,
+} from "#src/helpers/dataFormatters.js";
 import { expect } from 'chai';
 
 describe('formatDate()', () => {
@@ -33,11 +40,25 @@ describe('formatDateReadable()', () => {
 
   it('formats dates with single-digit days without a leading zero', () => {
     expect(formatDateReadable(new Date('2023-2-5'))).to.equal('5 February 2023');
-    expect(formatDateReadable(new Date('2023/2/5'))).to.equal('5 February 2023')
+    expect(formatDateReadable(new Date('2023/2/5'))).to.equal('5 February 2023');
   });
 
   it('handles undefined date strings by returning default', () => {
     expect(formatDateReadable(undefined)).to.equal("No data available");
+  });
+});
+
+describe('formatMinutes()', () => {
+  it('formats single-digit numbers without a leading zero', () => {
+    expect(formatMinutes(5)).to.equal('5 minutes');
+  });
+
+  it('formats non single-digit numbers', () => {
+    expect(formatMinutes(15)).to.equal('15 minutes');
+  });
+
+  it('handles undefined numbers by returning default', () => {
+    expect(formatMinutes(undefined)).to.equal("No data available");
   });
 });
 

@@ -39,6 +39,19 @@ export function formatDateReadable(date: Date | undefined): string {
 }
 
 /**
+ * Format minutes for readable display
+ * @param {number} minutes number object
+ * @returns {string} Formatted minutes (e.g., "6 minutes")
+ */
+export function formatMinutes(minutes: number | undefined): string {
+  if (minutes === undefined) {
+    return "No data available";
+  } else {
+    return `${minutes} minutes`;
+  }
+}
+
+/**
  * Format claim ID for display in table cells and UI components
  * @param {number} value claim ID
  * @returns {string} Transformed claim ID

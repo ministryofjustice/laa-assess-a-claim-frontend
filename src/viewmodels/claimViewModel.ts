@@ -2,7 +2,10 @@ import type { Claim } from "#src/types/Claim.js";
 import { formatClaimed, formatDate, formatOptionalString } from "#src/helpers/index.js";
 import type { SummaryListRow } from "./components/summaryList.js";
 import { Status, StatusTagClass } from "#src/viewmodels/components/status.js";
-import { formatDateReadable } from "#src/helpers/dataFormatters.js";
+import {
+  formatDateReadable,
+  formatMinutes,
+} from "#src/helpers/dataFormatters.js";
 
 /**
  *
@@ -28,13 +31,18 @@ export class ClaimViewModel {
     this.unassigned = false; // TODO - derive from claim
 
     const summary: SummaryListRow[] = [];
+    // TODO - default to 'No data available' if 'total claim amount' is undefined
     summary.push({ key: { text: "Total claim amount" }, value: { text: formatClaimed(3480) } });
     summary.push({ key: { text: "Date received" }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
+    // TODO - default to 'No data available' if 'case reference number' is undefined
     summary.push({ key: { text: "Case reference number" }, value: { text: "300001820960" } });
+    // TODO - default to 'No data available' if 'LAA reference number' is undefined
     summary.push({ key: { text: "LAA reference number" }, value: { text: "LAA-90d26c" } });
+    // TODO - default to 'Not yet assigned' if 'assigned to' is undefined
     summary.push({ key: { text: "Assigned to" }, value: { text: "Caseworker name" } });
+    // TODO - default to 'Low' if 'provider risk' is undefined
     summary.push({ key: { text: "Provider risk" }, value: { text: "Low" }, action: { href: "#" } });
-    summary.push({ key: { text: "Claim time standard" }, value: { text: "15 minutes" } });
+    summary.push({ key: { text: "Claim time standard" }, value: { text: formatMinutes(15) } });
 
     this.summary = summary;
 
