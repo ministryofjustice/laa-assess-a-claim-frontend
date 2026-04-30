@@ -1,0 +1,29 @@
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+
+{% macro subNavigation(t, page) %}
+  {{ mojSubNavigation({
+    label: t('pages.claim.subNavigation.ariaLabel'),
+    items: [
+      {
+        text: t('pages.claim.subNavigation.claimSummary'),
+        href: "#",
+        active: page == 1
+      },
+      {
+        text: t('pages.claim.subNavigation.reviewAndAssess'),
+        href: "#",
+        active: page == 2
+      },
+      {
+        text: t('pages.claim.subNavigation.claimHistory'),
+        href: "#",
+        active: page == 3
+      },
+      {
+        text: t('pages.claim.subNavigation.allEvidence'),
+        href: "#",
+        active: page == 4
+      }
+    ]
+  }) }}
+{% endmacro %}

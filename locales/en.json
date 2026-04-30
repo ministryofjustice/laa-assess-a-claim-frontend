@@ -62,12 +62,19 @@
       },
       "button": {
         "access": "Make a decision",
-        "request_provider": "Request update from provider"
+        "requestProvider": "Request update from provider"
       },
-      "link" : {
-        "review_and_assess": "Review and assess",
-        "claim_history": "Claim history",
-        "all_evidence": "All evidence"
+      "subNavigation": {
+        "ariaLabel": "Sub navigation",
+        "claimSummary": "Claim summary",
+        "reviewAndAssess": "Review and assess",
+        "claimHistory": "Claim history",
+        "allEvidence": "All evidence"
+      },
+      "costsAndAllocations": {
+        "title": "Costs and allocations",
+        "action": "Review and assess",
+        "totalClaimAmount": "Total claim amount"
       }
     }
   },

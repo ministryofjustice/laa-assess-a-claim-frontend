@@ -3,6 +3,8 @@
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 {% from "components/summaryList.njk" import summaryList %}
 {% from "components/linkButton.njk" import linkButton %}
+{% from "components/subNavigation.njk" import subNavigation %}
+{% from "components/summaryCard.njk" import summaryCard %}
 
 {% extends "base.njk" %}
 {% block content %}
@@ -19,22 +21,26 @@
 
   {{ linkButton(t, vm.assignmentButton, "assignment", "govuk-button--secondary") }}
 
+  {{ subNavigation(t, 1) }}
+
+  {{ summaryCard(t, "pages.claim.costsAndAllocations.title", [], { href: "#", text: t('pages.claim.costsAndAllocations.action')}) }}
+
   {{ govukSummaryList({ classes: "govuk-!-margin-bottom-7", rows: vm.rows }) }}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>
-    <a class="govuk-button govuk-button--secondary" href="#">{{ t('pages.claim.button.request_provider') }}</a>
+    <a class="govuk-button govuk-button--secondary" href="#">{{ t('pages.claim.button.requestProvider') }}</a>
   </div>
 
   <ul class="govuk-list" id="nav-links">
     <li>
-      <a class="govuk-link" href="#" >{{ t('pages.claim.link.review_and_assess') }}</a>
+      <a class="govuk-link" href="#" >{{ t('pages.claim.subNavigation.reviewAndAssess') }}</a>
     </li>
     <li>
-      <a class="govuk-link" href="#" >{{ t('pages.claim.link.claim_history') }}</a>
+      <a class="govuk-link" href="#" >{{ t('pages.claim.subNavigation.claimHistory') }}</a>
     </li>
     <li>
-      <a class="govuk-link" href="#" >{{ t('pages.claim.link.all_evidence') }}</a>
+      <a class="govuk-link" href="#" >{{ t('pages.claim.subNavigation.allEvidence') }}</a>
     </li>
   </ul>
 
