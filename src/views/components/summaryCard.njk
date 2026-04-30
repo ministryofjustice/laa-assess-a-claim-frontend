@@ -1,7 +1,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 
-{% macro summaryCard(t, cardTitleKey, rows, cardAction) %}
+{% macro summaryCard(t, id, cardTitleKey, rows, cardAction) %}
 
 {% set govukRows = [] %}
 
@@ -79,7 +79,10 @@
       ]
     }
   },
-  rows: govukRows
+  rows: govukRows,
+  attributes: {
+    "id": id
+  }
 }) }}
 
 {% endmacro %}

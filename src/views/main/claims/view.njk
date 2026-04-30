@@ -23,13 +23,13 @@
 
   {{ subNavigation(t, 1) }}
 
-  {{ summaryCard(t, "pages.claim.costsAndAllocations.title", vm.costsAndAllocationsRows, { href: "#", text: "pages.claim.costsAndAllocations.action"}) }}
+  {{ summaryCard(t, "costs-and-allocations", "pages.claim.costsAndAllocations.title", vm.costsAndAllocationsRows, { href: "#", text: "pages.claim.costsAndAllocations.action"}) }}
 
   <h2 class="govuk-heading-m">Provider and Client details</h2>
 
-  {{ summaryCard(t, 'pages.claim.providers.title', vm.providerRows )}}
+  {{ summaryCard(t, "providers", 'pages.claim.providers.title', vm.providerRows )}}
 
-  {{ summaryCard(t, 'pages.claim.client.title', vm.clientRows )}}
+  {{ summaryCard(t, "client", 'pages.claim.client.title', vm.clientRows )}}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>
