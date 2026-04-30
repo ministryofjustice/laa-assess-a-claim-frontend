@@ -1,13 +1,23 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "components/summaryList.njk" import summaryList %}
+{% from "components/linkButton.njk" import linkButton %}
 
 {% extends "base.njk" %}
 {% block content %}
 
   {{ govukBackLink({ text: "Back", href: vm.backLink }) }}
 
-  <span class="govuk-caption-l">Claim</span>
+  <div class="govuk-!-margin-bottom-6">
+    {{ govukTag({ text: t(vm.statusText), classes: vm.statusTagClass }) }}
+  </div>
+
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ vm.title }}</h1>
+
+  {{ summaryList(t, vm.summary) }}
+
+  {{ linkButton(t, vm.assignmentButton, "assignment", "govuk-button--secondary") }}
 
   {{ govukSummaryList({ classes: "govuk-!-margin-bottom-7", rows: vm.rows }) }}
 

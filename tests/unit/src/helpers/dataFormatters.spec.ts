@@ -2,9 +2,15 @@
  * @description Tests for the utility functions in dataFormatters work as expected
  */
 
-import { formatClaimed, formatClaimId, formatDate, formatOptionalString } from '#src/helpers/dataFormatters.js';
+import {
+  formatClaimed,
+  formatClaimId,
+  formatDate,
+  formatDateReadable,
+  formatMinutes,
+  formatOptionalString,
+} from "#src/helpers/dataFormatters.js";
 import { expect } from 'chai';
-
 
 describe('formatDate()', () => {
   it('formats a valid ISO date string correctly', () => {
@@ -21,6 +27,44 @@ describe('formatDate()', () => {
 
     it('handles undefined date strings by returning an empty string', () => {
     expect(formatDate(undefined)).to.equal('');
+  });
+});
+
+describe('formatDateReadable()', () => {
+  it('formats a valid ISO date string correctly', () => {
+    expect(formatDateReadable(new Date('1986-01-06T00:00:00Z'))).to.equal('6 January 1986');
+    expect(formatDateReadable(new Date('2023-07-28'))).to.equal('28 July 2023');
+    expect(formatDateReadable(new Date('2023/07/28'))).to.equal('28 July 2023');
+
+  });
+
+  it('formats dates with single-digit days without a leading zero', () => {
+    expect(formatDateReadable(new Date('2023-2-5'))).to.equal('5 February 2023');
+    expect(formatDateReadable(new Date('2023/2/5'))).to.equal('5 February 2023');
+  });
+
+  it('handles undefined date strings by returning default', () => {
+    expect(formatDateReadable(undefined)).to.equal("No data available");
+  });
+});
+
+describe('formatMinutes()', () => {
+  it('formats single-digit numbers without a leading zero', () => {
+    const result = formatMinutes(5);
+    expect(result.key).to.equal('common.minutes');
+    expect(result.args).to.deep.equal({ minutes: 5 });
+  });
+
+  it('formats non single-digit numbers', () => {
+    const result = formatMinutes(15);
+    expect(result.key).to.equal('common.minutes');
+    expect(result.args).to.deep.equal({ minutes: 15 });
+  });
+
+  it('handles undefined numbers by returning default', () => {
+    const result = formatMinutes(undefined);
+    expect(result.key).to.equal('common.noDataAvailable');
+    expect(result.args).to.be.undefined;
   });
 });
 
