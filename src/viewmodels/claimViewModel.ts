@@ -6,6 +6,7 @@ import {
   formatDateReadable,
   formatMinutes,
 } from "#src/helpers/dataFormatters.js";
+import type { Message } from "#src/viewmodels/components/message.js";
 
 /**
  *
@@ -32,17 +33,17 @@ export class ClaimViewModel {
 
     const summary: SummaryListRow[] = [];
     // TODO - default to 'No data available' if 'total claim amount' is undefined
-    summary.push({ key: { text: "Total claim amount" }, value: { text: formatClaimed(3480) } });
-    summary.push({ key: { text: "Date received" }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
+    summary.push({ key: { message: { key: "pages.claim.summary.totalClaimAmount" } }, value: { text: formatClaimed(3480) } });
+    summary.push({ key: { message: { key: "pages.claim.summary.dateReceived" } }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
     // TODO - default to 'No data available' if 'case reference number' is undefined
-    summary.push({ key: { text: "Case reference number" }, value: { text: "300001820960" } });
+    summary.push({ key: { message: { key: "pages.claim.summary.caseReferenceNumber" } }, value: { text: "300001820960" } });
     // TODO - default to 'No data available' if 'LAA reference number' is undefined
-    summary.push({ key: { text: "LAA reference number" }, value: { text: "LAA-90d26c" } });
+    summary.push({ key: { message: { key: "pages.claim.summary.laaReferenceNumber" } }, value: { text: "LAA-90d26c" } });
     // TODO - default to 'Not yet assigned' if 'assigned to' is undefined
-    summary.push({ key: { text: "Assigned to" }, value: { text: "Caseworker name" } });
+    summary.push({ key: { message: { key: "pages.claim.summary.assignedTo" } }, value: { text: "Caseworker name" } } );
     // TODO - default to 'Low' if 'provider risk' is undefined
-    summary.push({ key: { text: "Provider risk" }, value: { text: "Low" }, action: { href: "#" } });
-    summary.push({ key: { text: "Claim time standard" }, value: { text: formatMinutes(15) } });
+    summary.push({ key: { message: { key: "pages.claim.summary.providerRisk" } }, value: { text: "Low" }, action: { href: "#" } } );
+    summary.push({ key: { message: { key: "pages.claim.summary.claimTimeStandard" } }, value: { message: formatMinutes(15) } } );
 
     this.summary = summary;
 
@@ -95,7 +96,7 @@ export class ClaimViewModel {
    * @returns {string} the text value of the given status
    */
   get statusText(): string {
-    return this.status;
+    return `pages.claim.status.${this.status}`;
   }
 
   /**
@@ -110,17 +111,21 @@ export class ClaimViewModel {
    * Gets the text and href of the assignment button
    * @returns {string, string} the text and href for the assignment button
    */
-  get assignmentButton(): { text: string; href: string } {
+  get assignmentButton(): { message: Message; href: string } {
     if (this.unassigned) {
       return {
-        text: "Add to my claims",
+        message: {
+          key: "pages.claim.assignment.add"
+        },
+        href: "#"
+      };
+    } else {
+      return {
+        message: {
+          key: "pages.claim.assignment.remove"
+        },
         href: "#"
       };
     }
-
-    return {
-      text: "Remove from your list",
-      href: "#"
-    };
   }
 }

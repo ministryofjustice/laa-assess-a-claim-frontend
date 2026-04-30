@@ -62,7 +62,7 @@ describe("views/main/claims/view.njk", () => {
 
       if (action) {
         expect(link).to.have.length(1);
-        expect(link.text().trim()).to.equal("Change");
+        expect(link.text().trim()).to.equal("common.change");
         expect(link.attr("href")).to.equal(action);
       } else {
         expect(link).to.have.length(0);
@@ -70,39 +70,39 @@ describe("views/main/claims/view.njk", () => {
     }
 
     assertSummaryRow(rows.eq(0), {
-      key: "Total claim amount:",
+      key: "pages.claim.summary.totalClaimAmount:",
       value: "£3,480",
     });
 
     assertSummaryRow(rows.eq(1), {
-      key: "Date received:",
+      key: "pages.claim.summary.dateReceived:",
       value: "27 February 2026",
     });
 
     assertSummaryRow(rows.eq(2), {
-      key: "Case reference number:",
+      key: "pages.claim.summary.caseReferenceNumber:",
       value: "300001820960",
     });
 
     assertSummaryRow(rows.eq(3), {
-      key: "LAA reference number:",
+      key: "pages.claim.summary.laaReferenceNumber:",
       value: "LAA-90d26c",
     });
 
     assertSummaryRow(rows.eq(4), {
-      key: "Assigned to:",
+      key: "pages.claim.summary.assignedTo:",
       value: "Caseworker name",
     });
 
     assertSummaryRow(rows.eq(5), {
-      key: "Provider risk:",
+      key: "pages.claim.summary.providerRisk:",
       value: "Low",
       action: "#",
     });
 
     assertSummaryRow(rows.eq(6), {
-      key: "Claim time standard:",
-      value: "15 minutes",
+      key: "pages.claim.summary.claimTimeStandard:",
+      value: "common.minutes",
     });
   });
 
@@ -112,8 +112,9 @@ describe("views/main/claims/view.njk", () => {
   });
 
   it("renders an assignment link button", () => {
-    const sl = $("#assignment");
-    expect(sl).to.have.length(1);
+    const button = $("#assignment");
+    expect(button).to.have.length(1);
+    expect(button.text().trim()).to.equal("pages.claim.assignment.remove");
   });
 
   it("shows expected GOV.UK summary list rows (keys)", () => {

@@ -50,15 +50,21 @@ describe('formatDateReadable()', () => {
 
 describe('formatMinutes()', () => {
   it('formats single-digit numbers without a leading zero', () => {
-    expect(formatMinutes(5)).to.equal('5 minutes');
+    const result = formatMinutes(5);
+    expect(result.key).to.equal('common.minutes');
+    expect(result.args).to.deep.equal({ minutes: 5 });
   });
 
   it('formats non single-digit numbers', () => {
-    expect(formatMinutes(15)).to.equal('15 minutes');
+    const result = formatMinutes(15);
+    expect(result.key).to.equal('common.minutes');
+    expect(result.args).to.deep.equal({ minutes: 15 });
   });
 
   it('handles undefined numbers by returning default', () => {
-    expect(formatMinutes(undefined)).to.equal("No data available");
+    const result = formatMinutes(undefined);
+    expect(result.key).to.equal('common.noDataAvailable');
+    expect(result.args).to.be.undefined;
   });
 });
 

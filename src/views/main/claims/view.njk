@@ -10,14 +10,14 @@
   {{ govukBackLink({ text: "Back", href: vm.backLink }) }}
 
   <div class="govuk-!-margin-bottom-6">
-    {{ govukTag({ text: vm.statusText, classes: vm.statusTagClass }) }}
+    {{ govukTag({ text: t(vm.statusText), classes: vm.statusTagClass }) }}
   </div>
 
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ vm.title }}</h1>
 
-  {{ summaryList(vm.summary) }}
+  {{ summaryList(t, vm.summary) }}
 
-  {{ linkButton(vm.assignmentButton, "assignment", "govuk-button--secondary") }}
+  {{ linkButton(t, vm.assignmentButton, "assignment", "govuk-button--secondary") }}
 
   {{ govukSummaryList({ classes: "govuk-!-margin-bottom-7", rows: vm.rows }) }}
 

@@ -4,6 +4,8 @@
  * Utility functions for formatting claim data in a consistent way across the application.
  */
 
+import type { Message } from "#src/viewmodels/components/message.js";
+
 /**
  * Format date for compact display
  * @param {Date} date Date object
@@ -43,11 +45,11 @@ export function formatDateReadable(date: Date | undefined): string {
  * @param {number} minutes number object
  * @returns {string} Formatted minutes (e.g., "6 minutes")
  */
-export function formatMinutes(minutes: number | undefined): string {
+export function formatMinutes(minutes: number | undefined): Message {
   if (minutes === undefined) {
-    return "No data available";
+    return { key: "common.noDataAvailable" };
   } else {
-    return `${minutes} minutes`;
+    return { key: "common.minutes", args: { minutes } };
   }
 }
 

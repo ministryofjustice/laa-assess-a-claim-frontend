@@ -10,7 +10,9 @@
     "no": "No",
     "error": "Error",
     "warning": "Warning",
-    "errorSummaryTitle": "There is a problem"
+    "errorSummaryTitle": "There is a problem",
+    "noDataAvailable": "No data available",
+    "minutes": "{minutes} minutes"
   },
   "navigation": {
     "mainNav": {},
@@ -35,10 +37,29 @@
       "title": "Your Assessments"
     },
     "claims" : {
-        "title": "English"
+      "title": "English"
     },
     "error": {
       "pageTitle": "Sorry, there is a problem with the service – {SERVICE_NAME} – GOV.UK"
+    },
+    "claim": {
+      "status": {
+        "inProgress": "In progress",
+        "notAssigned": "Not assigned"
+      },
+      "summary": {
+        "totalClaimAmount": "Total claim amount",
+        "dateReceived": "Date received",
+        "caseReferenceNumber": "Case reference number",
+        "laaReferenceNumber": "LAA reference number",
+        "assignedTo": "Assigned to",
+        "providerRisk": "Provider risk",
+        "claimTimeStandard": "Claim time standard"
+      },
+      "assignment": {
+        "add": "Add to my claims",
+        "remove": "Remove from your list"
+      }
     }
   },
   "forms": {
