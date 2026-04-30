@@ -74,7 +74,23 @@
       "costsAndAllocations": {
         "title": "Costs and allocations",
         "action": "Review and assess",
+        "claimType": "Claim type",
         "totalClaimAmount": "Total claim amount"
+      },
+      "providers": {
+        "title": "Providers",
+        "solicitorName": "Solicitor name",
+        "solicitorRegion": "Solicitor region",
+        "numberOfSolicitors": "Number of solicitors",
+        "counselInvolved": "Counsel involved",
+        "counselPayment": "Counsel payment"
+      },
+      "client": {
+        "title": "Client",
+        "name": "Name",
+        "dateOfBirth": "Date of birth",
+        "location": "Location",
+        "status": "Status"
       }
     }
   },

@@ -19,9 +19,6 @@ test('home page displays service name and table', async ({ pages, checkAccessibi
   expect(serviceName).toBeTruthy();
 
   await expect(page.heading).toContainText('Fixed fee: Special Children Act (Care)')
-  const summary = page.summaryTable
-  await expect(summary).toBeVisible();
-  await expect(summary).toContainText('£234.56');
 
   const primaryBttn = page.primaryButton
   await expect(primaryBttn).toBeVisible();

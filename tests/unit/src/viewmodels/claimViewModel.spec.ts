@@ -41,20 +41,14 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.summary[6].value.message?.args).to.deep.equal({ "minutes": 15});
     expect(vm.summary[6].action).to.be.undefined;
 
-    const byKey = Object.fromEntries(
-      vm.rows.map(r => [r.key.text, r.value.text ?? r.value.html])
-    );
+    expect(vm.costsAndAllocationsRows[0].key.message?.key).to.equal("pages.claim.costsAndAllocations.claimType");
+    expect(vm.costsAndAllocationsRows[0].value.text).to.equal("Solicitor final bill");
+    expect(vm.costsAndAllocationsRows[0].action).to.be.undefined;
 
-    expect(byKey["Claim ID"]).to.equal(String(claim.id));
-    if (claim.client) expect(byKey["Client"]).to.equal(claim.client);
-    if (claim.category) expect(byKey["Category"]).to.equal(claim.category);
-    if (claim.concluded) expect(byKey["Concluded"]).to.equal(formatDate(claim.concluded));
-    if (claim.feeType) expect(byKey["Fee type"]).to.equal(claim.feeType);
-    if (claim.claimed != null) expect(byKey["Claimed"]).to.equal(formatClaimed(claim.claimed));
+    expect(vm.costsAndAllocationsRows[1].key.message?.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
+    expect(vm.costsAndAllocationsRows[1].value.text).to.equal("£9,176.36");
+    expect(vm.costsAndAllocationsRows[1].action?.tag?.text).to.equal("Escaped");
+    expect(vm.costsAndAllocationsRows[1].action?.tag?.classes).to.equal("govuk-tag--blue");
 
-    // Optional: Submission row is a link (if present)
-    if (claim.submissionId && byKey["Submission"]) {
-      expect(byKey["Submission"]).to.contain(`/submissions/${encodeURIComponent(claim.submissionId)}`);
-    }
   });
 });

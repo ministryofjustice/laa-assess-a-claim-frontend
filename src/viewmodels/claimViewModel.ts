@@ -1,11 +1,8 @@
 import type { Claim } from "#src/types/Claim.js";
-import { formatClaimed, formatDate, formatOptionalString } from "#src/helpers/index.js";
+import { formatClaimed } from "#src/helpers/index.js";
 import type { SummaryListRow } from "./components/summaryList.js";
 import { Status, StatusTagClass } from "#src/viewmodels/components/status.js";
-import {
-  formatDateReadable,
-  formatMinutes,
-} from "#src/helpers/dataFormatters.js";
+import { formatDateReadable, formatMinutes } from "#src/helpers/dataFormatters.js";
 import type { Message } from "#src/viewmodels/components/message.js";
 
 /**
@@ -13,12 +10,14 @@ import type { Message } from "#src/viewmodels/components/message.js";
  */
 export class ClaimViewModel {
   readonly summary: SummaryListRow[];
-  readonly rows: SummaryListRow[];
+  readonly costsAndAllocationsRows: SummaryListRow[];
   readonly title: string;
   readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
   readonly assessLink: string;
   readonly status: Status;
   readonly unassigned: boolean;
+  readonly providerRows;
+  readonly clientRows;
 
   /**
    * Creates a view model containing the summary rows derived from the claim data
@@ -44,51 +43,29 @@ export class ClaimViewModel {
     // TODO - default to 'Low' if 'provider risk' is undefined
     summary.push({ key: { message: { key: "pages.claim.summary.providerRisk" } }, value: { text: "Low" }, action: { href: "#" } } );
     summary.push({ key: { message: { key: "pages.claim.summary.claimTimeStandard" } }, value: { message: formatMinutes(15) } } );
-
     this.summary = summary;
 
-    const rows: SummaryListRow[] = [];
+    const costsAndAllocationsRows: SummaryListRow[] = [];
+    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
+    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36) }, action: { tag: { text: "Escaped", classes: "govuk-tag--blue" } } } );
+    this.costsAndAllocationsRows = costsAndAllocationsRows;
 
-    rows.push({ key: { text: "Claim ID" }, value: { text: String(claim.id) } });
+    const providerRows = [];
+    // TODO - By default the key text does not automatically call t()
+    providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorName" } }, value: { text: "Smith & Co Solicitors" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorRegion" } }, value: { text: "North West" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.numberOfSolicitors" } }, value: { text: "1" } });
+    // TODO - Logic for hiding next line if 'no'
+    providerRows.push({ key: { message: { key: "pages.claim.providers.counselInvolved" } }, value: { text: "Yes" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.counselPayment" } }, value: { text: "Paid and reconciled" } });
+    this.providerRows = providerRows;
 
-    if (claim.ufn !== undefined && claim.ufn !== '') {
-      rows.push({ key: { text: "UFN" }, value: { text: claim.ufn } });
-    }
-
-    if (claim.client !== undefined) {
-      rows.push({ key: { text: "Client" }, value: { text: formatOptionalString(claim.client) } });
-    }
-
-    if (claim.category !== undefined) {
-      rows.push({ key: { text: "Category" }, value: { text: formatOptionalString(claim.category) } });
-    }
-
-    if (claim.concluded !== undefined) {
-      rows.push({ key: { text: "Concluded" }, value: { text: formatDate(new Date(claim.concluded)) } });
-    }
-
-    if (claim.feeType !== undefined) {
-      rows.push({ key: { text: "Fee type" }, value: { text: claim.feeType } });
-    }
-
-    if (claim.claimed !== undefined) {
-      rows.push({ key: { text: "Claimed" }, value: { text: formatClaimed(claim.claimed) } });
-    }
-
-    if (claim.submissionId !== undefined) {
-      const href = `/submissions/${encodeURIComponent(claim.submissionId)}`;
-      rows.push({
-        key: { text: "Submission" },
-        value: {
-          html:
-            `<a class="govuk-link" href="${href}">` +
-            `View submission<span class="govuk-visually-hidden"> for claim ${this.title}</span>` +
-            `</a>`
-        }
-      });
-    }
-
-    this.rows = rows;
+    const clientRows = [];
+    clientRows.push({ key: { message: { key: "pages.claim.client.name" } }, value: { text: "Liam Oldfield" } });
+    clientRows.push({ key: { message: { key: "pages.claim.client.dateOfBirth" } }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
+    clientRows.push({ key: { message: { key: "pages.claim.client.location" } }, value: { text: "Manchester" } });
+    clientRows.push({ key: { message: { key: "pages.claim.client.status" } }, value: { text: "Parent" } });
+    this.clientRows = clientRows;
   }
 
   /**

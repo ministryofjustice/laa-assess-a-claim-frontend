@@ -23,7 +23,13 @@
 
   {{ subNavigation(t, 1) }}
 
-  {{ govukSummaryList({ classes: "govuk-!-margin-bottom-7", rows: vm.rows }) }}
+  {{ summaryCard(t, "costs-and-allocations", "pages.claim.costsAndAllocations.title", vm.costsAndAllocationsRows, { href: "#", text: "pages.claim.costsAndAllocations.action"}) }}
+
+  <h2 class="govuk-heading-m">Provider and Client details</h2>
+
+  {{ summaryCard(t, "providers", 'pages.claim.providers.title', vm.providerRows )}}
+
+  {{ summaryCard(t, "client", 'pages.claim.client.title', vm.clientRows )}}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>
