@@ -68,7 +68,7 @@ export class ClaimViewModel {
     clientRows.push({ key: { text: "pages.claim.client.name" }, value: { text: "Liam Oldfield" } });
     clientRows.push({ key: { text: "pages.claim.client.dateOfBirth" }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
     clientRows.push({ key: { text: "pages.claim.client.location" }, value: { text: "Manchester" } });
-    clientRows.push({ key: { text: "pages.claim.client.status" }, vaslue: { text: "Parent" } });
+    clientRows.push({ key: { text: "pages.claim.client.status" }, value: { text: "Parent" } });
     
     this.clientRows = clientRows;
 
