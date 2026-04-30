@@ -13,12 +13,13 @@ import type { Message } from "#src/viewmodels/components/message.js";
  */
 export class ClaimViewModel {
   readonly summary: SummaryListRow[];
-  readonly rows: SummaryListRow[];
   readonly title: string;
   readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
   readonly assessLink: string;
   readonly status: Status;
   readonly unassigned: boolean;
+  readonly providerRows;
+  readonly clientRows;
 
   /**
    * Creates a view model containing the summary rows derived from the claim data
@@ -47,48 +48,25 @@ export class ClaimViewModel {
 
     this.summary = summary;
 
-    const rows: SummaryListRow[] = [];
+    const providerRows = [];
+    // TODO - By default the key text does not automatically call t()
+    providerRows.push({ key: { text: "pages.claim.providers.solicitorName" }, value: { text: "Smith & Co Solicitors" } });
+    providerRows.push({ key: { text: "pages.claim.providers.solicitorRegion" }, value: { text: "North West" } });
+    providerRows.push({ key: { text: "pages.claim.providers.numberOfSolicitors" }, value: { text: "1" } });
+    // TODO - Logic for hiding next line if 'no'
+    providerRows.push({ key: { text: "pages.claim.providers.counselInvolved" }, value: { text: "Yes" } });
+    providerRows.push({ key: { text: "pages.claim.providers.counselPayment" }, value: { text: "Paid and reconciled" } });
+    
+    this.providerRows = providerRows;
 
-    rows.push({ key: { text: "Claim ID" }, value: { text: String(claim.id) } });
+    const clientRows = [];
+    clientRows.push({ key: { text: "pages.claim.client.name" }, value: { text: "Liam Oldfield" } });
+    clientRows.push({ key: { text: "pages.claim.client.dateOfBirth" }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
+    clientRows.push({ key: { text: "pages.claim.client.location" }, value: { text: "Manchester" } });
+    clientRows.push({ key: { text: "pages.claim.client.status" }, value: { text: "Parent" } });
+    
+    this.clientRows = clientRows;
 
-    if (claim.ufn !== undefined && claim.ufn !== '') {
-      rows.push({ key: { text: "UFN" }, value: { text: claim.ufn } });
-    }
-
-    if (claim.client !== undefined) {
-      rows.push({ key: { text: "Client" }, value: { text: formatOptionalString(claim.client) } });
-    }
-
-    if (claim.category !== undefined) {
-      rows.push({ key: { text: "Category" }, value: { text: formatOptionalString(claim.category) } });
-    }
-
-    if (claim.concluded !== undefined) {
-      rows.push({ key: { text: "Concluded" }, value: { text: formatDate(new Date(claim.concluded)) } });
-    }
-
-    if (claim.feeType !== undefined) {
-      rows.push({ key: { text: "Fee type" }, value: { text: claim.feeType } });
-    }
-
-    if (claim.claimed !== undefined) {
-      rows.push({ key: { text: "Claimed" }, value: { text: formatClaimed(claim.claimed) } });
-    }
-
-    if (claim.submissionId !== undefined) {
-      const href = `/submissions/${encodeURIComponent(claim.submissionId)}`;
-      rows.push({
-        key: { text: "Submission" },
-        value: {
-          html:
-            `<a class="govuk-link" href="${href}">` +
-            `View submission<span class="govuk-visually-hidden"> for claim ${this.title}</span>` +
-            `</a>`
-        }
-      });
-    }
-
-    this.rows = rows;
   }
 
   /**
