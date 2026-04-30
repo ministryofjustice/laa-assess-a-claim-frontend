@@ -1,11 +1,8 @@
 import type { Claim } from "#src/types/Claim.js";
-import { formatClaimed, formatDate, formatOptionalString } from "#src/helpers/index.js";
+import { formatClaimed } from "#src/helpers/index.js";
 import type { SummaryListRow } from "./components/summaryList.js";
 import { Status, StatusTagClass } from "#src/viewmodels/components/status.js";
-import {
-  formatDateReadable,
-  formatMinutes,
-} from "#src/helpers/dataFormatters.js";
+import { formatDateReadable, formatMinutes } from "#src/helpers/dataFormatters.js";
 import type { Message } from "#src/viewmodels/components/message.js";
 
 /**
@@ -55,20 +52,20 @@ export class ClaimViewModel {
 
     const providerRows = [];
     // TODO - By default the key text does not automatically call t()
-    providerRows.push({ key: { text: "pages.claim.providers.solicitorName" }, value: { text: "Smith & Co Solicitors" } });
-    providerRows.push({ key: { text: "pages.claim.providers.solicitorRegion" }, value: { text: "North West" } });
-    providerRows.push({ key: { text: "pages.claim.providers.numberOfSolicitors" }, value: { text: "1" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorName" } }, value: { text: "Smith & Co Solicitors" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorRegion" } }, value: { text: "North West" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.numberOfSolicitors" } }, value: { text: "1" } });
     // TODO - Logic for hiding next line if 'no'
-    providerRows.push({ key: { text: "pages.claim.providers.counselInvolved" }, value: { text: "Yes" } });
-    providerRows.push({ key: { text: "pages.claim.providers.counselPayment" }, value: { text: "Paid and reconciled" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.counselInvolved" } }, value: { text: "Yes" } });
+    providerRows.push({ key: { message: { key: "pages.claim.providers.counselPayment" } }, value: { text: "Paid and reconciled" } });
     
     this.providerRows = providerRows;
 
     const clientRows = [];
-    clientRows.push({ key: { text: "pages.claim.client.name" }, value: { text: "Liam Oldfield" } });
-    clientRows.push({ key: { text: "pages.claim.client.dateOfBirth" }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
-    clientRows.push({ key: { text: "pages.claim.client.location" }, value: { text: "Manchester" } });
-    clientRows.push({ key: { text: "pages.claim.client.status" }, value: { text: "Parent" } });
+    clientRows.push({ key: { message: { key: "pages.claim.client.name" } }, value: { text: "Liam Oldfield" } });
+    clientRows.push({ key: { message: { key: "pages.claim.client.dateOfBirth" } }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
+    clientRows.push({ key: { message: { key: "pages.claim.client.location" } }, value: { text: "Manchester" } });
+    clientRows.push({ key: { message: { key: "pages.claim.client.status" } }, value: { text: "Parent" } });
     
     this.clientRows = clientRows;
 
