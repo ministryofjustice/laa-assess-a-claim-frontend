@@ -76,7 +76,7 @@ describe("views/main/claims/view.njk", () => {
 
     assertSummaryRow(rows.eq(1), {
       key: "Date received:",
-      value: "27/02/2026",
+      value: "27 February 2026",
     });
 
     assertSummaryRow(rows.eq(2), {

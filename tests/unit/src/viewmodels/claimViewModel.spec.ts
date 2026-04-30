@@ -17,7 +17,7 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.summary[0].action).to.be.undefined;
 
     expect(vm.summary[1].key.text).to.equal("Date received");
-    expect(vm.summary[1].value.text).to.equal("27/02/2026");
+    expect(vm.summary[1].value.text).to.equal("27 February 2026");
     expect(vm.summary[1].action).to.be.undefined;
 
     expect(vm.summary[2].key.text).to.equal("Case reference number");

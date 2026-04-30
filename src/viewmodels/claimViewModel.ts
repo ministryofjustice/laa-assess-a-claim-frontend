@@ -2,6 +2,7 @@ import type { Claim } from "#src/types/Claim.js";
 import { formatClaimed, formatDate, formatOptionalString } from "#src/helpers/index.js";
 import type { SummaryListRow } from "./components/summaryList.js";
 import { Status, StatusTagClass } from "#src/viewmodels/components/status.js";
+import { formatDateReadable } from "#src/helpers/dataFormatters.js";
 
 /**
  *
@@ -28,7 +29,7 @@ export class ClaimViewModel {
 
     const summary: SummaryListRow[] = [];
     summary.push({ key: { text: "Total claim amount" }, value: { text: formatClaimed(3480) } });
-    summary.push({ key: { text: "Date received" }, value: { text: formatDate(new Date("2026-02-27")) } });
+    summary.push({ key: { text: "Date received" }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
     summary.push({ key: { text: "Case reference number" }, value: { text: "300001820960" } });
     summary.push({ key: { text: "LAA reference number" }, value: { text: "LAA-90d26c" } });
     summary.push({ key: { text: "Assigned to" }, value: { text: "Caseworker name" } });
