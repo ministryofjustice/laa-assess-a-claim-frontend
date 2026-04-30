@@ -22,8 +22,20 @@
   {{ govukSummaryList({ classes: "govuk-!-margin-bottom-7", rows: vm.rows }) }}
 
   <div class="govuk-button-group">
-    <a class="govuk-button" href={{vm.assessLink}}>Assess claim</a>
-    <a class="govuk-button govuk-button--secondary" href="/">Return to claims</a>
+    <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>
+    <a class="govuk-button govuk-button--secondary" href="#">{{ t('pages.claim.button.request_provider') }}</a>
   </div>
+
+  <ul class="govuk-list" id="nav-links">
+    <li>
+      <a class="govuk-link" href="#" >{{ t('pages.claim.link.review_and_assess') }}</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#" >{{ t('pages.claim.link.claim_history') }}</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#" >{{ t('pages.claim.link.all_evidence') }}</a>
+    </li>
+  </ul>
 
 {% endblock %}

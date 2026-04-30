@@ -48,6 +48,14 @@ export class ViewClaimPage {
   }
 
   /**
+   * get the primary button
+   * @returns {Locator} The button locator
+   */
+  get primaryButton(): Locator {
+    return this.page.locator('.govuk-button-group .govuk-button').first();
+  }
+
+  /**
    * Gets the service name from the heading
    * @returns {Promise<string>} The service name text
    */
