@@ -1,0 +1,8 @@
+{% from "components/summaryList.njk" import summaryList %}
+
+{% macro summaryCard(t, title, rows) %}
+  <div class="govuk-summary-card">
+    <h2 class="govuk-summary-card__title">{{ title }}</h2>
+    {{ summaryList(t, rows) }}
+  </div>
+{% endmacro %}
