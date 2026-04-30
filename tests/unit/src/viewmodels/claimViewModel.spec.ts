@@ -9,8 +9,36 @@ describe("ClaimViewModel constructor()", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
 
-    expect(vm.title).to.equal(formatClaimId(claim.id));
+    expect(vm.title).to.equal("Fixed fee: Special Children Act (Care)");
     expect(vm.backLink).to.equal("/");
+
+    expect(vm.summary[0].key.text).to.equal("Total claim amount");
+    expect(vm.summary[0].value.text).to.equal("£3,480.00");
+    expect(vm.summary[0].action).to.be.undefined;
+
+    expect(vm.summary[1].key.text).to.equal("Date received");
+    expect(vm.summary[1].value.text).to.equal("27/02/2026");
+    expect(vm.summary[1].action).to.be.undefined;
+
+    expect(vm.summary[2].key.text).to.equal("Case reference number");
+    expect(vm.summary[2].value.text).to.equal("300001820960");
+    expect(vm.summary[2].action).to.be.undefined;
+
+    expect(vm.summary[3].key.text).to.equal("LAA reference number");
+    expect(vm.summary[3].value.text).to.equal("LAA-90d26c");
+    expect(vm.summary[3].action).to.be.undefined;
+
+    expect(vm.summary[4].key.text).to.equal("Assigned to");
+    expect(vm.summary[4].value.text).to.equal("Caseworker name");
+    expect(vm.summary[4].action).to.be.undefined;
+
+    expect(vm.summary[5].key.text).to.equal("Provider risk");
+    expect(vm.summary[5].value.text).to.equal("Low");
+    expect(vm.summary[5].action?.href).to.equal("#");
+
+    expect(vm.summary[6].key.text).to.equal("Claim time standard");
+    expect(vm.summary[6].value.text).to.equal("15 minutes");
+    expect(vm.summary[6].action).to.be.undefined;
 
     const byKey = Object.fromEntries(
       vm.rows.map(r => [r.key.text, r.value.text ?? r.value.html])

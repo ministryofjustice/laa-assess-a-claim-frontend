@@ -1,0 +1,19 @@
+{% macro summaryRow(row) %}
+  <p class="govuk-body govuk-!-margin-0">
+    <strong>{{ row.key.text }}:</strong>
+
+    {% if row.value.html %}
+      {{ row.value.html | safe }}
+    {% else %}
+      {{ row.value.text }}
+    {% endif %}
+
+    {% if row.action %}
+      <span class="govuk-body-s">
+        <a class="govuk-link" href="{{ row.action.href }}">
+          Change
+        </a>
+      </span>
+    {% endif %}
+  </p>
+{% endmacro %}
