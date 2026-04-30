@@ -143,9 +143,9 @@ describe("views/main/claims/view.njk", () => {
     );
   });
 
-  it("Edit button links to edit page", () => {
+  it("Assess button links to Assess page", () => {
     const edit = $(".govuk-button-group .govuk-button").first();
-    expect(edit.text().trim()).to.match(/^Assess claim$/);
+    expect(edit.text().trim()).to.equal("pages.claim.button.access");
     expect(edit.attr("href")).to.equal(
       `/claim/${encodeURIComponent(String(claim.id))}/assess`,
     );
@@ -154,7 +154,25 @@ describe("views/main/claims/view.njk", () => {
   it("Secondary button links back to claims", () => {
     const btns = $(".govuk-button-group .govuk-button");
     const secondary = btns.eq(1);
+    expect(secondary.text().trim()).to.equal("pages.claim.button.request_provider");
     expect(secondary.hasClass("govuk-button--secondary")).to.equal(true);
-    expect(secondary.attr("href")).to.equal("/");
+    expect(secondary.attr("href")).to.equal("#");
   });
+
+  it("has the navigation links", () => {
+    const link1 = $("#nav-links > li:nth-child(1) > a")
+    expect(link1.text().trim()).to.equal("pages.claim.link.review_and_assess");
+    expect(link1.hasClass("govuk-link")).to.equal(true);
+    expect(link1.attr("href")).to.equal("#");
+
+    const link2 = $("#nav-links > li:nth-child(2) > a")
+    expect(link2.text().trim()).to.equal("pages.claim.link.claim_history");
+    expect(link2.hasClass("govuk-link")).to.equal(true);
+    expect(link2.attr("href")).to.equal("#");
+
+    const link3 = $("#nav-links > li:nth-child(3) > a")
+    expect(link3.text().trim()).to.equal("pages.claim.link.all_evidence");
+    expect(link3.hasClass("govuk-link")).to.equal(true);
+    expect(link3.attr("href")).to.equal("#");
+  })
 });

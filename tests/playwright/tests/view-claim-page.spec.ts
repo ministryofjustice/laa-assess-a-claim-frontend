@@ -22,6 +22,10 @@ test('home page displays service name and table', async ({ pages, checkAccessibi
   const summary = page.summaryTable
   await expect(summary).toBeVisible();
   await expect(summary).toContainText('£234.56');
+
+  const primaryBttn = page.primaryButton
+  await expect(primaryBttn).toBeVisible();
+  await expect(primaryBttn).toContainText('Make a decision');
     
   // Run accessibility check
   await checkAccessibility();

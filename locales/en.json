@@ -59,6 +59,15 @@
       "assignment": {
         "add": "Add to my claims",
         "remove": "Remove from your list"
+      },
+      "button": {
+        "access": "Make a decision",
+        "request_provider": "Request update from provider"
+      },
+      "link" : {
+        "review_and_assess": "Review and assess",
+        "claim_history": "Claim history",
+        "all_evidence": "All evidence"
       }
     }
   },
