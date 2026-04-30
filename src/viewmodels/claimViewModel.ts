@@ -58,7 +58,6 @@ export class ClaimViewModel {
     // TODO - Logic for hiding next line if 'no'
     providerRows.push({ key: { message: { key: "pages.claim.providers.counselInvolved" } }, value: { text: "Yes" } });
     providerRows.push({ key: { message: { key: "pages.claim.providers.counselPayment" } }, value: { text: "Paid and reconciled" } });
-    
     this.providerRows = providerRows;
 
     const clientRows = [];
@@ -66,9 +65,7 @@ export class ClaimViewModel {
     clientRows.push({ key: { message: { key: "pages.claim.client.dateOfBirth" } }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
     clientRows.push({ key: { message: { key: "pages.claim.client.location" } }, value: { text: "Manchester" } });
     clientRows.push({ key: { message: { key: "pages.claim.client.status" } }, value: { text: "Parent" } });
-    
     this.clientRows = clientRows;
-
   }
 
   /**
