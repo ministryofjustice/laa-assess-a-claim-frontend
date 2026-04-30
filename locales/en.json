@@ -74,6 +74,7 @@
       "costsAndAllocations": {
         "title": "Costs and allocations",
         "action": "Review and assess",
+        "claimType": "Claim type",
         "totalClaimAmount": "Total claim amount"
       },
       "providers": {

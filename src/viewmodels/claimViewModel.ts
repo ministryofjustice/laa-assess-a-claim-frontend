@@ -13,6 +13,7 @@ import type { Message } from "#src/viewmodels/components/message.js";
  */
 export class ClaimViewModel {
   readonly summary: SummaryListRow[];
+  readonly costsAndAllocationsRows: SummaryListRow[];
   readonly title: string;
   readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
   readonly assessLink: string;
@@ -45,8 +46,12 @@ export class ClaimViewModel {
     // TODO - default to 'Low' if 'provider risk' is undefined
     summary.push({ key: { message: { key: "pages.claim.summary.providerRisk" } }, value: { text: "Low" }, action: { href: "#" } } );
     summary.push({ key: { message: { key: "pages.claim.summary.claimTimeStandard" } }, value: { message: formatMinutes(15) } } );
-
     this.summary = summary;
+
+    const costsAndAllocationsRows: SummaryListRow[] = [];
+    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
+    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36) }, action: { tag: { text: "Escaped", classes: "govuk-tag--blue" } } } );
+    this.costsAndAllocationsRows = costsAndAllocationsRows;
 
     const providerRows = [];
     // TODO - By default the key text does not automatically call t()
@@ -63,7 +68,7 @@ export class ClaimViewModel {
     clientRows.push({ key: { text: "pages.claim.client.name" }, value: { text: "Liam Oldfield" } });
     clientRows.push({ key: { text: "pages.claim.client.dateOfBirth" }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
     clientRows.push({ key: { text: "pages.claim.client.location" }, value: { text: "Manchester" } });
-    clientRows.push({ key: { text: "pages.claim.client.status" }, value: { text: "Parent" } });
+    clientRows.push({ key: { text: "pages.claim.client.status" }, vaslue: { text: "Parent" } });
     
     this.clientRows = clientRows;
 

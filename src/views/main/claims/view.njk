@@ -23,6 +23,8 @@
 
   {{ subNavigation(t, 1) }}
 
+  {{ summaryCard(t, "pages.claim.costsAndAllocations.title", vm.costsAndAllocationsRows, { href: "#", text: "pages.claim.costsAndAllocations.action"}) }}
+
   <h2 class="govuk-heading-m">Provider and Client details</h2>
 
   {{ summaryCard(t, 'pages.claim.providers.title', vm.providerRows )}}
