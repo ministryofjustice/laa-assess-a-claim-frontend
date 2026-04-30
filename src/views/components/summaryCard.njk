@@ -1,0 +1,17 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% macro summaryCard(t, cardTitleKey, rows, cardAction) %}
+{{ govukSummaryList({
+    card: {
+      title: {
+        text: t(cardTitleKey)
+      },
+      actions: {
+        items: [
+          cardAction
+        ]
+      }
+    },
+    rows: rows
+  }) }}
+{% endmacro %}
