@@ -189,7 +189,7 @@ try {
 
 #### Error Types
 
-**HTTP ClaimStatus Codes:**
+**HTTP Status Codes:**
 - `400` → "Invalid request. Please check your input and try again."
 - `401` → "Authentication failed. Please log in again."
 - `403` → "You do not have permission to access this resource."
