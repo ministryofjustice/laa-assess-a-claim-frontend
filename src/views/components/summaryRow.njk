@@ -2,14 +2,15 @@
   <p class="govuk-body govuk-!-margin-0">
     <strong>{{ t(row.key.message.key, row.key.message.args) }}:</strong>
 
-    {% if row.value.text %}
+    {% if row.value.href and row.value.text %}
+      <a class="govuk-link" href="{{ row.value.href }}">
+        {{ row.value.text }}
+      </a>
+
+    {% elif row.value.text %}
       {{ row.value.text }}
     {% elif row.value.html %}
       {{ row.value.html | safe }}
-    {% elif (row.value.href) and (row.value.text) %}
-      <a class="govuk-link" href="{{ row.value.href }}">
-        {{ t('row.value.text') }}
-      </a>
     {% else %}
       {{ t(row.value.message.key, row.value.message.args) }}
     {% endif %}
