@@ -15,7 +15,10 @@
     {% set valueText = row.value.text %}
   {% endif %}
 
-  {% if row.value.tag %}
+{% if row.value.html %}
+    {% set valueHtml = row.value.html %}
+
+  {% elif row.value.tag %}
     {% set valueTag = govukTag({
       text: t(row.value.tag.message.key),
       classes: row.value.tag.classes
