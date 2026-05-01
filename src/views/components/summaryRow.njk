@@ -1,6 +1,7 @@
 {% macro summaryRow(t, row) %}
   <p class="govuk-body govuk-!-margin-0">
-    <strong>{{ t(row.key.message.key, row.key.message.args) }}:</strong>
+    {% set keyText = t(row.key.message.key, row.key.message.args) %}
+    <strong>{{ keyText }}:</strong>
 
     {% if row.value.href and row.value.text %}
       <a class="govuk-link" href="{{ row.value.href }}">
@@ -19,6 +20,7 @@
       <span class="govuk-body-s">
         <a class="govuk-link" href="{{ row.action.href }}">
           {{ t('common.change') }}
+          <span class="govuk-visually-hidden"> {{ keyText }}</span>
         </a>
       </span>
     {% endif %}

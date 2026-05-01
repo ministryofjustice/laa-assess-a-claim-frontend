@@ -1,4 +1,4 @@
-import { SummaryListRow } from "./summaryList.js";
+import type { SummaryListRow } from "./summaryList.js";
 
 export interface SummaryCard {
   title: string;

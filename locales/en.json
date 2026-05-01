@@ -12,7 +12,10 @@
     "warning": "Warning",
     "errorSummaryTitle": "There is a problem",
     "noDataAvailable": "No data available",
-    "minutes": "{minutes} minutes"
+    "minutes": "{minutes} minutes",
+    "granted": "{amount} granted",
+    "available": "{amount} (of {available})",
+    "discharged": "Discharged {date}"
   },
   "navigation": {
     "mainNav": {},
@@ -43,9 +46,13 @@
       "pageTitle": "Sorry, there is a problem with the service – {SERVICE_NAME} – GOV.UK"
     },
     "claim": {
-      "status": {
+      "assignmentStatus": {
         "inProgress": "In progress",
         "notAssigned": "Not assigned"
+      },
+      "feeStatus": {
+        "fixed": "Fixed fee",
+        "escaped": "Escaped"
       },
       "summary": {
         "totalClaimAmount": "Total claim amount",
@@ -62,12 +69,43 @@
       },
       "button": {
         "access": "Make a decision",
-        "request_provider": "Request update from provider"
+        "requestProvider": "Request update from provider"
       },
-      "link" : {
-        "review_and_assess": "Review and assess",
-        "claim_history": "Claim history",
-        "all_evidence": "All evidence"
+      "subNavigation": {
+        "ariaLabel": "Sub navigation",
+        "claimSummary": "Claim summary",
+        "reviewAndAssess": "Review and assess",
+        "claimHistory": "Claim history",
+        "allEvidence": "All evidence"
+      },
+      "costsAndAllocations": {
+        "title": "Costs and allocations",
+        "action": "Review and assess",
+        "claimType": "Claim type",
+        "totalClaimAmount": "Total claim amount",
+        "fixedFeeAmountGranted": "Fixed fee amount granted",
+        "escapeThreshold": "Escape threshold (2x fixed fee)",
+        "assessmentBasis": "Assessment basis",
+        "counselCostAndAllocation": "Counsel cost and allocation",
+        "totalPaymentOnAccount": "Total payment on account (POA)",
+        "totalPOA": "Total POA to recoup",
+        "priorAuthority": "Prior authority",
+        "availableCostLimit": "Available cost limit"
+      },
+      "providers": {
+        "title": "Providers",
+        "solicitorName": "Solicitor name",
+        "solicitorRegion": "Solicitor region",
+        "numberOfSolicitors": "Number of solicitors",
+        "counselInvolved": "Counsel involved",
+        "counselPayment": "Counsel payment"
+      },
+      "client": {
+        "title": "Client",
+        "name": "Name",
+        "dateOfBirth": "Date of birth",
+        "location": "Location",
+        "status": "Status"
       }
     }, 
     "case": {
@@ -82,7 +120,7 @@
         "title": "Certificate scope",
         "type": "Type",
         "description": "Description",
-        "limtation": "Limitation",
+        "limitation": "Limitation",
         "issueDate": "Issue date",
         "status": "Status",
         "levelOfService": "Level of service"

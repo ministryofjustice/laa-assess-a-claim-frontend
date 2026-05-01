@@ -1,17 +1,89 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
 
-{% macro summaryCard(t, title, rows) %}
-  <div class="govuk-summary-card">
-    <div class="govuk-summary-card__title-wrapper">
-      <h2 class="govuk-summary-card__title">
-        {{ title }}
-      </h2>
-    </div>
+{% macro summaryCard(t, id, cardTitleKey, rows, cardAction) %}
 
-    <div class="govuk-summary-card__content">
-      {{ govukSummaryList({
-        rows: rows
-      }) }}
-    </div>
-  </div>
+{% set govukRows = [] %}
+
+{% for row in rows %}
+
+  {% set keyText = t(row.key.message.key, row.key.message.args) %}
+
+  {% if row.value.message %}
+    {% set valueText = t(row.value.message.key, row.value.message.args) %}
+  {% else %}
+    {% set valueText = row.value.text %}
+  {% endif %}
+
+  {% if row.value.tag %}
+    {% set valueTag = govukTag({
+      text: t(row.value.tag.message.key),
+      classes: row.value.tag.classes
+    }) %}
+
+    {% set valueHtml %}
+      <div class="govuk-summary-list__value-split">
+        <span>{{ valueText }}</span>
+        <span class="govuk-summary-list__value-split-right">{{ valueTag }}</span>
+      </div>
+    {% endset %}
+  {% elif row.value.href %}
+    {% set valueHtml %}
+      <span><a class="govuk-link" href="{{ row.value.href }}">{{ valueText }}</a></span>
+    {% endset %}
+  {% else %}
+    {% set valueHtml %}
+      <span>{{ valueText }}</span>
+    {% endset %}
+  {% endif %}
+
+  {% set govukRow = {
+    key: {
+      text: keyText
+    },
+    value: {
+      html: valueHtml
+    }
+  } %}
+
+  {% if row.action %}
+    {% set govukRow = {
+      key: govukRow.key,
+      value: govukRow.value,
+      actions: {
+        items: [
+          {
+            href: row.action.href,
+            text: t('common.change'),
+            visuallyHiddenText: keyText
+          }
+        ]
+      }
+    } %}
+  {% endif %}
+
+  {% set govukRows = govukRows.concat([govukRow]) %}
+
+{% endfor %}
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: t(cardTitleKey)
+    },
+    actions: {
+      items: [
+        {
+          href: cardAction.href,
+          text: t(cardAction.text)
+        }
+      ]
+    }
+  },
+  rows: govukRows,
+  attributes: {
+    "id": id
+  }
+}) }}
+
 {% endmacro %}

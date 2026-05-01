@@ -37,10 +37,10 @@ describe("views/main/claims/view.njk", () => {
     expect(back.attr("href")).to.equal(viewModel.backLink ?? "/claims");
   });
 
-  it("renders a status tag", () => {
-    const tag = $(`.govuk-tag.${viewModel.statusTagClass}`);
+  it("renders an assignment status tag", () => {
+    const tag = $(`.govuk-tag.${viewModel.assignmentStatusTagClass}`);
     expect(tag).to.have.length(1);
-    expect(tag.text().trim()).to.equal(viewModel.statusText);
+    expect(tag.text().trim()).to.equal(viewModel.assignmentStatusText);
   });
 
   it("renders a summary list", () => {
@@ -48,21 +48,22 @@ describe("views/main/claims/view.njk", () => {
     expect(sl).to.have.length(1);
   });
 
-  it("shows expected summary list rows (keys)", () => {
+  it("shows expected summary list rows", () => {
     const rows = $("#summary p");
     expect(rows).to.have.length(7);
 
     function assertSummaryRow(row: any, expected: any) {
       const { key, value, action } = expected;
 
-      expect(row.find("strong").text()).to.equal(key);
+      expect(row.find("strong").text()).to.equal(`${key}:`);
       expect(row.text()).to.contain(value);
 
       const link = row.find("a.govuk-link");
 
       if (action) {
         expect(link).to.have.length(1);
-        expect(link.text().trim()).to.equal("common.change");
+        expect(link.text().trim()).to.contain("common.change");
+        expect(link.text().trim()).to.contain(key);
         expect(link.attr("href")).to.equal(action);
       } else {
         expect(link).to.have.length(0);
@@ -70,77 +71,115 @@ describe("views/main/claims/view.njk", () => {
     }
 
     assertSummaryRow(rows.eq(0), {
-      key: "pages.claim.summary.totalClaimAmount:",
+      key: "pages.claim.summary.totalClaimAmount",
       value: "£3,480",
     });
 
     assertSummaryRow(rows.eq(1), {
-      key: "pages.claim.summary.dateReceived:",
+      key: "pages.claim.summary.dateReceived",
       value: "27 February 2026",
     });
 
     assertSummaryRow(rows.eq(2), {
-      key: "pages.claim.summary.caseReferenceNumber:",
+      key: "pages.claim.summary.caseReferenceNumber",
       value: "300001820960",
     });
 
     assertSummaryRow(rows.eq(3), {
-      key: "pages.claim.summary.laaReferenceNumber:",
+      key: "pages.claim.summary.laaReferenceNumber",
       value: "LAA-90d26c",
     });
 
     assertSummaryRow(rows.eq(4), {
-      key: "pages.claim.summary.assignedTo:",
+      key: "pages.claim.summary.assignedTo",
       value: "Caseworker name",
     });
 
     assertSummaryRow(rows.eq(5), {
-      key: "pages.claim.summary.providerRisk:",
+      key: "pages.claim.summary.providerRisk",
       value: "Low",
       action: "#",
     });
 
     assertSummaryRow(rows.eq(6), {
-      key: "pages.claim.summary.claimTimeStandard:",
+      key: "pages.claim.summary.claimTimeStandard",
       value: "common.minutes",
     });
   });
 
-  it("renders a GOV.UK summary list", () => {
-    const sl = $(".govuk-summary-list");
+  it("renders a sub-navigation", () => {
+    const sn = $(".moj-sub-navigation");
+    expect(sn).to.have.length(1);
+  });
+
+  it("renders a costs and allocations summary list", () => {
+    const sl = $("#costs-and-allocations");
     expect(sl).to.have.length(1);
+  });
+
+  it("shows expected costs and allocations summary list rows", () => {
+    const rows = $("#costs-and-allocations .govuk-summary-list__row");
+    expect(rows).to.have.length(10);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.costsAndAllocations.claimType",
+      value: "Solicitor final bill",
+    });
+
+    const totalClaimAmountRow = rows.eq(1);
+    assertSummaryRow(totalClaimAmountRow, {
+      key: "pages.claim.costsAndAllocations.totalClaimAmount",
+      value: "£9,176.36",
+    });
+    const totalClaimAmountRightValue = totalClaimAmountRow.find(".govuk-summary-list__value .govuk-summary-list__value-split-right");
+    expect(totalClaimAmountRightValue).to.have.length(1);
+    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText);
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",
+      value: "£3,000",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.claim.costsAndAllocations.escapeThreshold",
+      value: "£6,000",
+    });
+
+    assertSummaryRow(rows.eq(4), {
+      key: "pages.claim.costsAndAllocations.assessmentBasis",
+      value: "Hourly rate, escaped",
+    });
+
+    assertSummaryRow(rows.eq(5), {
+      key: "pages.claim.costsAndAllocations.counselCostAndAllocation",
+      value: "£2,850",
+    });
+
+    assertSummaryRow(rows.eq(6), {
+      key: "pages.claim.costsAndAllocations.totalPaymentOnAccount",
+      value: "£1,200",
+    });
+
+    assertSummaryRow(rows.eq(7), {
+      key: "pages.claim.costsAndAllocations.totalPOA",
+      value: "£1,200",
+    });
+
+    assertSummaryRow(rows.eq(8), {
+      key: "pages.claim.costsAndAllocations.priorAuthority",
+      value: "common.granted",
+    });
+
+    assertSummaryRow(rows.eq(9), {
+      key: "pages.claim.costsAndAllocations.availableCostLimit",
+      value: "common.available",
+    });
   });
 
   it("renders an assignment link button", () => {
     const button = $("#assignment");
     expect(button).to.have.length(1);
     expect(button.text().trim()).to.equal("pages.claim.assignment.remove");
-  });
-
-  it("shows expected GOV.UK summary list rows (keys)", () => {
-    const keys = $(".govuk-summary-list__key")
-      .map((_, el) => $(el).text().trim())
-      .get();
-    expect(keys).to.include.members([
-      "Claim ID",
-      "Client",
-      "Category",
-      "Concluded",
-      "Fee type",
-      "Claimed",
-    ]);
-  });
-
-  it("shows Claim ID value", () => {
-    const row = $(".govuk-summary-list__row")
-      .filter(
-        (_, r) =>
-          $(r).find(".govuk-summary-list__key").text().trim() === "Claim ID",
-      )
-      .first();
-    expect(row.find(".govuk-summary-list__value").text().trim()).to.equal(
-      String(claim.id),
-    );
   });
 
   it("Assess button links to Assess page", () => {
@@ -154,25 +193,31 @@ describe("views/main/claims/view.njk", () => {
   it("Secondary button links back to claims", () => {
     const btns = $(".govuk-button-group .govuk-button");
     const secondary = btns.eq(1);
-    expect(secondary.text().trim()).to.equal("pages.claim.button.request_provider");
+    expect(secondary.text().trim()).to.equal("pages.claim.button.requestProvider");
     expect(secondary.hasClass("govuk-button--secondary")).to.equal(true);
     expect(secondary.attr("href")).to.equal("#");
   });
 
   it("has the navigation links", () => {
     const link1 = $("#nav-links > li:nth-child(1) > a")
-    expect(link1.text().trim()).to.equal("pages.claim.link.review_and_assess");
+    expect(link1.text().trim()).to.equal("pages.claim.subNavigation.reviewAndAssess");
     expect(link1.hasClass("govuk-link")).to.equal(true);
     expect(link1.attr("href")).to.equal("#");
 
     const link2 = $("#nav-links > li:nth-child(2) > a")
-    expect(link2.text().trim()).to.equal("pages.claim.link.claim_history");
+    expect(link2.text().trim()).to.equal("pages.claim.subNavigation.claimHistory");
     expect(link2.hasClass("govuk-link")).to.equal(true);
     expect(link2.attr("href")).to.equal("#");
 
     const link3 = $("#nav-links > li:nth-child(3) > a")
-    expect(link3.text().trim()).to.equal("pages.claim.link.all_evidence");
+    expect(link3.text().trim()).to.equal("pages.claim.subNavigation.allEvidence");
     expect(link3.hasClass("govuk-link")).to.equal(true);
     expect(link3.attr("href")).to.equal("#");
   })
+
+  function assertSummaryRow(row: any, expected: any) {
+    const { key, value } = expected;
+    expect(row.find(".govuk-summary-list__key").text().trim()).to.equal(key);
+    expect(row.find(".govuk-summary-list__value").text().trim()).to.contain(value);
+  }
 });
