@@ -1,2 +1,12 @@
 @use "govuk-frontend/dist/govuk/index";
 @use "@ministryofjustice/frontend/moj/all";
+
+.govuk-summary-list__value-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.govuk-summary-list__value-split-right {
+  white-space: nowrap;
+}

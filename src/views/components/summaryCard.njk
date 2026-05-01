@@ -15,48 +15,47 @@
     {% set valueText = row.value.text %}
   {% endif %}
 
+  {% if row.value.tag %}
+    {% set valueTag = govukTag({
+      text: row.value.tag.text,
+      classes: row.value.tag.classes
+    }) %}
+
+    {% set valueHtml %}
+      <div class="govuk-summary-list__value-split">
+        <span>{{ valueText }}</span>
+        <span class="govuk-summary-list__value-split-right">{{ valueTag }}</span>
+      </div>
+    {% endset %}
+  {% else %}
+    {% set valueHtml %}
+      <span>{{ valueText }}</span>
+    {% endset %}
+  {% endif %}
+
   {% set govukRow = {
     key: {
       text: keyText
     },
     value: {
-      text: valueText,
-      html: row.value.html
+      html: valueHtml
     }
   } %}
 
   {% if row.action %}
-
-    {% set actionItem = {} %}
-
-    {% if row.action.tag %}
-
-      {% set actionItem = {
-        html: govukTag({
-          text: row.action.tag.text,
-          classes: row.action.tag.classes
-        }),
-        visuallyHiddenText: keyText
-      } %}
-
-    {% else %}
-
-      {% set actionItem = {
-        href: row.action.href,
-        text: t('common.change'),
-        visuallyHiddenText: keyText
-      } %}
-
-    {% endif %}
-
     {% set govukRow = {
       key: govukRow.key,
       value: govukRow.value,
       actions: {
-        items: [actionItem]
+        items: [
+          {
+            href: row.action.href,
+            text: t('common.change'),
+            visuallyHiddenText: keyText
+          }
+        ]
       }
     } %}
-
   {% endif %}
 
   {% set govukRows = govukRows.concat([govukRow]) %}
