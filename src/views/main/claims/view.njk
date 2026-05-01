@@ -3,6 +3,7 @@
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 {% from "components/summaryList.njk" import summaryList %}
 {% from "components/linkButton.njk" import linkButton %}
+{% from "components/summaryCard.njk" import summaryCard %}
 
 {% extends "base.njk" %}
 {% block content %}
@@ -20,6 +21,10 @@
   {{ linkButton(t, vm.assignmentButton, "assignment", "govuk-button--secondary") }}
 
   {{ govukSummaryList({ classes: "govuk-!-margin-bottom-7", rows: vm.rows }) }}
+
+  {{ summaryCard(t, t('pages.case.summary.title'), vm.caseSummaryRows) }}
+  {{ summaryCard(t, t('pages.case.certificateScope.title'), vm.certificateScopeSummaryRows) }}
+  {{ summaryCard(t, t('pages.case.proceedings.title'), vm.proceedingsSummaryRows) }}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>

@@ -69,8 +69,31 @@
         "claim_history": "Claim history",
         "all_evidence": "All evidence"
       }
-    }
-  },
+    }, 
+    "case": {
+      "summary": {
+        "title": "Case",
+        "matterType": "Matter type",
+        "leadProceeding": "Lead proceeding",
+        "linkedCases": "Linked cases",
+        "outcome": "Outcome"
+      },
+      "certificateScope": {
+        "title": "Certificate scope",
+        "type": "Type",
+        "description": "Description",
+        "limtation": "Limitation",
+        "issueDate": "Issue date",
+        "status": "Status",
+        "levelOfService": "Level of service"
+      },
+      "proceedings": {
+        "title": "Proceedings",
+        "careOrder": "Care order",
+        "supervisionOrder": "Supervision order"
+      }
+  } 
+},
   "forms": {
     "name": {
       "label": "Full name",

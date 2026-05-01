@@ -7,6 +7,7 @@ import {
   formatMinutes,
 } from "#src/helpers/dataFormatters.js";
 import type { Message } from "#src/viewmodels/components/message.js";
+import { SummaryCard } from "./components/summaryCard.js";
 
 /**
  *
@@ -16,6 +17,9 @@ export class ClaimViewModel {
   readonly rows: SummaryListRow[];
   readonly title: string;
   readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
+  readonly caseSummaryRows: SummaryListRow[];
+  readonly certificateScopeSummaryRows: SummaryListRow[];
+  readonly proceedingsSummaryRows: SummaryListRow[];
   readonly assessLink: string;
   readonly status: Status;
   readonly unassigned: boolean;
@@ -32,6 +36,13 @@ export class ClaimViewModel {
     this.unassigned = false; // TODO - derive from claim
 
     const summary: SummaryListRow[] = [];
+
+    const caseSummaryRows: SummaryListRow[] = [];
+    const certificateScopeSummaryRows: SummaryListRow[] = [];
+    const proceedingsSummaryRows: SummaryListRow[] = [];
+
+    const certifcateScopeStatus = "Discharged " + formatDateReadable(new Date("2026-02-28"));
+
     // TODO - default to 'No data available' if 'total claim amount' is undefined
     summary.push({ key: { message: { key: "pages.claim.summary.totalClaimAmount" } }, value: { text: formatClaimed(3480) } });
     summary.push({ key: { message: { key: "pages.claim.summary.dateReceived" } }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
@@ -46,6 +57,26 @@ export class ClaimViewModel {
     summary.push({ key: { message: { key: "pages.claim.summary.claimTimeStandard" } }, value: { message: formatMinutes(15) } } );
 
     this.summary = summary;
+
+    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.matterType" } }, value: { text: "300001820960" } });
+    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.leadProceeding" } }, value: { text: "Bristol Crown Court" } });
+    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.linkedCases" } }, value: { text: "1 linked case available", href: "#" } });
+    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.outcome" } }, value: { text: "Final hearing completed" } });
+
+    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.type" } }, value: { text: "Substantive Certificate" } });
+    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.description" } }, value: { text: "To be represented on an application for Care Order" } });
+    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.limitation" } }, value: { text: "All steps up to and inlcuding final hearing, limited to family help" } });
+    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.issueDate" } }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
+    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.status" } }, value: { text: certifcateScopeStatus } });
+    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.levelOfService" } }, value: { text: "Full representation" } });
+
+    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.careOrder" } }, value: { text: "Start date" } });
+    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.supervisionOrder" } }, value: { text: formatDateReadable(new Date("2025-11-12")) } });
+
+
+    this.caseSummaryRows = caseSummaryRows;
+    this.certificateScopeSummaryRows = certificateScopeSummaryRows;
+    this.proceedingsSummaryRows = proceedingsSummaryRows;
 
     const rows: SummaryListRow[] = [];
 
