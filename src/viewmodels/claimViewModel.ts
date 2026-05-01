@@ -1,7 +1,7 @@
 import type { Claim } from "#src/types/Claim.js";
 import { formatClaimed } from "#src/helpers/index.js";
 import type { SummaryListRow } from "./components/summaryList.js";
-import { AssignmentStatusTagClass } from "#src/viewmodels/components/status.js";
+import { AssignmentStatusTagClass, FeeStatusTagClass } from "#src/viewmodels/components/status.js";
 import { formatDateReadable, formatMinutes } from "#src/helpers/dataFormatters.js";
 import type { Message } from "#src/viewmodels/components/message.js";
 import { AssignmentStatus } from "#src/models/assignmentStatus.js";
@@ -52,7 +52,7 @@ export class ClaimViewModel {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- temporary while we hardcode values
     if (this.feeStatus === FeeStatus.Escaped) {
       costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36) }, action: { tag: { text: "Escaped", classes: "govuk-tag--blue" } } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36), tag: { message: { key: this.feeStatusText }, classes: this.feeStatusTagClass } } } );
       costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" } }, value: { text: formatClaimed(3000) } } );
       costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.escapeThreshold" } }, value: { text: formatClaimed(6000) } } );
       costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.assessmentBasis" } }, value: { text: "Hourly rate, escaped" } } );
@@ -88,19 +88,35 @@ export class ClaimViewModel {
   }
 
   /**
-   * Gets the status text
-   * @returns {string} the text value of the given status
+   * Gets the assignment status text
+   * @returns {string} the text value of the given assignment status
    */
-  get statusText(): string {
-    return `pages.claim.status.${this.assignmentStatus}`;
+  get assignmentStatusText(): string {
+    return `pages.claim.assignmentStatus.${this.assignmentStatus}`;
   }
 
   /**
-   * Gets the status tag class
-   * @returns {string} the tag class value for the given status
+   * Gets the assignment status tag class
+   * @returns {string} the tag class value for the given assignment status
    */
-  get statusTagClass(): string {
+  get assignmentStatusTagClass(): string {
     return AssignmentStatusTagClass[this.assignmentStatus];
+  }
+
+  /**
+   * Gets the fee status text
+   * @returns {string} the text value of the given fee status
+   */
+  get feeStatusText(): string {
+    return `pages.claim.feeStatus.${this.feeStatus}`;
+  }
+
+  /**
+   * Gets the fee status tag class
+   * @returns {string} the tag class value for the given fee status
+   */
+  get feeStatusTagClass(): string {
+    return FeeStatusTagClass[this.feeStatus];
   }
 
   /**

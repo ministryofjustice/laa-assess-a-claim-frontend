@@ -1,4 +1,4 @@
 export enum AssignmentStatus {
-  InProgress = 'inProgress',
-  NotAssigned = 'notAssigned',
+  InProgress = "inProgress",
+  NotAssigned = "notAssigned",
 }

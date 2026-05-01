@@ -1,4 +1,4 @@
 export enum FeeStatus {
-  Fixed,
-  Escaped,
+  Fixed = "fixed",
+  Escaped = "escaped",
 }

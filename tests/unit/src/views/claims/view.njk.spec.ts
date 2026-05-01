@@ -37,10 +37,10 @@ describe("views/main/claims/view.njk", () => {
     expect(back.attr("href")).to.equal(viewModel.backLink ?? "/claims");
   });
 
-  it("renders a status tag", () => {
-    const tag = $(`.govuk-tag.${viewModel.statusTagClass}`);
+  it("renders an assignment status tag", () => {
+    const tag = $(`.govuk-tag.${viewModel.assignmentStatusTagClass}`);
     expect(tag).to.have.length(1);
-    expect(tag.text().trim()).to.equal(viewModel.statusText);
+    expect(tag.text().trim()).to.equal(viewModel.assignmentStatusText);
   });
 
   it("renders a summary list", () => {
@@ -131,10 +131,9 @@ describe("views/main/claims/view.njk", () => {
       key: "pages.claim.costsAndAllocations.totalClaimAmount",
       value: "£9,176.36",
     });
-    const totalClaimAmountLink = totalClaimAmountRow.find(".govuk-summary-list__actions a.govuk-link");
-    expect(totalClaimAmountLink).to.have.length(1);
-    expect(totalClaimAmountLink.find(".govuk-tag").text().trim()).to.equal("Escaped");
-    expect(totalClaimAmountLink.find(".govuk-visually-hidden").text().trim()).to.equal("pages.claim.costsAndAllocations.totalClaimAmount (pages.claim.costsAndAllocations.title)");
+    const totalClaimAmountRightValue = totalClaimAmountRow.find(".govuk-summary-list__value .govuk-summary-list__value-split-right");
+    expect(totalClaimAmountRightValue).to.have.length(1);
+    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText);
 
     assertSummaryRow(rows.eq(2), {
       key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",
@@ -219,6 +218,6 @@ describe("views/main/claims/view.njk", () => {
   function assertSummaryRow(row: any, expected: any) {
     const { key, value } = expected;
     expect(row.find(".govuk-summary-list__key").text().trim()).to.equal(key);
-    expect(row.find(".govuk-summary-list__value").text()).to.contain(value);
+    expect(row.find(".govuk-summary-list__value").text().trim()).to.contain(value);
   }
 });

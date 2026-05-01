@@ -45,9 +45,13 @@
       "pageTitle": "Sorry, there is a problem with the service – {SERVICE_NAME} – GOV.UK"
     },
     "claim": {
-      "status": {
+      "assignmentStatus": {
         "inProgress": "In progress",
         "notAssigned": "Not assigned"
+      },
+      "feeStatus": {
+        "fixed": "Fixed fee",
+        "escaped": "Escaped"
       },
       "summary": {
         "totalClaimAmount": "Total claim amount",

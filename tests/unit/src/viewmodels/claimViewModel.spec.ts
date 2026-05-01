@@ -2,7 +2,6 @@ import { ClaimViewModel } from "#src/viewmodels/claimViewModel.js";
 import type { Claim } from "#src/types/Claim.js";
 import { getClaimsSuccessResponseData } from "#tests/assets/getClaimsResponseData.js";
 import { expect } from "chai";
-import { formatClaimId, formatDate, formatClaimed } from "#src/helpers/index.js";
 
 describe("ClaimViewModel constructor()", () => {
   it("builds the title, back link and summary rows", () => {
@@ -47,8 +46,8 @@ describe("ClaimViewModel constructor()", () => {
 
     expect(vm.costsAndAllocationsRows[1].key.message?.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
     expect(vm.costsAndAllocationsRows[1].value.text).to.equal("£9,176.36");
-    expect(vm.costsAndAllocationsRows[1].action?.tag?.text).to.equal("Escaped");
-    expect(vm.costsAndAllocationsRows[1].action?.tag?.classes).to.equal("govuk-tag--blue");
+    expect(vm.costsAndAllocationsRows[1].value?.tag?.message.key).to.equal("pages.claim.feeStatus.escaped");
+    expect(vm.costsAndAllocationsRows[1].value?.tag?.classes).to.equal("govuk-tag--blue");
 
     expect(vm.costsAndAllocationsRows[2].key.message?.key).to.equal("pages.claim.costsAndAllocations.fixedFeeAmountGranted");
     expect(vm.costsAndAllocationsRows[2].value.text).to.equal("£3,000");
