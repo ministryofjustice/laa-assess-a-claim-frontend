@@ -3,12 +3,7 @@
     {% set keyText = t(row.key.message.key, row.key.message.args) %}
     <strong>{{ keyText }}:</strong>
 
-    {% if row.value.href and row.value.text %}
-      <a class="govuk-link" href="{{ row.value.href }}">
-        {{ row.value.text }}
-      </a>
-
-    {% elif row.value.text %}
+    {% if row.value.text %}
       {{ row.value.text }}
     {% elif row.value.html %}
       {{ row.value.html | safe }}
