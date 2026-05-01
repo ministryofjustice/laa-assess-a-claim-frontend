@@ -82,5 +82,61 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.costsAndAllocationsRows[9].value.message?.key).to.equal("common.available");
     expect(vm.costsAndAllocationsRows[9].value.message?.args).to.deep.equal({ "amount": "£18,500", "available": "£25,000"});
     expect(vm.costsAndAllocationsRows[9].action).to.be.undefined;
+
+    expect(vm.caseSummaryRows[0].key.message?.key).to.equal("pages.case.summary.matterType");
+    expect(vm.caseSummaryRows[0].value.text).to.equal("Special Children Act");
+    expect(vm.caseSummaryRows[0].action).to.be.undefined;
+
+    expect(vm.caseSummaryRows[1].key.message?.key).to.equal("pages.case.summary.leadProceeding");
+    expect(vm.caseSummaryRows[1].value.text).to.equal("Care order");
+    expect(vm.caseSummaryRows[1].action).to.be.undefined;
+
+    expect(vm.caseSummaryRows[2].key.message?.key).to.equal("pages.case.summary.linkedCases");
+    expect(vm.caseSummaryRows[2].value.text).to.equal("1 linked case");
+    expect(vm.caseSummaryRows[2].value.href).to.equal("#");
+    expect(vm.caseSummaryRows[2].action).to.be.undefined;
+
+    expect(vm.caseSummaryRows[3].key.message?.key).to.equal("pages.case.summary.outcome");
+    expect(vm.caseSummaryRows[3].value.text).to.equal("Final hearing completed");
+    expect(vm.caseSummaryRows[3].action).to.be.undefined;
+
+      expect(vm.certificateScopeSummaryRows[0].key.message?.key).to.equal("pages.case.certificateScope.type");
+      expect(vm.certificateScopeSummaryRows[0].value.text).to.equal("Substantive Certificate");
+      expect(vm.certificateScopeSummaryRows[0].action).to.be.undefined;
+
+      expect(vm.certificateScopeSummaryRows[1].key.message?.key).to.equal("pages.case.certificateScope.description");
+      expect(vm.certificateScopeSummaryRows[1].value.text).to.equal("To be represented on an application for Care Order");
+      expect(vm.certificateScopeSummaryRows[1].action).to.be.undefined;
+
+      expect(vm.certificateScopeSummaryRows[2].key.message?.key).to.equal("pages.case.certificateScope.limitation");
+      expect(vm.certificateScopeSummaryRows[2].value.text).to.equal("All steps up to and inlcuding final hearing, limited to family help");
+      expect(vm.certificateScopeSummaryRows[2].action).to.be.undefined;
+
+      expect(vm.certificateScopeSummaryRows[3].key.message?.key).to.equal("pages.case.certificateScope.issueDate");
+      expect(vm.certificateScopeSummaryRows[3].value.text).to.equal("27 February 2026");
+      expect(vm.certificateScopeSummaryRows[3].action).to.be.undefined;
+
+      expect(vm.certificateScopeSummaryRows[4].key.message?.key).to.equal("pages.case.certificateScope.status");
+      expect(vm.certificateScopeSummaryRows[4].value.message?.key).to.equal("common.discharged");
+      expect(vm.certificateScopeSummaryRows[4].value.message?.args).to.deep.equal({ date: "28 February 2026" });
+      expect(vm.certificateScopeSummaryRows[4].action).to.be.undefined;
+
+      expect(vm.certificateScopeSummaryRows[5].key.message?.key).to.equal("pages.case.certificateScope.levelOfService");
+      expect(vm.certificateScopeSummaryRows[5].value.text).to.equal("Full representation");
+      expect(vm.certificateScopeSummaryRows[5].action).to.be.undefined;
+
+      expect(vm.proceedingsSummaryRows[0].key.message?.key).to.equal("pages.case.proceedings.careOrder");
+      expect(vm.proceedingsSummaryRows[0].value.html).to.equal(`
+    <p class="govuk-body">Start date 25 February 2026</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">Final hearing completed (PB0057)</p>
+  `);
+      expect(vm.proceedingsSummaryRows[0].action).to.be.undefined;
+
+      expect(vm.proceedingsSummaryRows[1].key.message?.key).to.equal("pages.case.proceedings.supervisionOrder");
+      expect(vm.proceedingsSummaryRows[1].value.html).to.equal(`
+    <p class="govuk-body"> 12 November 2025</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">Withdrawn (PB0142)</p>
+  `);
+      expect(vm.proceedingsSummaryRows[1].action).to.be.undefined;
   });
 });
