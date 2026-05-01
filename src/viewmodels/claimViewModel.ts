@@ -1,9 +1,11 @@
 import type { Claim } from "#src/types/Claim.js";
 import { formatClaimed } from "#src/helpers/index.js";
 import type { SummaryListRow } from "./components/summaryList.js";
-import { Status, StatusTagClass } from "#src/viewmodels/components/status.js";
+import { AssignmentStatusTagClass } from "#src/viewmodels/components/status.js";
 import { formatDateReadable, formatMinutes } from "#src/helpers/dataFormatters.js";
 import type { Message } from "#src/viewmodels/components/message.js";
+import { AssignmentStatus } from "#src/models/assignmentStatus.js";
+import { FeeStatus } from "#src/models/feeStatus.js";
 
 /**
  *
@@ -14,8 +16,8 @@ export class ClaimViewModel {
   readonly title: string;
   readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
   readonly assessLink: string;
-  readonly status: Status;
-  readonly unassigned: boolean;
+  readonly assignmentStatus: AssignmentStatus;
+  readonly feeStatus: FeeStatus;
   readonly providerRows;
   readonly clientRows;
 
@@ -27,8 +29,9 @@ export class ClaimViewModel {
     this.title = "Fixed fee: Special Children Act (Care)"
     this.assessLink = `/claim/${claim.id}/assess`
     // eslint-disable-next-line @typescript-eslint/prefer-destructuring -- temporary while we hardcode values
-    this.status = Status.InProgress;
-    this.unassigned = false; // TODO - derive from claim
+    this.assignmentStatus = AssignmentStatus.InProgress; // TODO - derive from claim
+    // eslint-disable-next-line @typescript-eslint/prefer-destructuring -- temporary while we hardcode values
+    this.feeStatus = FeeStatus.Escaped; // TODO - derive from claim
 
     const summary: SummaryListRow[] = [];
     // TODO - default to 'No data available' if 'total claim amount' is undefined
@@ -46,8 +49,25 @@ export class ClaimViewModel {
     this.summary = summary;
 
     const costsAndAllocationsRows: SummaryListRow[] = [];
-    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
-    costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36) }, action: { tag: { text: "Escaped", classes: "govuk-tag--blue" } } } );
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- temporary while we hardcode values
+    if (this.feeStatus === FeeStatus.Escaped) {
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36) }, action: { tag: { text: "Escaped", classes: "govuk-tag--blue" } } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" } }, value: { text: formatClaimed(3000) } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.escapeThreshold" } }, value: { text: formatClaimed(6000) } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.assessmentBasis" } }, value: { text: "Hourly rate, escaped" } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" } }, value: { text: formatClaimed(2850) } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalPaymentOnAccount" } }, value: { text: formatClaimed(1200) } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalPOA" } }, value: { text: formatClaimed(1200) } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.priorAuthority" } }, value: { message: { key: "common.granted", args: { amount: formatClaimed(3200) } } } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.availableCostLimit" } }, value: { message: { key: "common.available", args: { amount: formatClaimed(18500), available: formatClaimed(25000) } } } } );
+    } else {
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(3480) } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.assessmentBasis" } }, value: { text: "Fixed fee applies" } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" } }, value: { text: formatClaimed(900) } } );
+      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.availableCostLimit" } }, value: { message: { key: "common.available", args: { amount: formatClaimed(24100), available: formatClaimed(25000) } } } } );
+    }
     this.costsAndAllocationsRows = costsAndAllocationsRows;
 
     const providerRows = [];
@@ -73,7 +93,7 @@ export class ClaimViewModel {
    * @returns {string} the text value of the given status
    */
   get statusText(): string {
-    return `pages.claim.status.${this.status}`;
+    return `pages.claim.status.${this.assignmentStatus}`;
   }
 
   /**
@@ -81,7 +101,7 @@ export class ClaimViewModel {
    * @returns {string} the tag class value for the given status
    */
   get statusTagClass(): string {
-    return StatusTagClass[this.status];
+    return AssignmentStatusTagClass[this.assignmentStatus];
   }
 
   /**
@@ -89,7 +109,7 @@ export class ClaimViewModel {
    * @returns {string, string} the text and href for the assignment button
    */
   get assignmentButton(): { message: Message; href: string } {
-    if (this.unassigned) {
+    if (this.assignmentStatus === AssignmentStatus.NotAssigned) {
       return {
         message: {
           key: "pages.claim.assignment.add"

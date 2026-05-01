@@ -12,7 +12,9 @@
     "warning": "Warning",
     "errorSummaryTitle": "There is a problem",
     "noDataAvailable": "No data available",
-    "minutes": "{minutes} minutes"
+    "minutes": "{minutes} minutes",
+    "granted": "{amount} granted",
+    "available": "{amount} (of {available})"
   },
   "navigation": {
     "mainNav": {},
@@ -75,7 +77,15 @@
         "title": "Costs and allocations",
         "action": "Review and assess",
         "claimType": "Claim type",
-        "totalClaimAmount": "Total claim amount"
+        "totalClaimAmount": "Total claim amount",
+        "fixedFeeAmountGranted": "Fixed fee amount granted",
+        "escapeThreshold": "Escape threshold (2x fixed fee)",
+        "assessmentBasis": "Assessment basis",
+        "counselCostAndAllocation": "Counsel cost and allocation",
+        "totalPaymentOnAccount": "Total payment on account (POA)",
+        "totalPOA": "Total POA to recoup",
+        "priorAuthority": "Prior authority",
+        "availableCostLimit": "Available cost limit"
       },
       "providers": {
         "title": "Providers",

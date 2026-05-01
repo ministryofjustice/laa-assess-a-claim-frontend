@@ -7,11 +7,7 @@
 
 {% for row in rows %}
 
-  {% if row.key.message %}
-    {% set keyText = t(row.key.message.key, row.key.message.args) %}
-  {% else %}
-    {% set keyText = row.key.text %}
-  {% endif %}
+  {% set keyText = t(row.key.message.key, row.key.message.args) %}
 
   {% if row.value.message %}
     {% set valueText = t(row.value.message.key, row.value.message.args) %}
@@ -39,14 +35,16 @@
         html: govukTag({
           text: row.action.tag.text,
           classes: row.action.tag.classes
-        })
+        }),
+        visuallyHiddenText: keyText
       } %}
 
     {% else %}
 
       {% set actionItem = {
         href: row.action.href,
-        text: t('common.change')
+        text: t('common.change'),
+        visuallyHiddenText: keyText
       } %}
 
     {% endif %}

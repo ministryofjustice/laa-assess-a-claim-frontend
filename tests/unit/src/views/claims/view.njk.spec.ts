@@ -48,21 +48,22 @@ describe("views/main/claims/view.njk", () => {
     expect(sl).to.have.length(1);
   });
 
-  it("shows expected summary list rows (keys)", () => {
+  it("shows expected summary list rows", () => {
     const rows = $("#summary p");
     expect(rows).to.have.length(7);
 
     function assertSummaryRow(row: any, expected: any) {
       const { key, value, action } = expected;
 
-      expect(row.find("strong").text()).to.equal(key);
+      expect(row.find("strong").text()).to.equal(`${key}:`);
       expect(row.text()).to.contain(value);
 
       const link = row.find("a.govuk-link");
 
       if (action) {
         expect(link).to.have.length(1);
-        expect(link.text().trim()).to.equal("common.change");
+        expect(link.text().trim()).to.contain("common.change");
+        expect(link.text().trim()).to.contain(key);
         expect(link.attr("href")).to.equal(action);
       } else {
         expect(link).to.have.length(0);
@@ -70,39 +71,109 @@ describe("views/main/claims/view.njk", () => {
     }
 
     assertSummaryRow(rows.eq(0), {
-      key: "pages.claim.summary.totalClaimAmount:",
+      key: "pages.claim.summary.totalClaimAmount",
       value: "£3,480",
     });
 
     assertSummaryRow(rows.eq(1), {
-      key: "pages.claim.summary.dateReceived:",
+      key: "pages.claim.summary.dateReceived",
       value: "27 February 2026",
     });
 
     assertSummaryRow(rows.eq(2), {
-      key: "pages.claim.summary.caseReferenceNumber:",
+      key: "pages.claim.summary.caseReferenceNumber",
       value: "300001820960",
     });
 
     assertSummaryRow(rows.eq(3), {
-      key: "pages.claim.summary.laaReferenceNumber:",
+      key: "pages.claim.summary.laaReferenceNumber",
       value: "LAA-90d26c",
     });
 
     assertSummaryRow(rows.eq(4), {
-      key: "pages.claim.summary.assignedTo:",
+      key: "pages.claim.summary.assignedTo",
       value: "Caseworker name",
     });
 
     assertSummaryRow(rows.eq(5), {
-      key: "pages.claim.summary.providerRisk:",
+      key: "pages.claim.summary.providerRisk",
       value: "Low",
       action: "#",
     });
 
     assertSummaryRow(rows.eq(6), {
-      key: "pages.claim.summary.claimTimeStandard:",
+      key: "pages.claim.summary.claimTimeStandard",
       value: "common.minutes",
+    });
+  });
+
+  it("renders a sub-navigation", () => {
+    const sn = $(".moj-sub-navigation");
+    expect(sn).to.have.length(1);
+  });
+
+  it("renders a costs and allocations summary list", () => {
+    const sl = $("#costs-and-allocations");
+    expect(sl).to.have.length(1);
+  });
+
+  it("shows expected costs and allocations summary list rows", () => {
+    const rows = $("#costs-and-allocations .govuk-summary-list__row");
+    expect(rows).to.have.length(10);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.costsAndAllocations.claimType",
+      value: "Solicitor final bill",
+    });
+
+    const totalClaimAmountRow = rows.eq(1);
+    assertSummaryRow(totalClaimAmountRow, {
+      key: "pages.claim.costsAndAllocations.totalClaimAmount",
+      value: "£9,176.36",
+    });
+    const totalClaimAmountLink = totalClaimAmountRow.find(".govuk-summary-list__actions a.govuk-link");
+    expect(totalClaimAmountLink).to.have.length(1);
+    expect(totalClaimAmountLink.find(".govuk-tag").text().trim()).to.equal("Escaped");
+    expect(totalClaimAmountLink.find(".govuk-visually-hidden").text().trim()).to.equal("pages.claim.costsAndAllocations.totalClaimAmount (pages.claim.costsAndAllocations.title)");
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",
+      value: "£3,000.00",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.claim.costsAndAllocations.escapeThreshold",
+      value: "£6,000.00",
+    });
+
+    assertSummaryRow(rows.eq(4), {
+      key: "pages.claim.costsAndAllocations.assessmentBasis",
+      value: "Hourly rate, escaped",
+    });
+
+    assertSummaryRow(rows.eq(5), {
+      key: "pages.claim.costsAndAllocations.counselCostAndAllocation",
+      value: "£2,850.00",
+    });
+
+    assertSummaryRow(rows.eq(6), {
+      key: "pages.claim.costsAndAllocations.totalPaymentOnAccount",
+      value: "£1,200.00",
+    });
+
+    assertSummaryRow(rows.eq(7), {
+      key: "pages.claim.costsAndAllocations.totalPOA",
+      value: "£1,200.00",
+    });
+
+    assertSummaryRow(rows.eq(8), {
+      key: "pages.claim.costsAndAllocations.priorAuthority",
+      value: "common.granted",
+    });
+
+    assertSummaryRow(rows.eq(9), {
+      key: "pages.claim.costsAndAllocations.availableCostLimit",
+      value: "common.available",
     });
   });
 
@@ -144,4 +215,10 @@ describe("views/main/claims/view.njk", () => {
     expect(link3.hasClass("govuk-link")).to.equal(true);
     expect(link3.attr("href")).to.equal("#");
   })
+
+  function assertSummaryRow(row: any, expected: any) {
+    const { key, value } = expected;
+    expect(row.find(".govuk-summary-list__key").text().trim()).to.equal(key);
+    expect(row.find(".govuk-summary-list__value").text()).to.contain(value);
+  }
 });

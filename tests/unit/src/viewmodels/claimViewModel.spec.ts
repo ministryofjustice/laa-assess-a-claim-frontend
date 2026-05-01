@@ -50,5 +50,38 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.costsAndAllocationsRows[1].action?.tag?.text).to.equal("Escaped");
     expect(vm.costsAndAllocationsRows[1].action?.tag?.classes).to.equal("govuk-tag--blue");
 
+    expect(vm.costsAndAllocationsRows[2].key.message?.key).to.equal("pages.claim.costsAndAllocations.fixedFeeAmountGranted");
+    expect(vm.costsAndAllocationsRows[2].value.text).to.equal("£3,000.00");
+    expect(vm.costsAndAllocationsRows[2].action).to.be.undefined;
+
+    expect(vm.costsAndAllocationsRows[3].key.message?.key).to.equal("pages.claim.costsAndAllocations.escapeThreshold");
+    expect(vm.costsAndAllocationsRows[3].value.text).to.equal("£6,000.00");
+    expect(vm.costsAndAllocationsRows[3].action).to.be.undefined;
+
+    expect(vm.costsAndAllocationsRows[4].key.message?.key).to.equal("pages.claim.costsAndAllocations.assessmentBasis");
+    expect(vm.costsAndAllocationsRows[4].value.text).to.equal("Hourly rate, escaped");
+    expect(vm.costsAndAllocationsRows[4].action).to.be.undefined;
+
+    expect(vm.costsAndAllocationsRows[5].key.message?.key).to.equal("pages.claim.costsAndAllocations.counselCostAndAllocation");
+    expect(vm.costsAndAllocationsRows[5].value.text).to.equal("£2,850.00");
+    expect(vm.costsAndAllocationsRows[5].action).to.be.undefined;
+
+    expect(vm.costsAndAllocationsRows[6].key.message?.key).to.equal("pages.claim.costsAndAllocations.totalPaymentOnAccount");
+    expect(vm.costsAndAllocationsRows[6].value.text).to.equal("£1,200.00");
+    expect(vm.costsAndAllocationsRows[6].action).to.be.undefined;
+
+    expect(vm.costsAndAllocationsRows[7].key.message?.key).to.equal("pages.claim.costsAndAllocations.totalPOA");
+    expect(vm.costsAndAllocationsRows[7].value.text).to.equal("£1,200.00");
+    expect(vm.costsAndAllocationsRows[7].action).to.be.undefined;
+
+    expect(vm.costsAndAllocationsRows[8].key.message?.key).to.equal("pages.claim.costsAndAllocations.priorAuthority");
+    expect(vm.costsAndAllocationsRows[8].value.message?.key).to.equal("common.granted");
+    expect(vm.costsAndAllocationsRows[8].value.message?.args).to.deep.equal({ "amount": "£3,200.00"});
+    expect(vm.costsAndAllocationsRows[8].action).to.be.undefined;
+
+    expect(vm.costsAndAllocationsRows[9].key.message?.key).to.equal("pages.claim.costsAndAllocations.availableCostLimit");
+    expect(vm.costsAndAllocationsRows[9].value.message?.key).to.equal("common.available");
+    expect(vm.costsAndAllocationsRows[9].value.message?.args).to.deep.equal({ "amount": "£18,500.00", "available": "£25,000.00"});
+    expect(vm.costsAndAllocationsRows[9].action).to.be.undefined;
   });
 });
