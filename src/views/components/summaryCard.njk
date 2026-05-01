@@ -1,8 +1,17 @@
-{% from "components/summaryList.njk" import summaryList %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% macro summaryCard(t, title, rows) %}
   <div class="govuk-summary-card">
-    <h2 class="govuk-summary-card__title">{{ title }}</h2>
-    {{ summaryList(t, rows) }}
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">
+        {{ title }}
+      </h2>
+    </div>
+
+    <div class="govuk-summary-card__content">
+      {{ govukSummaryList({
+        rows: rows
+      }) }}
+    </div>
   </div>
 {% endmacro %}
