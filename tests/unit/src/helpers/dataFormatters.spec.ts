@@ -84,8 +84,8 @@ describe("Data Transformation Helpers", () => {
   });
 
   describe("formatClaimed", () => {
-    it("should format 1 -> £1.00", async () => {
-      expect(formatClaimed(1)).to.equal("£1.00");
+    it("should format 1 -> £1", async () => {
+      expect(formatClaimed(1)).to.equal("£1");
     });
 
     it("should format 0.1 -> £0.10", async () => {
@@ -98,6 +98,10 @@ describe("Data Transformation Helpers", () => {
 
     it("should format 1.10 -> £1.10", async () => {
       expect(formatClaimed(1.10)).to.equal("£1.10");
+    });
+
+    it("should format 1.101 -> £1.10", async () => {
+      expect(formatClaimed(1.101)).to.equal("£1.10");
     });
 
     it("should return empty string on undefined input", async () => {

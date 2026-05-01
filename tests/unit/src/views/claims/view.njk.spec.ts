@@ -138,12 +138,12 @@ describe("views/main/claims/view.njk", () => {
 
     assertSummaryRow(rows.eq(2), {
       key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",
-      value: "£3,000.00",
+      value: "£3,000",
     });
 
     assertSummaryRow(rows.eq(3), {
       key: "pages.claim.costsAndAllocations.escapeThreshold",
-      value: "£6,000.00",
+      value: "£6,000",
     });
 
     assertSummaryRow(rows.eq(4), {
@@ -153,17 +153,17 @@ describe("views/main/claims/view.njk", () => {
 
     assertSummaryRow(rows.eq(5), {
       key: "pages.claim.costsAndAllocations.counselCostAndAllocation",
-      value: "£2,850.00",
+      value: "£2,850",
     });
 
     assertSummaryRow(rows.eq(6), {
       key: "pages.claim.costsAndAllocations.totalPaymentOnAccount",
-      value: "£1,200.00",
+      value: "£1,200",
     });
 
     assertSummaryRow(rows.eq(7), {
       key: "pages.claim.costsAndAllocations.totalPOA",
-      value: "£1,200.00",
+      value: "£1,200",
     });
 
     assertSummaryRow(rows.eq(8), {
