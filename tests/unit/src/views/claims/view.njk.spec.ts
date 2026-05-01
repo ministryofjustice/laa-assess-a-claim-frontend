@@ -117,6 +117,71 @@ describe("views/main/claims/view.njk", () => {
     expect(sl).to.have.length(1);
   });
 
+  it("renders a providers summary list", () => {
+    const sl = $("#providers");
+    expect(sl).to.have.length(1);
+  });
+
+  it("renders a client summary list", () => {
+    const sl = $("#client");
+    expect(sl).to.have.length(1);
+  });
+
+  it("shows expected provider summary list rows", () => {
+    const rows = $("#provider .govuk-simmary-list_row");
+    expect(rows).to.have.length(5);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.providers.title",
+      value: "Providers",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.claim.providers.solicitorRegion",
+      value: "North West",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.claim.providers.numberOfSolicitors",
+      value: "1",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.claim.providers.counselInvolved",
+      value: "Yes",
+    });
+
+     assertSummaryRow(rows.eq(4), {
+      key: "pages.claim.providers.counselPayment",
+      value: "Paid and reconciled",
+    });
+  });
+
+   it("shows expected Client summary list rows", () => {
+    const rows = $("#client .govuk-simmary-list_row");
+    expect(rows).to.have.length(4);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.client.name",
+      value: "Liam Oldfield",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.claim.client.dateOfBirth",
+      value: "27 March 1996",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.claim.client.location",
+      value: "Manchester",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.claim.client.status",
+      value: "Parent",
+    });
+  });
+
   it("shows expected costs and allocations summary list rows", () => {
     const rows = $("#costs-and-allocations .govuk-summary-list__row");
     expect(rows).to.have.length(10);
