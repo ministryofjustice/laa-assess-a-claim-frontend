@@ -15,7 +15,8 @@
     "minutes": "{minutes} minutes",
     "granted": "{amount} granted",
     "available": "{amount} (of {available})",
-    "discharged": "Discharged {date}"
+    "discharged": "Discharged {date}",
+    "startDate": "Start date {date}"
   },
   "navigation": {
     "mainNav": {},

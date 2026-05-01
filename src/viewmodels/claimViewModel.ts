@@ -74,9 +74,9 @@ export class ClaimViewModel {
     this.costsAndAllocationsRows = costsAndAllocationsRows;
 
     const caseSummaryRows: SummaryListRow[] = [];
-    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.matterType" } }, value: { text: "300001820960" } });
-    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.leadProceeding" } }, value: { text: "Bristol Crown Court" } });
-    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.linkedCases" } }, value: { text: "1 linked case available", href: "#" } });
+    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.matterType" } }, value: { text: "Special Children Act" } });
+    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.leadProceeding" } }, value: { text: "Care order" } });
+    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.linkedCases" } }, value: { text: "1 linked case", href: "#" } });
     caseSummaryRows.push({ key: { message: { key: "pages.case.summary.outcome" } }, value: { text: "Final hearing completed" } });
     this.caseSummaryRows = caseSummaryRows;
 
@@ -90,8 +90,16 @@ export class ClaimViewModel {
     this.certificateScopeSummaryRows = certificateScopeSummaryRows;
 
     const proceedingsSummaryRows: SummaryListRow[] = [];
-    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.careOrder" } }, value: { text: "Start date" } });
-    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.supervisionOrder" } }, value: { text: formatDateReadable(new Date("2025-11-12")) } });
+    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.careOrder" } }, value: { html: 
+`
+    <p class="govuk-body">Start date ${formatDateReadable(new Date("2026-02-25"))}</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">Final hearing completed</p>
+  `
+} });
+    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.supervisionOrder" } }, value: { html: `
+    <p class="govuk-body"> ${formatDateReadable(new Date("2025-11-12"))}</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">Withdrawn</p>
+  ` } });
     this.proceedingsSummaryRows = proceedingsSummaryRows;
 
     const providerRows = [];
