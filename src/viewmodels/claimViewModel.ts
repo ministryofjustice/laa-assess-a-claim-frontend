@@ -71,7 +71,6 @@ export class ClaimViewModel {
     this.costsAndAllocationsRows = costsAndAllocationsRows;
 
     const providerRows = [];
-    // TODO - By default the key text does not automatically call t()
     providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorName" } }, value: { text: "Smith & Co Solicitors" } });
     providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorRegion" } }, value: { text: "North West" } });
     providerRows.push({ key: { message: { key: "pages.claim.providers.numberOfSolicitors" } }, value: { text: "1" } });
