@@ -46,7 +46,7 @@ describe("ClaimViewModel constructor()", () => {
 
     expect(vm.costsAndAllocationsRows[1].key.message?.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
     expect(vm.costsAndAllocationsRows[1].value.text).to.equal("£9,176.36");
-    expect(vm.costsAndAllocationsRows[1].value?.tag?.text).to.equal("Escaped");
+    expect(vm.costsAndAllocationsRows[1].value?.tag?.message.key).to.equal("pages.claim.feeStatus.escaped");
     expect(vm.costsAndAllocationsRows[1].value?.tag?.classes).to.equal("govuk-tag--blue");
 
     expect(vm.costsAndAllocationsRows[2].key.message?.key).to.equal("pages.claim.costsAndAllocations.fixedFeeAmountGranted");

@@ -37,10 +37,10 @@ describe("views/main/claims/view.njk", () => {
     expect(back.attr("href")).to.equal(viewModel.backLink ?? "/claims");
   });
 
-  it("renders a status tag", () => {
-    const tag = $(`.govuk-tag.${viewModel.statusTagClass}`);
+  it("renders an assignment status tag", () => {
+    const tag = $(`.govuk-tag.${viewModel.assignmentStatusTagClass}`);
     expect(tag).to.have.length(1);
-    expect(tag.text().trim()).to.equal(viewModel.statusText);
+    expect(tag.text().trim()).to.equal(viewModel.assignmentStatusText);
   });
 
   it("renders a summary list", () => {
@@ -133,7 +133,7 @@ describe("views/main/claims/view.njk", () => {
     });
     const totalClaimAmountRightValue = totalClaimAmountRow.find(".govuk-summary-list__value .govuk-summary-list__value-split-right");
     expect(totalClaimAmountRightValue).to.have.length(1);
-    expect(totalClaimAmountRightValue.find(".govuk-tag").text().trim()).to.equal("Escaped");
+    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText);
 
     assertSummaryRow(rows.eq(2), {
       key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",

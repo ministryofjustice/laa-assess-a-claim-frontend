@@ -17,7 +17,7 @@
 
   {% if row.value.tag %}
     {% set valueTag = govukTag({
-      text: row.value.tag.text,
+      text: t(row.value.tag.message.key),
       classes: row.value.tag.classes
     }) %}
 
