@@ -93,12 +93,12 @@ export class ClaimViewModel {
     proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.careOrder" } }, value: { html: 
 `
     <p class="govuk-body">Start date ${formatDateReadable(new Date("2026-02-25"))}</p>
-    <p class="govuk-body govuk-!-margin-bottom-0">Final hearing completed</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">Final hearing completed (PB0057)</p>
   `
 } });
     proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.supervisionOrder" } }, value: { html: `
     <p class="govuk-body"> ${formatDateReadable(new Date("2025-11-12"))}</p>
-    <p class="govuk-body govuk-!-margin-bottom-0">Withdrawn</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">Withdrawn (PB0142)</p>
   ` } });
     this.proceedingsSummaryRows = proceedingsSummaryRows;
 
