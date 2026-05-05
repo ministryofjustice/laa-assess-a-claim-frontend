@@ -133,7 +133,7 @@ describe("views/main/claims/view.njk", () => {
     });
     const totalClaimAmountRightValue = totalClaimAmountRow.find(".govuk-summary-list__value .govuk-summary-list__value-split-right");
     expect(totalClaimAmountRightValue).to.have.length(1);
-    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText.key);
+    expect(totalClaimAmountRightValue.find(".govuk-tag.govuk-tag--blue").text().trim()).to.equal("pages.claim.feeStatus.escaped");
 
     assertSummaryRow(rows.eq(2), {
       key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",
