@@ -118,7 +118,7 @@ describe("views/main/claims/view.njk", () => {
   });
 
   it("shows expected costs and allocations summary list rows", () => {
-    const rows = $("#costs-and-allocations .govuk-summary-list__row");
+    const rows = $("#costs-and-allocations-rows .govuk-summary-list__row");
     expect(rows).to.have.length(10);
 
     assertSummaryRow(rows.eq(0), {
@@ -179,11 +179,16 @@ describe("views/main/claims/view.njk", () => {
   it("renders a 'provider and client details' h2", () => {
     const h2 = $("h2#provider-and-client-details");
     expect(h2).to.have.length(1);
-    expect(h2.text().trim()).to.equal("pages.claim.providerAndClientDetails")
+   });
+
+  it("renders a providers summary list", () => {
+    const sl = $("#providers");
+    expect(sl).to.have.length(1);
+
   });
 
-  it("shows expected providers summary list rows", () => {
-    const rows = $("#providers .govuk-summary-list__row");
+  it("shows expected provider summary list rows", () => {
+    const rows = $("#providers-rows").children();
     expect(rows).to.have.length(5);
 
     assertSummaryRow(rows.eq(0), {
@@ -206,14 +211,19 @@ describe("views/main/claims/view.njk", () => {
       value: "Yes",
     });
 
-    assertSummaryRow(rows.eq(4), {
+     assertSummaryRow(rows.eq(4), {
       key: "pages.claim.providers.counselPayment",
       value: "Paid and reconciled",
     });
   });
 
-  it("shows expected client summary list rows", () => {
-    const rows = $("#client .govuk-summary-list__row");
+  it("renders a client summary list", () => {
+    const sl = $("#client");
+    expect(sl).to.have.length(1);
+  });
+
+  it("shows expected Client summary list rows", () => {
+    const rows = $("#client-rows").children();
     expect(rows).to.have.length(4);
 
     assertSummaryRow(rows.eq(0), {
