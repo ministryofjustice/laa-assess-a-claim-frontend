@@ -247,6 +247,81 @@ describe("views/main/claims/view.njk", () => {
     });
   });
 
+  it("shows expected case summary list rows", () => {
+    const rows = $("#case .govuk-summary-list__row");
+    expect(rows).to.have.length(4);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.summary.matterType",
+      value: "Special Children Act",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.case.summary.leadProceeding",
+      value: "Care order",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.case.summary.linkedCases",
+      value: "1 linked case",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.case.summary.outcome",
+      value: "Final hearing completed",
+    });
+  });
+
+  it("shows expected certificate scope summary list rows", () => {
+    const rows = $("#certificate .govuk-summary-list__row");
+    expect(rows).to.have.length(6);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.certificateScope.type",
+      value: "Substantive Certificate",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.case.certificateScope.description",
+      value: "To be represented on an application for Care Order",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.case.certificateScope.limitation",
+      value: "All steps up to and including final hearing, limited to family help",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.case.certificateScope.issueDate",
+      value: "27 February 2026",
+    });
+
+    assertSummaryRow(rows.eq(4), {
+      key: "pages.case.certificateScope.status",
+      value: "common.discharged",
+    });
+
+    assertSummaryRow(rows.eq(5), {
+      key: "pages.case.certificateScope.levelOfService",
+      value: "Full representation",
+    });
+  });
+
+  it("shows expected proceedings scope summary list rows", () => {
+    const rows = $("#proceedings .govuk-summary-list__row");
+    expect(rows).to.have.length(2);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.proceedings.careOrder",
+      value: "common.startDate Final hearing completed (PB0057)",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.case.proceedings.supervisionOrder",
+      value: "12 November 2025 Withdrawn (PB0142)",
+    });
+  });
+
   it("renders an assignment link button", () => {
     const button = $("#assignment");
     expect(button).to.have.length(1);
