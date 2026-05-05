@@ -5,6 +5,8 @@
 
 {% set govukRows = [] %}
 
+{% set rowId = [id, '-rows'] | join %}
+
 {% for row in rows %}
 
   {% set keyText = t(row.key.message.key, row.key.message.args) %}
@@ -74,11 +76,14 @@
           text: t(cardAction.text)
         }
       ]
+    },
+    attributes: {
+      "id": id
     }
   },
   rows: govukRows,
   attributes: {
-    "id": id
+    "id": rowId 
   }
 }) }}
 
