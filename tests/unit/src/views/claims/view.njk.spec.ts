@@ -176,6 +176,12 @@ describe("views/main/claims/view.njk", () => {
     });
   });
 
+  it("renders a 'provider and client details' h2", () => {
+    const h2 = $("h2#provider-and-client-details");
+    expect(h2).to.have.length(1);
+    expect(h2.text().trim()).to.equal("pages.claim.providerAndClientDetails")
+  });
+
   it("shows expected providers summary list rows", () => {
     const rows = $("#providers .govuk-summary-list__row");
     expect(rows).to.have.length(5);

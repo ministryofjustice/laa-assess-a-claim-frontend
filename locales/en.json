@@ -93,6 +93,7 @@
         "priorAuthority": "Prior authority",
         "availableCostLimit": "Available cost limit"
       },
+      "providerAndClientDetails": "Provider and Client details",
       "providers": {
         "title": "Providers",
         "solicitorName": "Solicitor name",
