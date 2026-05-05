@@ -5,6 +5,7 @@
 {% from "components/linkButton.njk" import linkButton %}
 {% from "components/subNavigation.njk" import subNavigation %}
 {% from "components/summaryCard.njk" import summaryCard %}
+{% from "components/renderMessage.njk" import renderMessage %}
 
 {% extends "base.njk" %}
 {% block content %}
@@ -12,7 +13,7 @@
   {{ govukBackLink({ text: "Back", href: vm.backLink }) }}
 
   <div class="govuk-!-margin-bottom-6">
-    {{ govukTag({ text: t(vm.assignmentStatusText), classes: vm.assignmentStatusTagClass }) }}
+    {{ govukTag({ text: renderMessage(t, vm.assignmentStatusText), classes: vm.assignmentStatusTagClass }) }}
   </div>
 
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ vm.title }}</h1>
@@ -25,11 +26,17 @@
 
   {{ summaryCard(t, "costs-and-allocations", "pages.claim.costsAndAllocations.title", vm.costsAndAllocationsRows, { href: "#", text: "pages.claim.costsAndAllocations.action"}) }}
 
-  <h2 class="govuk-heading-m">Provider and Client details</h2>
+  <h2 class="govuk-heading-m" id="provider-and-client-details">{{ t('pages.claim.providerAndClientDetails') }}</h2>
 
   {{ summaryCard(t, "providers", 'pages.claim.providers.title', vm.providerRows )}}
 
   {{ summaryCard(t, "client", 'pages.claim.client.title', vm.clientRows )}}
+
+  {{ summaryCard(t, "case", "pages.case.summary.title", vm.caseSummaryRows) }}
+
+  {{ summaryCard(t, "certificate", "pages.case.certificateScope.title", vm.certificateScopeSummaryRows) }}
+
+  {{ summaryCard(t, "proceedings", "pages.case.proceedings.title", vm.proceedingsSummaryRows) }}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>

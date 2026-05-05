@@ -1,5 +1,6 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "components/renderMessage.njk" import renderMessage %}
+{% from "components/renderSummaryValue.njk" import renderSummaryValue %}
 
 {% macro summaryCard(t, id, cardTitleKey, rows, cardAction) %}
 
@@ -9,31 +10,11 @@
 
 {% for row in rows %}
 
-  {% set keyText = t(row.key.message.key, row.key.message.args) %}
+  {% set keyText = renderMessage(t, row.key) %}
 
-  {% if row.value.message %}
-    {% set valueText = t(row.value.message.key, row.value.message.args) %}
-  {% else %}
-    {% set valueText = row.value.text %}
-  {% endif %}
-
-  {% if row.value.tag %}
-    {% set valueTag = govukTag({
-      text: t(row.value.tag.message.key),
-      classes: row.value.tag.classes
-    }) %}
-
-    {% set valueHtml %}
-      <div class="govuk-summary-list__value-split">
-        <span>{{ valueText }}</span>
-        <span class="govuk-summary-list__value-split-right">{{ valueTag }}</span>
-      </div>
-    {% endset %}
-  {% else %}
-    {% set valueHtml %}
-      <span>{{ valueText }}</span>
-    {% endset %}
-  {% endif %}
+  {% set valueHtml %}
+    {{ renderSummaryValue(t, row.value) }}
+  {% endset %}
 
   {% set govukRow = {
     key: {
@@ -64,11 +45,15 @@
 
 {% endfor %}
 
-{{ govukSummaryList({
-  card: {
-    title: {
-      text: t(cardTitleKey)
-    },
+{% set card = {
+  title: {
+    text: t(cardTitleKey)
+  }
+} %}
+
+{% if cardAction %}
+  {% set card = {
+    title: card.title,
     actions: {
       items: [
         {
@@ -80,7 +65,11 @@
     attributes: {
       "id": id
     }
-  },
+  } %}
+{% endif %}
+
+{{ govukSummaryList({
+  card: card,
   rows: govukRows,
   attributes: {
     "id": rowId 

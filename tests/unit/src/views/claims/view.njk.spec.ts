@@ -40,7 +40,7 @@ describe("views/main/claims/view.njk", () => {
   it("renders an assignment status tag", () => {
     const tag = $(`.govuk-tag.${viewModel.assignmentStatusTagClass}`);
     expect(tag).to.have.length(1);
-    expect(tag.text().trim()).to.equal(viewModel.assignmentStatusText);
+    expect(tag.text().trim()).to.equal(viewModel.assignmentStatusText.key);
   });
 
   it("renders a summary list", () => {
@@ -129,11 +129,11 @@ describe("views/main/claims/view.njk", () => {
     const totalClaimAmountRow = rows.eq(1);
     assertSummaryRow(totalClaimAmountRow, {
       key: "pages.claim.costsAndAllocations.totalClaimAmount",
-      value: "£9,176.36",
+      value: "£9,176.36 pages.claim.feeStatus.escaped",
     });
     const totalClaimAmountRightValue = totalClaimAmountRow.find(".govuk-summary-list__value .govuk-summary-list__value-split-right");
     expect(totalClaimAmountRightValue).to.have.length(1);
-    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText);
+    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText.key);
 
     assertSummaryRow(rows.eq(2), {
       key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",
@@ -284,6 +284,6 @@ describe("views/main/claims/view.njk", () => {
   function assertSummaryRow(row: any, expected: any) {
     const { key, value } = expected;
     expect(row.find(".govuk-summary-list__key").text().trim()).to.equal(key);
-    expect(row.find(".govuk-summary-list__value").text().trim()).to.contain(value);
+    expect(row.find(".govuk-summary-list__value").text().trim().replace(/\s+/g, " ")).to.equal(value);
   }
 });

@@ -1,0 +1,36 @@
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "components/renderTextOrMessage.njk" import renderTextOrMessage %}
+
+{% macro renderSummaryValue(t, value) %}
+
+  {% if value.type == "text" %}
+
+    {{ renderTextOrMessage(t, value.value) }}
+
+  {% elseif value.type == "texts" %}
+
+    {% for value in value.values %}
+      {{ renderTextOrMessage(t, value) }}{% if not loop.last %}<br>{% endif %}
+    {% endfor %}
+
+  {% elseif value.type == "tag" %}
+
+    {% set tag = govukTag({
+      text: renderTextOrMessage(t, value.tag.text),
+      classes: value.tag.classes
+    }) %}
+
+    <div class="govuk-summary-list__value-split">
+      <span>{{ renderTextOrMessage(t, value.value) }}</span>
+      <span class="govuk-summary-list__value-split-right">
+        {{ tag | safe }}
+      </span>
+    </div>
+
+  {% elseif value.type == "link" %}
+
+    <a class="govuk-link" href="{{ value.value.href }}">{{ renderTextOrMessage(t, value.value.text) }}</a>
+
+  {% endif %}
+
+{% endmacro %}
