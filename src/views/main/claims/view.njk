@@ -5,6 +5,7 @@
 {% from "components/linkButton.njk" import linkButton %}
 {% from "components/subNavigation.njk" import subNavigation %}
 {% from "components/summaryCard.njk" import summaryCard %}
+{% from "components/renderMessage.njk" import renderMessage %}
 
 {% extends "base.njk" %}
 {% block content %}
@@ -12,7 +13,7 @@
   {{ govukBackLink({ text: "Back", href: vm.backLink }) }}
 
   <div class="govuk-!-margin-bottom-6">
-    {{ govukTag({ text: t(vm.assignmentStatusText), classes: vm.assignmentStatusTagClass }) }}
+    {{ govukTag({ text: renderMessage(t, vm.assignmentStatusText), classes: vm.assignmentStatusTagClass }) }}
   </div>
 
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ vm.title }}</h1>

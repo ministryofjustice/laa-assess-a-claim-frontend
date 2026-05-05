@@ -38,84 +38,76 @@ export class ClaimViewModel {
 
     const summary: SummaryListRow[] = [];
     // TODO - default to 'No data available' if 'total claim amount' is undefined
-    summary.push({ key: { message: { key: "pages.claim.summary.totalClaimAmount" } }, value: { text: formatClaimed(3480) } });
-    summary.push({ key: { message: { key: "pages.claim.summary.dateReceived" } }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
+    summary.push({ key: { key: "pages.claim.summary.totalClaimAmount" }, value: { type: "text", value: formatClaimed(3480) } });
+    summary.push({ key: { key: "pages.claim.summary.dateReceived" }, value: { type: "text", value: formatDateReadable(new Date("2026-02-27")) } });
     // TODO - default to 'No data available' if 'case reference number' is undefined
-    summary.push({ key: { message: { key: "pages.claim.summary.caseReferenceNumber" } }, value: { text: "300001820960" } });
+    summary.push({ key: { key: "pages.claim.summary.caseReferenceNumber" }, value: { type: "text", value: "300001820960" } });
     // TODO - default to 'No data available' if 'LAA reference number' is undefined
-    summary.push({ key: { message: { key: "pages.claim.summary.laaReferenceNumber" } }, value: { text: "LAA-90d26c" } });
+    summary.push({ key: { key: "pages.claim.summary.laaReferenceNumber" }, value: { type: "text", value: "LAA-90d26c" } });
     // TODO - default to 'Not yet assigned' if 'assigned to' is undefined
-    summary.push({ key: { message: { key: "pages.claim.summary.assignedTo" } }, value: { text: "Caseworker name" } } );
+    summary.push({ key: { key: "pages.claim.summary.assignedTo" }, value: { type: "text", value: "Caseworker name" } } );
     // TODO - default to 'Low' if 'provider risk' is undefined
-    summary.push({ key: { message: { key: "pages.claim.summary.providerRisk" } }, value: { text: "Low" }, action: { href: "#" } } );
-    summary.push({ key: { message: { key: "pages.claim.summary.claimTimeStandard" } }, value: { message: formatMinutes(15) } } );
+    summary.push({ key: { key: "pages.claim.summary.providerRisk" }, value: { type: "text", value: "Low" }, action: { href: "#" } } );
+    summary.push({ key: { key: "pages.claim.summary.claimTimeStandard" }, value: { type: "text", value: formatMinutes(15) } } );
     this.summary = summary;
 
     const costsAndAllocationsRows: SummaryListRow[] = [];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- temporary while we hardcode values
     if (this.feeStatus === FeeStatus.Escaped) {
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(9176.36), tag: { message: { key: this.feeStatusText }, classes: this.feeStatusTagClass } } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" } }, value: { text: formatClaimed(3000) } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.escapeThreshold" } }, value: { text: formatClaimed(6000) } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.assessmentBasis" } }, value: { text: "Hourly rate, escaped" } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" } }, value: { text: formatClaimed(2850) } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalPaymentOnAccount" } }, value: { text: formatClaimed(1200) } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalPOA" } }, value: { text: formatClaimed(1200) } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.priorAuthority" } }, value: { message: { key: "common.granted", args: { amount: formatClaimed(3200) } } } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.availableCostLimit" } }, value: { message: { key: "common.available", args: { amount: formatClaimed(18500), available: formatClaimed(25000) } } } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.claimType" }, value: { type: "text", value: "Solicitor final bill" } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" }, value: { type: "tag", text: formatClaimed(9176.36), tag: this.feeStatusText, classes: this.feeStatusTagClass } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" }, value: { type: "text", value: formatClaimed(3000) } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.escapeThreshold" }, value: { type: "text", value: formatClaimed(6000) } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.assessmentBasis" }, value: { type: "text", value: "Hourly rate, escaped" } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" }, value: { type: "text", value: formatClaimed(2850) } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalPaymentOnAccount" }, value: { type: "text", value: formatClaimed(1200) } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalPOA" }, value: { type: "text", value: formatClaimed(1200) } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.priorAuthority" }, value: { type: "text", value: { key: "common.granted", args: { amount: formatClaimed(3200) } } } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.availableCostLimit" }, value: { type: "text", value: { key: "common.available", args: { amount: formatClaimed(18500), available: formatClaimed(25000) } } } } );
     } else {
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.claimType" } }, value: { text: "Solicitor final bill" } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } }, value: { text: formatClaimed(3480) } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.assessmentBasis" } }, value: { text: "Fixed fee applies" } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" } }, value: { text: formatClaimed(900) } } );
-      costsAndAllocationsRows.push({ key: { message: { key: "pages.claim.costsAndAllocations.availableCostLimit" } }, value: { message: { key: "common.available", args: { amount: formatClaimed(24100), available: formatClaimed(25000) } } } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.claimType" }, value: { type: "text", value: "Solicitor final bill" } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" }, value: { type: "text", value: formatClaimed(3480) } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.assessmentBasis" }, value: { type: "text", value: "Fixed fee applies" } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" }, value: { type: "text", value: formatClaimed(900) } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.availableCostLimit" }, value: { type: "text", value: { key: "common.available", args: { amount: formatClaimed(24100), available: formatClaimed(25000) } } } } );
     }
     this.costsAndAllocationsRows = costsAndAllocationsRows;
 
     const caseSummaryRows: SummaryListRow[] = [];
-    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.matterType" } }, value: { text: "Special Children Act" } });
-    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.leadProceeding" } }, value: { text: "Care order" } });
-    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.linkedCases" } }, value: { text: "1 linked case", href: "#" } });
-    caseSummaryRows.push({ key: { message: { key: "pages.case.summary.outcome" } }, value: { text: "Final hearing completed" } });
+    caseSummaryRows.push({ key: { key: "pages.case.summary.matterType" }, value: { type: "text", value: "Special Children Act" } });
+    caseSummaryRows.push({ key: { key: "pages.case.summary.leadProceeding" }, value: { type: "text", value: "Care order" } });
+    caseSummaryRows.push({ key: { key: "pages.case.summary.linkedCases" }, value: { type: "link", text: "1 linked case", href: "#" } } );
+    caseSummaryRows.push({ key: { key: "pages.case.summary.outcome" }, value: { type: "text", value: "Final hearing completed" } });
     this.caseSummaryRows = caseSummaryRows;
 
     const certificateScopeSummaryRows: SummaryListRow[] = [];
-    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.type" } }, value: { text: "Substantive Certificate" } });
-    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.description" } }, value: { text: "To be represented on an application for Care Order" } });
-    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.limitation" } }, value: { text: "All steps up to and inlcuding final hearing, limited to family help" } });
-    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.issueDate" } }, value: { text: formatDateReadable(new Date("2026-02-27")) } });
-    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.status" } }, value: { message: { key: "common.discharged", args: { date: formatDateReadable(new Date("2026-02-28")) } } } });
-    certificateScopeSummaryRows.push({ key: { message: { key: "pages.case.certificateScope.levelOfService" } }, value: { text: "Full representation" } });
+    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.type" }, value: { type: "text", value: "Substantive Certificate" } });
+    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.description" }, value: { type: "text", value: "To be represented on an application for Care Order" } });
+    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.limitation" }, value: { type: "text", value: "All steps up to and inlcuding final hearing, limited to family help" } });
+    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.issueDate" }, value: { type: "text", value: formatDateReadable(new Date("2026-02-27")) } });
+    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.status" }, value: { type: "text", value: { key: "common.discharged", args: { date: formatDateReadable(new Date("2026-02-28")) } } } });
+    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.levelOfService" }, value: { type: "text", value: "Full representation" } });
     this.certificateScopeSummaryRows = certificateScopeSummaryRows;
 
     const proceedingsSummaryRows: SummaryListRow[] = [];
-    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.careOrder" } }, value: { html: 
-`
-    <p class="govuk-body">Start date ${formatDateReadable(new Date("2026-02-25"))}</p>
-    <p class="govuk-body govuk-!-margin-bottom-0">Final hearing completed (PB0057)</p>
-  `
-} });
-    proceedingsSummaryRows.push({ key: { message: { key: "pages.case.proceedings.supervisionOrder" } }, value: { html: `
-    <p class="govuk-body"> ${formatDateReadable(new Date("2025-11-12"))}</p>
-    <p class="govuk-body govuk-!-margin-bottom-0">Withdrawn (PB0142)</p>
-  ` } });
+    proceedingsSummaryRows.push({ key: { key: "pages.case.proceedings.careOrder" }, value: { type: "texts", values: [{ key: "common.startDate", args: {date: formatDateReadable(new Date("2026-02-25"))} }, "Final hearing completed (PB0057)"] } });
+    proceedingsSummaryRows.push({ key: { key: "pages.case.proceedings.supervisionOrder" }, value: { type: "texts", values: [formatDateReadable(new Date("2025-11-12")), "Withdrawn (PB0142)"] } });
     this.proceedingsSummaryRows = proceedingsSummaryRows;
 
-    const providerRows = [];
-    providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorName" } }, value: { text: "Smith & Co Solicitors" } });
-    providerRows.push({ key: { message: { key: "pages.claim.providers.solicitorRegion" } }, value: { text: "North West" } });
-    providerRows.push({ key: { message: { key: "pages.claim.providers.numberOfSolicitors" } }, value: { text: "1" } });
+    const providerRows: SummaryListRow[] = [];
+    providerRows.push({ key: { key: "pages.claim.providers.solicitorName" }, value: { type: "text", value: "Smith & Co Solicitors" } });
+    providerRows.push({ key: { key: "pages.claim.providers.solicitorRegion" }, value: { type: "text", value: "North West" } });
+    providerRows.push({ key: { key: "pages.claim.providers.numberOfSolicitors" }, value: { type: "text", value: "1" } });
     // TODO - Logic for hiding next line if 'no'
-    providerRows.push({ key: { message: { key: "pages.claim.providers.counselInvolved" } }, value: { text: "Yes" } });
-    providerRows.push({ key: { message: { key: "pages.claim.providers.counselPayment" } }, value: { text: "Paid and reconciled" } });
+    providerRows.push({ key: { key: "pages.claim.providers.counselInvolved" }, value: { type: "text", value: "Yes" } });
+    providerRows.push({ key: { key: "pages.claim.providers.counselPayment" }, value: { type: "text", value: "Paid and reconciled" } });
     this.providerRows = providerRows;
 
-    const clientRows = [];
-    clientRows.push({ key: { message: { key: "pages.claim.client.name" } }, value: { text: "Liam Oldfield" } });
-    clientRows.push({ key: { message: { key: "pages.claim.client.dateOfBirth" } }, value: { text: formatDateReadable(new Date("1996-03-27")) } });
-    clientRows.push({ key: { message: { key: "pages.claim.client.location" } }, value: { text: "Manchester" } });
-    clientRows.push({ key: { message: { key: "pages.claim.client.status" } }, value: { text: "Parent" } });
+    const clientRows: SummaryListRow[] = [];
+    clientRows.push({ key: { key: "pages.claim.client.name" }, value: { type: "text", value: "Liam Oldfield" } });
+    clientRows.push({ key: { key: "pages.claim.client.dateOfBirth" }, value: { type: "text", value: formatDateReadable(new Date("1996-03-27")) } });
+    clientRows.push({ key: { key: "pages.claim.client.location" }, value: { type: "text", value: "Manchester" } });
+    clientRows.push({ key: { key: "pages.claim.client.status" }, value: { type: "text", value: "Parent" } });
     this.clientRows = clientRows;
   }
 
@@ -123,8 +115,8 @@ export class ClaimViewModel {
    * Gets the assignment status text
    * @returns {string} the text value of the given assignment status
    */
-  get assignmentStatusText(): string {
-    return `pages.claim.assignmentStatus.${this.assignmentStatus}`;
+  get assignmentStatusText(): Message {
+    return { key: `pages.claim.assignmentStatus.${this.assignmentStatus}` };
   }
 
   /**
@@ -139,8 +131,8 @@ export class ClaimViewModel {
    * Gets the fee status text
    * @returns {string} the text value of the given fee status
    */
-  get feeStatusText(): string {
-    return `pages.claim.feeStatus.${this.feeStatus}`;
+  get feeStatusText(): Message {
+    return { key: `pages.claim.feeStatus.${this.feeStatus}` };
   }
 
   /**
