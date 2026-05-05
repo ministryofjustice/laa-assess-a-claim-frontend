@@ -35,13 +35,13 @@ export class ClaimViewModel {
     this.assignmentStatus = AssignmentStatus.InProgress; // TODO - derive from claim
     this.feeStatus = claim.escaped === true ? FeeStatus.Escaped : FeeStatus.Fixed;
 
-    this.summaryRows = ClaimViewModel.buildSummary();
+    this.summaryRows = ClaimViewModel.buildSummaryRows();
     this.costsAndAllocationsRows = ClaimViewModel.buildCostsAndAllocationsRows(this.feeStatus);
     this.providerRows = ClaimViewModel.buildProviderRows();
     this.clientRows = ClaimViewModel.buildClientRows();
     this.caseRows = ClaimViewModel.buildCaseRows();
-    this.certificateScopeRows = ClaimViewModel.buildCertificateScopeSummary();
-    this.proceedingsRows = ClaimViewModel.buildProceedingsSummary();
+    this.certificateScopeRows = ClaimViewModel.buildCertificateScopeRows();
+    this.proceedingsRows = ClaimViewModel.buildProceedingsRows();
   }
 
   /**
@@ -82,7 +82,7 @@ export class ClaimViewModel {
     }
   }
 
-  private static buildSummary(): SummaryListRow[] {
+  private static buildSummaryRows(): SummaryListRow[] {
     return [
       {
         key: { key: "pages.claim.summary.totalClaimAmount" },
@@ -296,7 +296,7 @@ export class ClaimViewModel {
     ];
   }
 
-  private static buildCertificateScopeSummary(): SummaryListRow[] {
+  private static buildCertificateScopeRows(): SummaryListRow[] {
     return [
       {
         key: { key: "pages.case.certificateScope.type" },
@@ -341,7 +341,7 @@ export class ClaimViewModel {
     ];
   }
 
-  private static buildProceedingsSummary(): SummaryListRow[] {
+  private static buildProceedingsRows(): SummaryListRow[] {
     return [
       {
         key: { key: "pages.case.proceedings.careOrder" },
