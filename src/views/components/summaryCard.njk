@@ -43,11 +43,15 @@
 
 {% endfor %}
 
-{{ govukSummaryList({
-  card: {
-    title: {
-      text: t(cardTitleKey)
-    },
+{% set card = {
+  title: {
+    text: t(cardTitleKey)
+  }
+} %}
+
+{% if cardAction %}
+  {% set card = {
+    title: card.title,
     actions: {
       items: [
         {
@@ -56,7 +60,11 @@
         }
       ]
     }
-  },
+  } %}
+{% endif %}
+
+{{ govukSummaryList({
+  card: card,
   rows: govukRows,
   attributes: {
     "id": id
