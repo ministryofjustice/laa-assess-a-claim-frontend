@@ -176,6 +176,11 @@ describe("views/main/claims/view.njk", () => {
     });
   });
 
+  it("renders a 'provider and client details' h2", () => {
+    const h2 = $("h2#provider-and-client-details");
+    expect(h2).to.have.length(1);
+   });
+
   it("renders a providers summary list", () => {
     const sl = $("#providers");
     expect(sl).to.have.length(1);

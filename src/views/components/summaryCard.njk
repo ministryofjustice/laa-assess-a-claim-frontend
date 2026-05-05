@@ -48,7 +48,10 @@
 {% set card = {
   title: {
     text: t(cardTitleKey)
-  }
+  },
+  attributes: {
+      "id": id
+    }
 } %}
 
 {% if cardAction %}
