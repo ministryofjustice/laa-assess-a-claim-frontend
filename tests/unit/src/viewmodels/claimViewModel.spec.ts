@@ -44,7 +44,7 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.costsAndAllocationsRows[0].action).to.be.undefined;
 
     expect(vm.costsAndAllocationsRows[1].key.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
-    expect(vm.costsAndAllocationsRows[1].value).to.deep.equal({ type: "tag", text: "£9,176.36", tag: { key: "pages.claim.feeStatus.escaped" }, classes: "govuk-tag--blue" });
+    expect(vm.costsAndAllocationsRows[1].value).to.deep.equal({ type: "tag", value: "£9,176.36", tag: { value: { key: "pages.claim.feeStatus.escaped"}, classes: "govuk-tag--blue" }});
 
     expect(vm.costsAndAllocationsRows[2].key.key).to.equal("pages.claim.costsAndAllocations.fixedFeeAmountGranted");
     expect(vm.costsAndAllocationsRows[2].value).to.deep.equal({type: "text", value: "£3,000"});
@@ -87,7 +87,7 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.caseSummaryRows[1].action).to.be.undefined;
 
     expect(vm.caseSummaryRows[2].key.key).to.equal("pages.case.summary.linkedCases");
-    expect(vm.caseSummaryRows[2].value).to.deep.equal({ type: "link", text: "1 linked case", href: "#" });
+    expect(vm.caseSummaryRows[2].value).to.deep.equal({ type: "link", value: "1 linked case", href: "#" });
     expect(vm.caseSummaryRows[2].action).to.be.undefined;
 
     expect(vm.caseSummaryRows[3].key.key).to.equal("pages.case.summary.outcome");

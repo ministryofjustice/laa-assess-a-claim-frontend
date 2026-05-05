@@ -16,12 +16,12 @@
   {% elseif value.type == "tag" %}
 
     {% set valueText %}
-      {{ renderTextOrMessage(t, value.text) }}
+      {{ renderTextOrMessage(t, value.value) }}
     {% endset %}
 
     {% set valueTag = govukTag({
-      text: renderTextOrMessage(t, value.tag),
-      classes: value.classes
+      text: renderTextOrMessage(t, value.tag.value),
+      classes: value.tag.classes
     }) %}
 
     {% set valueHtml %}
@@ -37,7 +37,7 @@
 
   {% elseif value.type == "link" %}
 
-    <a class="govuk-link" href="{{ value.href }}">{{ renderTextOrMessage(t, value.text) }}</a>
+    <a class="govuk-link" href="{{ value.href }}">{{ renderTextOrMessage(t, value.value) }}</a>
 
   {% endif %}
 

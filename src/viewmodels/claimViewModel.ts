@@ -55,7 +55,7 @@ export class ClaimViewModel {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- temporary while we hardcode values
     if (this.feeStatus === FeeStatus.Escaped) {
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.claimType" }, value: { type: "text", value: "Solicitor final bill" } } );
-      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" }, value: { type: "tag", text: formatClaimed(9176.36), tag: this.feeStatusText, classes: this.feeStatusTagClass } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" }, value: { type: "tag", value: formatClaimed(9176.36), tag: { value: this.feeStatusText, classes: this.feeStatusTagClass } } } );
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" }, value: { type: "text", value: formatClaimed(3000) } } );
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.escapeThreshold" }, value: { type: "text", value: formatClaimed(6000) } } );
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.assessmentBasis" }, value: { type: "text", value: "Hourly rate, escaped" } } );
@@ -76,7 +76,7 @@ export class ClaimViewModel {
     const caseSummaryRows: SummaryListRow[] = [];
     caseSummaryRows.push({ key: { key: "pages.case.summary.matterType" }, value: { type: "text", value: "Special Children Act" } });
     caseSummaryRows.push({ key: { key: "pages.case.summary.leadProceeding" }, value: { type: "text", value: "Care order" } });
-    caseSummaryRows.push({ key: { key: "pages.case.summary.linkedCases" }, value: { type: "link", text: "1 linked case", href: "#" } } );
+    caseSummaryRows.push({ key: { key: "pages.case.summary.linkedCases" }, value: { type: "link", value: "1 linked case", href: "#" } } );
     caseSummaryRows.push({ key: { key: "pages.case.summary.outcome" }, value: { type: "text", value: "Final hearing completed" } });
     this.caseSummaryRows = caseSummaryRows;
 

@@ -176,6 +176,56 @@ describe("views/main/claims/view.njk", () => {
     });
   });
 
+  it("shows expected providers summary list rows", () => {
+    const rows = $("#providers .govuk-summary-list__row");
+    expect(rows).to.have.length(5);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.providers.solicitorName",
+      value: "Smith & Co Solicitors",
+    });
+  });
+
+  it("shows expected client summary list rows", () => {
+    const rows = $("#client .govuk-summary-list__row");
+    expect(rows).to.have.length(4);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.client.name",
+      value: "Liam Oldfield",
+    });
+  });
+
+  it("shows expected case summary list rows", () => {
+    const rows = $("#case .govuk-summary-list__row");
+    expect(rows).to.have.length(4);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.summary.matterType",
+      value: "Special Children Act",
+    });
+  });
+
+  it("shows expected certificate scope summary list rows", () => {
+    const rows = $("#certificate .govuk-summary-list__row");
+    expect(rows).to.have.length(6);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.certificateScope.type",
+      value: "Substantive Certificate",
+    });
+  });
+
+  it("shows expected proceedings scope summary list rows", () => {
+    const rows = $("#proceedings .govuk-summary-list__row");
+    expect(rows).to.have.length(2);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.proceedings.careOrder",
+      value: "common.startDate",
+    });
+  });
+
   it("renders an assignment link button", () => {
     const button = $("#assignment");
     expect(button).to.have.length(1);
