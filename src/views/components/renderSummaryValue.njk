@@ -15,25 +15,17 @@
 
   {% elseif value.type == "tag" %}
 
-    {% set valueText %}
-      {{ renderTextOrMessage(t, value.value) }}
-    {% endset %}
-
-    {% set valueTag = govukTag({
+    {% set tag = govukTag({
       text: renderTextOrMessage(t, value.tag.text),
       classes: value.tag.classes
     }) %}
 
-    {% set valueHtml %}
-      <div class="govuk-summary-list__value-split">
-        <span>{{ valueText }}</span>
-        <span class="govuk-summary-list__value-split-right">
-          {{ valueTag | safe }}
-        </span>
-      </div>
-    {% endset %}
-
-    {{ valueHtml | safe }}
+    <div class="govuk-summary-list__value-split">
+      <span>{{ renderTextOrMessage(t, value.value) }}</span>
+      <span class="govuk-summary-list__value-split-right">
+        {{ tag | safe }}
+      </span>
+    </div>
 
   {% elseif value.type == "link" %}
 
