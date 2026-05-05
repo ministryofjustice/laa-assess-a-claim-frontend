@@ -1,14 +1,12 @@
+{% from "components/renderTextOrMessage.njk" import renderTextOrMessage %}
+
 {% macro summaryRow(t, row) %}
   <p class="govuk-body govuk-!-margin-0">
-    {% set keyText = t(row.key.message.key, row.key.message.args) %}
+    {% set keyText = t(row.key.key, row.key.args) %}
     <strong>{{ keyText }}:</strong>
 
-    {% if row.value.text %}
-      {{ row.value.text }}
-    {% elif row.value.html %}
-      {{ row.value.html | safe }}
-    {% else %}
-      {{ t(row.value.message.key, row.value.message.args) }}
+    {% if row.value.type == "text" %}
+      {{ renderTextOrMessage(t, row.value.value) }}
     {% endif %}
 
     {% if row.action %}

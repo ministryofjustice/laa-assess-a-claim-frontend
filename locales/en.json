@@ -14,7 +14,9 @@
     "noDataAvailable": "No data available",
     "minutes": "{minutes} minutes",
     "granted": "{amount} granted",
-    "available": "{amount} (of {available})"
+    "available": "{amount} (of {available})",
+    "discharged": "Discharged {date}",
+    "startDate": "Start date {date}"
   },
   "navigation": {
     "mainNav": {},
@@ -91,6 +93,7 @@
         "priorAuthority": "Prior authority",
         "availableCostLimit": "Available cost limit"
       },
+      "providerAndClientDetails": "Provider and Client details",
       "providers": {
         "title": "Providers",
         "solicitorName": "Solicitor name",
@@ -106,8 +109,31 @@
         "location": "Location",
         "status": "Status"
       }
-    }
-  },
+    }, 
+    "case": {
+      "summary": {
+        "title": "Case",
+        "matterType": "Matter type",
+        "leadProceeding": "Lead proceeding",
+        "linkedCases": "Linked cases",
+        "outcome": "Outcome"
+      },
+      "certificateScope": {
+        "title": "Certificate scope",
+        "type": "Type",
+        "description": "Description",
+        "limitation": "Limitation",
+        "issueDate": "Issue date",
+        "status": "Status",
+        "levelOfService": "Level of service"
+      },
+      "proceedings": {
+        "title": "Proceedings",
+        "careOrder": "Care order",
+        "supervisionOrder": "Supervision order"
+      }
+  } 
+},
   "forms": {
     "name": {
       "label": "Full name",

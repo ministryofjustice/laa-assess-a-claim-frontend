@@ -40,7 +40,7 @@ describe("views/main/claims/view.njk", () => {
   it("renders an assignment status tag", () => {
     const tag = $(`.govuk-tag.${viewModel.assignmentStatusTagClass}`);
     expect(tag).to.have.length(1);
-    expect(tag.text().trim()).to.equal(viewModel.assignmentStatusText);
+    expect(tag.text().trim()).to.equal(viewModel.assignmentStatusText.key);
   });
 
   it("renders a summary list", () => {
@@ -129,11 +129,11 @@ describe("views/main/claims/view.njk", () => {
     const totalClaimAmountRow = rows.eq(1);
     assertSummaryRow(totalClaimAmountRow, {
       key: "pages.claim.costsAndAllocations.totalClaimAmount",
-      value: "£9,176.36",
+      value: "£9,176.36 pages.claim.feeStatus.escaped",
     });
     const totalClaimAmountRightValue = totalClaimAmountRow.find(".govuk-summary-list__value .govuk-summary-list__value-split-right");
     expect(totalClaimAmountRightValue).to.have.length(1);
-    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText);
+    expect(totalClaimAmountRightValue.find(`.govuk-tag.${viewModel.feeStatusTagClass}`).text().trim()).to.equal(viewModel.feeStatusText.key);
 
     assertSummaryRow(rows.eq(2), {
       key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted",
@@ -173,6 +173,142 @@ describe("views/main/claims/view.njk", () => {
     assertSummaryRow(rows.eq(9), {
       key: "pages.claim.costsAndAllocations.availableCostLimit",
       value: "common.available",
+    });
+  });
+
+  it("renders a 'provider and client details' h2", () => {
+    const h2 = $("h2#provider-and-client-details");
+    expect(h2).to.have.length(1);
+    expect(h2.text().trim()).to.equal("pages.claim.providerAndClientDetails")
+  });
+
+  it("shows expected providers summary list rows", () => {
+    const rows = $("#providers .govuk-summary-list__row");
+    expect(rows).to.have.length(5);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.providers.solicitorName",
+      value: "Smith & Co Solicitors",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.claim.providers.solicitorRegion",
+      value: "North West",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.claim.providers.numberOfSolicitors",
+      value: "1",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.claim.providers.counselInvolved",
+      value: "Yes",
+    });
+
+    assertSummaryRow(rows.eq(4), {
+      key: "pages.claim.providers.counselPayment",
+      value: "Paid and reconciled",
+    });
+  });
+
+  it("shows expected client summary list rows", () => {
+    const rows = $("#client .govuk-summary-list__row");
+    expect(rows).to.have.length(4);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.claim.client.name",
+      value: "Liam Oldfield",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.claim.client.dateOfBirth",
+      value: "27 March 1996",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.claim.client.location",
+      value: "Manchester",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.claim.client.status",
+      value: "Parent",
+    });
+  });
+
+  it("shows expected case summary list rows", () => {
+    const rows = $("#case .govuk-summary-list__row");
+    expect(rows).to.have.length(4);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.summary.matterType",
+      value: "Special Children Act",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.case.summary.leadProceeding",
+      value: "Care order",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.case.summary.linkedCases",
+      value: "1 linked case",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.case.summary.outcome",
+      value: "Final hearing completed",
+    });
+  });
+
+  it("shows expected certificate scope summary list rows", () => {
+    const rows = $("#certificate .govuk-summary-list__row");
+    expect(rows).to.have.length(6);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.certificateScope.type",
+      value: "Substantive Certificate",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.case.certificateScope.description",
+      value: "To be represented on an application for Care Order",
+    });
+
+    assertSummaryRow(rows.eq(2), {
+      key: "pages.case.certificateScope.limitation",
+      value: "All steps up to and including final hearing, limited to family help",
+    });
+
+    assertSummaryRow(rows.eq(3), {
+      key: "pages.case.certificateScope.issueDate",
+      value: "27 February 2026",
+    });
+
+    assertSummaryRow(rows.eq(4), {
+      key: "pages.case.certificateScope.status",
+      value: "common.discharged",
+    });
+
+    assertSummaryRow(rows.eq(5), {
+      key: "pages.case.certificateScope.levelOfService",
+      value: "Full representation",
+    });
+  });
+
+  it("shows expected proceedings scope summary list rows", () => {
+    const rows = $("#proceedings .govuk-summary-list__row");
+    expect(rows).to.have.length(2);
+
+    assertSummaryRow(rows.eq(0), {
+      key: "pages.case.proceedings.careOrder",
+      value: "common.startDate Final hearing completed (PB0057)",
+    });
+
+    assertSummaryRow(rows.eq(1), {
+      key: "pages.case.proceedings.supervisionOrder",
+      value: "12 November 2025 Withdrawn (PB0142)",
     });
   });
 
@@ -218,6 +354,6 @@ describe("views/main/claims/view.njk", () => {
   function assertSummaryRow(row: any, expected: any) {
     const { key, value } = expected;
     expect(row.find(".govuk-summary-list__key").text().trim()).to.equal(key);
-    expect(row.find(".govuk-summary-list__value").text().trim()).to.contain(value);
+    expect(row.find(".govuk-summary-list__value").text().trim().replace(/\s+/g, " ")).to.equal(value);
   }
 });
