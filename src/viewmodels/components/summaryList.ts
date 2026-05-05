@@ -12,5 +12,5 @@ export interface SummaryListRow {
 type SummaryValue =
   | { type: "text"; value: TextOrMessage }
   | { type: "texts"; values: TextOrMessage[] }
-  | { type: "tag"; value: TextOrMessage; tag: { value: TextOrMessage; classes: string } }
-  | { type: "link"; value: TextOrMessage; href: string };
+  | { type: "tag"; value: TextOrMessage; tag: { text: TextOrMessage; classes: string } }
+  | { type: "link"; value: { text: TextOrMessage; href: string} };

@@ -20,7 +20,7 @@
     {% endset %}
 
     {% set valueTag = govukTag({
-      text: renderTextOrMessage(t, value.tag.value),
+      text: renderTextOrMessage(t, value.tag.text),
       classes: value.tag.classes
     }) %}
 
@@ -37,7 +37,7 @@
 
   {% elseif value.type == "link" %}
 
-    <a class="govuk-link" href="{{ value.href }}">{{ renderTextOrMessage(t, value.value) }}</a>
+    <a class="govuk-link" href="{{ value.value.href }}">{{ renderTextOrMessage(t, value.value.text) }}</a>
 
   {% endif %}
 

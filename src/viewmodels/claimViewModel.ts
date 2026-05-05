@@ -55,7 +55,7 @@ export class ClaimViewModel {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- temporary while we hardcode values
     if (this.feeStatus === FeeStatus.Escaped) {
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.claimType" }, value: { type: "text", value: "Solicitor final bill" } } );
-      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" }, value: { type: "tag", value: formatClaimed(9176.36), tag: { value: this.feeStatusText, classes: this.feeStatusTagClass } } } );
+      costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" }, value: { type: "tag", value: formatClaimed(9176.36), tag: { text: this.feeStatusText, classes: this.feeStatusTagClass } } } );
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" }, value: { type: "text", value: formatClaimed(3000) } } );
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.escapeThreshold" }, value: { type: "text", value: formatClaimed(6000) } } );
       costsAndAllocationsRows.push({ key: { key: "pages.claim.costsAndAllocations.assessmentBasis" }, value: { type: "text", value: "Hourly rate, escaped" } } );
@@ -76,14 +76,14 @@ export class ClaimViewModel {
     const caseSummaryRows: SummaryListRow[] = [];
     caseSummaryRows.push({ key: { key: "pages.case.summary.matterType" }, value: { type: "text", value: "Special Children Act" } });
     caseSummaryRows.push({ key: { key: "pages.case.summary.leadProceeding" }, value: { type: "text", value: "Care order" } });
-    caseSummaryRows.push({ key: { key: "pages.case.summary.linkedCases" }, value: { type: "link", value: "1 linked case", href: "#" } } );
+    caseSummaryRows.push({ key: { key: "pages.case.summary.linkedCases" }, value: { type: "link", value: { text: "1 linked case", href: "#" } } } );
     caseSummaryRows.push({ key: { key: "pages.case.summary.outcome" }, value: { type: "text", value: "Final hearing completed" } });
     this.caseSummaryRows = caseSummaryRows;
 
     const certificateScopeSummaryRows: SummaryListRow[] = [];
     certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.type" }, value: { type: "text", value: "Substantive Certificate" } });
     certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.description" }, value: { type: "text", value: "To be represented on an application for Care Order" } });
-    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.limitation" }, value: { type: "text", value: "All steps up to and inlcuding final hearing, limited to family help" } });
+    certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.limitation" }, value: { type: "text", value: "All steps up to and including final hearing, limited to family help" } });
     certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.issueDate" }, value: { type: "text", value: formatDateReadable(new Date("2026-02-27")) } });
     certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.status" }, value: { type: "text", value: { key: "common.discharged", args: { date: formatDateReadable(new Date("2026-02-28")) } } } });
     certificateScopeSummaryRows.push({ key: { key: "pages.case.certificateScope.levelOfService" }, value: { type: "text", value: "Full representation" } });
