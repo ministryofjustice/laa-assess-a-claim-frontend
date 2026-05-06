@@ -18,7 +18,7 @@
 
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ vm.title }}</h1>
 
-  {{ summaryList(t, "summary", vm.summary) }}
+  {{ summaryList(t, "summary", vm.summaryRows) }}
 
   {{ linkButton(t, vm.assignmentButton, "assignment", "govuk-button--secondary") }}
 
@@ -32,11 +32,11 @@
 
   {{ summaryCard(t, "client", 'pages.claim.client.title', vm.clientRows )}}
 
-  {{ summaryCard(t, "case", "pages.case.summary.title", vm.caseSummaryRows) }}
+  {{ summaryCard(t, "case", "pages.case.summary.title", vm.caseRows) }}
 
-  {{ summaryCard(t, "certificate", "pages.case.certificateScope.title", vm.certificateScopeSummaryRows) }}
+  {{ summaryCard(t, "certificate", "pages.case.certificateScope.title", vm.certificateScopeRows) }}
 
-  {{ summaryCard(t, "proceedings", "pages.case.proceedings.title", vm.proceedingsSummaryRows) }}
+  {{ summaryCard(t, "proceedings", "pages.case.proceedings.title", vm.proceedingsRows) }}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>

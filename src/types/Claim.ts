@@ -9,7 +9,8 @@ export const ClaimResponseSchema = z.object({
   concluded: z.string().optional().transform(val => (val == null ?  undefined : new Date(val))),
   feeType: z.string().optional(),
   claimed: z.number().optional(),
-  submissionId: z.string().optional()
+  submissionId: z.string().optional(),
+  escaped: z.boolean().optional()
 });
 
 export type Claim = z.infer<typeof ClaimResponseSchema>;
