@@ -86,7 +86,7 @@ export class ClaimViewModel {
     return [
       {
         key: { key: "pages.claim.summary.totalClaimAmount" },
-        value: { type: "text", value: formatClaimed(3480) },
+        value: { type: "text", value: formatClaimed(3480) }, // TODO - default to 'No data available' if 'total claim amount' is undefined
       },
       {
         key: { key: "pages.claim.summary.dateReceived" },
@@ -97,19 +97,19 @@ export class ClaimViewModel {
       },
       {
         key: { key: "pages.claim.summary.caseReferenceNumber" },
-        value: { type: "text", value: "300001820960" },
+        value: { type: "text", value: "300001820960" }, // TODO - default to 'No data available' if 'case reference number' is undefined
       },
       {
         key: { key: "pages.claim.summary.laaReferenceNumber" },
-        value: { type: "text", value: "LAA-90d26c" },
+        value: { type: "text", value: "LAA-90d26c" }, // TODO - default to 'No data available' if 'LAA reference number' is undefined
       },
       {
         key: { key: "pages.claim.summary.assignedTo" },
-        value: { type: "text", value: "Caseworker name" },
+        value: { type: "text", value: "Caseworker name" }, // TODO - default to 'Not yet assigned' if 'assigned to' is undefined
       },
       {
         key: { key: "pages.claim.summary.providerRisk" },
-        value: { type: "text", value: "Low" },
+        value: { type: "text", value: "Low" }, // TODO - default to 'Low' if 'provider risk' is undefined
         action: { href: "#" },
       },
       {
@@ -242,7 +242,7 @@ export class ClaimViewModel {
       },
       {
         key: { key: "pages.claim.providers.counselInvolved" },
-        value: { type: "text", value: "Yes" },
+        value: { type: "text", value: "Yes" }, // TODO - Logic for hiding next line if 'no'
       },
       {
         key: { key: "pages.claim.providers.counselPayment" },
