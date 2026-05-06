@@ -12,7 +12,6 @@ import { FeeStatus } from "#src/models/feeStatus.js";
  */
 export class ClaimViewModel {
   readonly title: string;
-  readonly backLink: string = "/"; // todo make "javascript:history.back()" - CSP blocks this currently
   readonly assessLink: string;
   readonly assignmentStatus: AssignmentStatus;
   readonly feeStatus: FeeStatus;
