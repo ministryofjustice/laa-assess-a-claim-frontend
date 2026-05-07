@@ -112,9 +112,11 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.costsAndAllocationsRows[4].action).to.be.undefined;
   });
 
-  it("builds the provider rows", () => {
+  it("builds the provider rows when counsel payment is defined", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
+
+    expect(vm.providerRows.length).to.equal(5);
 
     expect(vm.providerRows[0].key.key).to.equal("pages.claim.providers.solicitorName");
     expect(vm.providerRows[0].value).to.deep.equal({type: "text", value: "Smith & Co Solicitors"});
@@ -129,12 +131,35 @@ describe("ClaimViewModel constructor()", () => {
     expect(vm.providerRows[2].action).to.be.undefined;
 
     expect(vm.providerRows[3].key.key).to.equal("pages.claim.providers.counselInvolved");
-    expect(vm.providerRows[3].value).to.deep.equal({type: "text", value: "Yes"});
+    expect(vm.providerRows[3].value).to.deep.equal({type: "text", value: { key: "common.yes" }});
     expect(vm.providerRows[3].action).to.be.undefined;
 
     expect(vm.providerRows[4].key.key).to.equal("pages.claim.providers.counselPayment");
     expect(vm.providerRows[4].value).to.deep.equal({type: "text", value: "Paid and reconciled"});
     expect(vm.providerRows[4].action).to.be.undefined;
+  });
+
+  it("builds the provider rows when counsel payment is undefined", () => {
+    const claim: Claim = getClaimsSuccessResponseData.body!.data![1]!;
+    const vm = new ClaimViewModel(claim);
+
+    expect(vm.providerRows.length).to.equal(4);
+
+    expect(vm.providerRows[0].key.key).to.equal("pages.claim.providers.solicitorName");
+    expect(vm.providerRows[0].value).to.deep.equal({type: "text", value: "Smith & Co Solicitors"});
+    expect(vm.providerRows[0].action).to.be.undefined;
+
+    expect(vm.providerRows[1].key.key).to.equal("pages.claim.providers.solicitorRegion");
+    expect(vm.providerRows[1].value).to.deep.equal({type: "text", value: "North West"});
+    expect(vm.providerRows[1].action).to.be.undefined;
+
+    expect(vm.providerRows[2].key.key).to.equal("pages.claim.providers.numberOfSolicitors");
+    expect(vm.providerRows[2].value).to.deep.equal({type: "text", value: "1"});
+    expect(vm.providerRows[2].action).to.be.undefined;
+
+    expect(vm.providerRows[3].key.key).to.equal("pages.claim.providers.counselInvolved");
+    expect(vm.providerRows[3].value).to.deep.equal({type: "text", value: { key: "common.no" }});
+    expect(vm.providerRows[3].action).to.be.undefined;
   });
 
   it("builds the client rows", () => {

@@ -10,6 +10,7 @@ export const getClaimSuccessResponseData: ApiResponse<Claim> = {
     feeType: "Escape",
     claimed: 234.56,
     submissionId: "550e8400-e29b-41d4-a716-446655440000",
+    escaped: true
   },
   status: "success",
 }
@@ -31,7 +32,8 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Escape",
         claimed: 234.56,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
-        escaped: true
+        escaped: true,
+        counselPayment: "Paid and reconciled"
       },
       {
         id: 2,
@@ -51,6 +53,7 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Hourly",
         claimed: 456.01,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
+        escaped: true
       },
       {
         id: 4,
@@ -60,6 +63,7 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Hourly",
         claimed: 456.01,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
+        escaped: false
       },
       {
         id: 5,
@@ -69,6 +73,7 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Hourly",
         claimed: 234.56,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
+        escaped: true
       },
       {
         id: 6,
@@ -78,6 +83,7 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Fixed",
         claimed: 234.56,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
+        escaped: false
       },
       {
         id: 7,
@@ -87,6 +93,7 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Hourly",
         claimed: 456.01,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
+        escaped: true
       },
       {
         id: 8,
@@ -96,6 +103,7 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Fixed",
         claimed: 234.56,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
+        escaped: false
       },
       {
         id: 9,
@@ -105,6 +113,7 @@ export const getClaimsSuccessResponseData: ApiResponse<Paginated<Claim>> = {
         feeType: "Fixed",
         claimed: 56,
         submissionId: "550e8400-e29b-41d4-a716-446655440000",
+        escaped: false
       },
       {
         id: 10,

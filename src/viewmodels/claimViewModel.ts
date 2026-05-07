@@ -1,8 +1,14 @@
 import type { Claim } from "#src/types/Claim.js";
 import { formatClaimed } from "#src/helpers/index.js";
 import type { SummaryListRow } from "./components/summaryList.js";
-import { AssignmentStatusTagClass, FeeStatusTagClass } from "#src/viewmodels/components/status.js";
-import { formatDateReadable, formatMinutes } from "#src/helpers/dataFormatters.js";
+import {
+  AssignmentStatusTagClass,
+  FeeStatusTagClass,
+} from "#src/viewmodels/components/status.js";
+import {
+  formatDateReadable,
+  formatMinutes,
+} from "#src/helpers/dataFormatters.js";
 import type { Message } from "#src/viewmodels/components/message.js";
 import { AssignmentStatus } from "#src/models/assignmentStatus.js";
 import { FeeStatus } from "#src/models/feeStatus.js";
@@ -32,11 +38,11 @@ export class ClaimViewModel {
     this.assessLink = `/claim/${claim.id}/assess`;
     // eslint-disable-next-line @typescript-eslint/prefer-destructuring -- temporary while we hardcode values
     this.assignmentStatus = AssignmentStatus.InProgress; // TODO - derive from claim
-    this.feeStatus = claim.escaped === true ? FeeStatus.Escaped : FeeStatus.Fixed;
+    this.feeStatus = claim.escaped ? FeeStatus.Escaped : FeeStatus.Fixed;
 
     this.summaryRows = ClaimViewModel.buildSummaryRows();
     this.costsAndAllocationsRows = ClaimViewModel.buildCostsAndAllocationsRows(this.feeStatus);
-    this.providerRows = ClaimViewModel.buildProviderRows();
+    this.providerRows = ClaimViewModel.buildProviderRows(claim);
     this.clientRows = ClaimViewModel.buildClientRows();
     this.caseRows = ClaimViewModel.buildCaseRows();
     this.certificateScopeRows = ClaimViewModel.buildCertificateScopeRows();
@@ -225,8 +231,8 @@ export class ClaimViewModel {
     }
   }
 
-  private static buildProviderRows(): SummaryListRow[] {
-    return [
+  private static buildProviderRows(claim: Claim): SummaryListRow[] {
+    const solicitorRows: SummaryListRow[] = [
       {
         key: { key: "pages.claim.providers.solicitorName" },
         value: { type: "text", value: "Smith & Co Solicitors" },
@@ -239,15 +245,26 @@ export class ClaimViewModel {
         key: { key: "pages.claim.providers.numberOfSolicitors" },
         value: { type: "text", value: "1" },
       },
-      {
-        key: { key: "pages.claim.providers.counselInvolved" },
-        value: { type: "text", value: "Yes" }, // TODO - Logic for hiding next line if 'no'
-      },
-      {
-        key: { key: "pages.claim.providers.counselPayment" },
-        value: { type: "text", value: "Paid and reconciled" },
-      },
     ];
+    const counselRows: SummaryListRow[] =
+      claim.counselPayment != null
+        ? [
+            {
+              key: { key: "pages.claim.providers.counselInvolved" },
+              value: { type: "text", value: { key: "common.yes" } },
+            },
+            {
+              key: { key: "pages.claim.providers.counselPayment" },
+              value: { type: "text", value: claim.counselPayment },
+            },
+          ]
+        : [
+            {
+              key: { key: "pages.claim.providers.counselInvolved" },
+              value: { type: "text", value: { key: "common.no" } },
+            },
+          ];
+    return [...solicitorRows, ...counselRows];
   }
 
   private static buildClientRows(): SummaryListRow[] {
