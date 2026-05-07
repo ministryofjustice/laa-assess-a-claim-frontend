@@ -4,12 +4,11 @@ import { getClaimsSuccessResponseData } from "#tests/assets/getClaimsResponseDat
 import { expect } from "chai";
 
 describe("ClaimViewModel constructor()", () => {
-  it("builds the title, back link", () => {
+  it("builds the title", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
 
     expect(vm.title).to.equal("Fixed fee: Special Children Act (Care)");
-    expect(vm.backLink).to.equal("/");
   });
 
   it("builds the summary rows", () => {

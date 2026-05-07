@@ -34,7 +34,7 @@ describe("views/main/claims/view.njk", () => {
   it("renders a Back link to the list", () => {
     const back = $("a.govuk-back-link");
     expect(back).to.have.length(1);
-    expect(back.attr("href")).to.equal(viewModel.backLink ?? "/claims");
+    expect(back.attr("href")).to.equal("#");
   });
 
   it("renders an assignment status tag", () => {
