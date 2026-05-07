@@ -6,12 +6,12 @@ export const ClaimResponseSchema = z.object({
   providerUserId: z.string().optional(),
   client: z.string().optional(),
   category: z.string().optional(),
-  concluded: z.string().optional().transform(val => (val == null ?  undefined : new Date(val))),
+  concluded: z.string().nullish().transform(val => (val == null ? undefined : new Date(val))),
   feeType: z.string().optional(),
   claimed: z.number().optional(),
   submissionId: z.string().optional(),
   escaped: z.boolean(),
-  counselPayment: z.string().optional()
+  counselPayment: z.string().nullish()
 });
 
 export type Claim = z.infer<typeof ClaimResponseSchema>;
