@@ -24,6 +24,7 @@ describe("Claim Service", () => {
                 feeType: "Fixed",
                 claimed: 123.45,
                 submissionId: "3fa85f64-5717-4567-b3fc-2c963f66afa7",
+                escaped: false,
               },
             ],
             page: 2,
@@ -60,6 +61,7 @@ describe("Claim Service", () => {
           feeType: "Fixed",
           claimed: 123.45,
           submissionId: "3fa85f64-5717-4567-b3fc-2c963f66afa7",
+          escaped: false,
         },
       ]);
     });
@@ -121,6 +123,7 @@ describe("Claim Service", () => {
             feeType: "Fixed",
             claimed: 4500,
             submissionId: "sub-1",
+            escaped: false,
           },
         }),
       };
@@ -142,6 +145,7 @@ describe("Claim Service", () => {
         feeType: "Fixed",
         claimed: 4500,
         submissionId: "sub-1",
+        escaped: false,
       });
     });
 

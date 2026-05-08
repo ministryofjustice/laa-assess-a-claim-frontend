@@ -15,6 +15,7 @@ export function makeFakeClaim(id: number, overrides = {}): object {
     feeType: "Escape",
     claimed: 234.56,
     submissionId: "550e8400-e29b-41d4-a716-446655440000",
+    escaped: true,
     ...overrides
   }
 }

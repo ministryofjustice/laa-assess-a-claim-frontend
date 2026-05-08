@@ -208,7 +208,7 @@ describe("views/main/claims/view.njk", () => {
 
     assertSummaryRow(rows.eq(3), {
       key: "pages.claim.providers.counselInvolved",
-      value: "Yes",
+      value: "common.yes",
     });
 
      assertSummaryRow(rows.eq(4), {
