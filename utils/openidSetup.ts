@@ -119,10 +119,10 @@ export const oidcSetup = (app: Application): void => {
   app.get(LOGIN_PATH, async (req: Request, res: Response) => {
     const config = await getConfig();
 
-    const redirectUri = `${BASE_URL}${CALLBACK_PATH}`;
-    const codeVerifier = randomPKCECodeVerifier();
+    const redirectUri = req.session.oidc?.redirect_uri ?? `${BASE_URL}${CALLBACK_PATH}`;
+    const codeVerifier = req.session.oidc?.code_verifier ?? randomPKCECodeVerifier();
     const codeChallenge = await calculatePKCECodeChallenge(codeVerifier);
-    const state = randomState();
+    const state = req.session.oidc?.state ?? randomState();
 
     // Persist flow state in the session
     req.session.oidc = {
