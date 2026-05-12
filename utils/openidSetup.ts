@@ -168,20 +168,24 @@ export const oidcSetup = (app: Application): void => {
 
       const idTokenPayload = decodeIdToken(tokens.id_token);
 
-      req.session.oidc = {
-        ...sess,
-        tokens,
-        userinfo: idTokenPayload, 
-      };
+      req.session.regenerate((err) => {
+        if (err != null) {
+          next(err);
+          return;
+        }
 
-      // redirect to home page
-      res.redirect('/');
+        req.session.oidc = {
+          tokens,
+          userinfo: idTokenPayload,
+        };
+
+        // redirect to home page
+        res.redirect('/');
+      });
     } catch (err) {
-
       handleCallbackError(err, req);
-
-  next(err);
-}
+      next(err);
+    }
   });
 
   // GET /logout -> clear session, optionally call OP logout if available
