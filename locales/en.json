@@ -47,7 +47,6 @@
       "title": "English"
     },
     "error": {
-      "pageTitle": "Sorry, there is a problem with the service – {SERVICE_NAME} – GOV.UK",
       "notFound": {
         "title": "Page not found",
         "p1": "If you typed the web address, check it is correct.",

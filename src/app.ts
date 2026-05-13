@@ -142,14 +142,6 @@ const createApp = async (): Promise<express.Application> => {
     app.use(livereload());
   }
 
-  // Display ASCII Art banner
-  displayAsciiBanner(config);
-
-  // Starts the Express server on the specified port
-  app.listen(config.app.port, () => {
-    console.log(chalk.yellow(`Listening on port ${config.app.port}...`));
-  });
-
   app.use((req, res, next) => {
     res.status(404).render("main/notFound.njk");
   });
