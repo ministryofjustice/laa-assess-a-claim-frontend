@@ -151,7 +151,7 @@ const createApp = async (): Promise<express.Application> => {
   });
 
   app.use((req, res, next) => {
-    res.status(404).send("Page not found");
+    res.status(404).render("main/notFound.njk");
   });
 
   return app;
@@ -180,10 +180,6 @@ const createManagementApp = (): express.Application => {
 
   // Set up metrics
   prometheusSetup(app);
-
-  app.use((req, res, next) => {
-    res.status(404).send("Page not found");
-  });
 
   return app;
 };

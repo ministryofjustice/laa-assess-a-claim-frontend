@@ -1,5 +1,6 @@
 import { expect, config as chaiConfig } from 'chai';
 import { load, CheerioAPI } from 'cheerio';
+import { renderView } from "#tests/unit/src/views/base/renderView.js";
 
 // Show full strings in diffs if something fails
 chaiConfig.truncateThreshold = 0;
@@ -8,21 +9,15 @@ describe('views/main/error.njk', () => {
   let $: CheerioAPI;
 
   before(async () => {
-    // Import the JS helper at runtime to avoid TS/ESLint project faff
-    const { setupNunjucksForGovUk } = await import('../../../support/nunjucks-govuk.js');
-    const env = setupNunjucksForGovUk();
-
-    const html = env.render('main/error.njk', {
+    $ = await renderView('main/error.njk', {
       status: 'The service is not available at this time',
       error: 'Please try again later.'
     });
-
-    $ = load(html);
   });
 
   it('renders the page <title> from the pageTitle block', () => {
     const title = $('head > title').text().trim();
-    expect(title).to.equal("Sorry, there is a problem with the service – 'SERVICE_NAME' – GOV.UK");
+    expect(title).to.equal("common.title");
   });
 
   it('renders the status in the main H1', () => {
