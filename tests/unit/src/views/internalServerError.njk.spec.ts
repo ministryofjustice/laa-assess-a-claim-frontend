@@ -5,11 +5,11 @@ import { renderView } from "#tests/unit/src/views/base/renderView.js";
 // Show full strings in diffs if something fails
 chaiConfig.truncateThreshold = 0;
 
-describe('views/main/notFound.njk', () => {
+describe('views/main/internalServerError.njk', () => {
   let $: CheerioAPI;
 
   before(async () => {
-    $ = await renderView('main/notFound.njk');
+    $ = await renderView('main/internalServerError.njk');
   });
 
   it('renders the page <title> from the pageTitle block', () => {
@@ -20,20 +20,13 @@ describe('views/main/notFound.njk', () => {
   it('renders the title in the main H1', () => {
     const h1 = $("h1.govuk-heading-l");
     expect(h1).to.have.length(1);
-    expect(h1.text().trim()).to.equal("pages.error.notFound.title");
+    expect(h1.text().trim()).to.equal("pages.error.internalServerError.title");
   });
 
   it("renders the first paragraph", () => {
     const ps = $("#main-content p");
     const p = ps.first();
     expect(p).to.have.length(1);
-    expect(p.text().trim()).to.equal("pages.error.notFound.p1");
-  });
-
-  it("renders the second paragraph", () => {
-    const ps = $("#main-content p");
-    const p = ps.eq(1);
-    expect(p).to.have.length(1);
-    expect(p.text().trim()).to.equal("pages.error.notFound.p2");
+    expect(p.text().trim()).to.equal("pages.error.internalServerError.p1");
   });
 });

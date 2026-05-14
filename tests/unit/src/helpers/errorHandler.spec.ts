@@ -10,9 +10,11 @@ import {
   isServerError,
   createProcessedError,
   extractAndLogError,
+  createProcessedApiError,
 } from "#src/helpers/errorHandler.js";
 import { strict as assert } from "assert";
 import sinon from "sinon";
+import { ApiError } from "#src/types/api-types.js";
 
 describe("errorHandler", () => {
   beforeEach(() => {
@@ -190,6 +192,24 @@ describe("errorHandler", () => {
       const error = { response: { status: 534 } };
       const result = extractAndLogError(error, "testing context");
       assert.strictEqual(result, "Service error (534). Please try again later.");
+    });
+  });
+
+  describe("createProcessedApiError", () => {
+    it("should convert to HTTP error when statusCode is defined", () => {
+      const error: ApiError = { status: "error", statusCode: 400, message: "There was an error with status code 400" };
+      const result = createProcessedApiError(error);
+      assert.strictEqual(result.status, 400);
+      assert.strictEqual(result.statusCode, 400);
+      assert.strictEqual(result.message, "There was an error with status code 400");
+    });
+
+    it("should convert to HTTP error when statusCode is undefined", () => {
+      const error: ApiError = { status: "error", message: "There was an error with status code unknown" };
+      const result = createProcessedApiError(error);
+      assert.strictEqual(result.status, 500);
+      assert.strictEqual(result.statusCode, 500);
+      assert.strictEqual(result.message, "There was an error with status code unknown");
     });
   });
 });

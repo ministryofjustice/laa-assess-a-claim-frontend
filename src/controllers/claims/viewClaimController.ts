@@ -1,9 +1,11 @@
-import { createProcessedError } from "#src/helpers/errorHandler.js";
+import {
+  createProcessedApiError,
+  createProcessedError,
+} from "#src/helpers/errorHandler.js";
 import { claimService } from "#src/services/claimService.js";
-import type { Request, Response, NextFunction } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { ClaimViewModel } from "#src/viewmodels/claimViewModel.js";
-
-const NOT_FOUND = 404;
+import createHttpError, { HttpError } from "http-errors";
 
 /**
  * Handle claim view with API data
@@ -22,18 +24,14 @@ export async function viewClaimPage(
     const response = await claimService.getClaim(req.axiosMiddleware, claimId);
 
     if (response.status === "success") {
-      const { body: claim } = response
+      const { body: claim } = response;
       const vm = new ClaimViewModel(claim);
 
-      res.render("main/claims/view.njk", {vm});
+      res.render("main/claims/view.njk", { vm });
     } else {
-      res.status(NOT_FOUND).render("main/error.njk", {
-        status: "404",
-        error: response.message,
-      });
+      next(createProcessedApiError(response));
     }
   } catch (error) {
-    const processedError = createProcessedError(error, `fetching claim details for user`);
-    next(processedError);
+    next(createProcessedError(error, `fetching claim details for user`));
   }
 }

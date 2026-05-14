@@ -9,6 +9,8 @@
  */
 
 import { devError } from './index.js';
+import createHttpError, { type HttpError } from "http-errors";
+import type { ApiError } from "#src/types/api-types.js";
 
 // HTTP Status Code Constants
 const HTTP_BAD_REQUEST = 400;
@@ -240,4 +242,14 @@ export function extractAndLogError(error: unknown, context: string): string {
   //TODO: convert this to use devError IF we include this 
   console.error(`${context}: ${userFriendlyMessage}`);
   return userFriendlyMessage;
+}
+
+/**
+ * Convert ApiError to HttpError
+ * @param {ApiError} originalError - Original error object
+ * @returns {HttpError} Processed error
+ */
+export function createProcessedApiError(originalError: ApiError): HttpError {
+  devError(`Error: ${originalError.message}`);
+  return createHttpError(originalError.statusCode ?? 500, originalError.message);
 }

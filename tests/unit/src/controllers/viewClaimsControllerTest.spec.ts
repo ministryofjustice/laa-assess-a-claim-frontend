@@ -25,6 +25,7 @@ import { handleYourClaimsPage } from "#src/controllers/viewClaimsController.js";
 import { getClaimsSuccessResponseData } from "#tests/assets/getClaimsResponseData.js";
 import { ApiResponse, Paginated } from "#src/types/api-types.js";
 import { Claim } from "#src/types/Claim.js";
+import { HttpError } from "http-errors";
 
 describe("view claims Controller", () => {
   let req: Partial<Request>;
@@ -105,9 +106,10 @@ describe("view claims Controller", () => {
       expect(res.redirect.calledWith("/?page=1")).to.be.true;
     });
 
-    it("should render the error page with when 404 status", async () => {
-      const mockApiResponse = {
-        status: "404",
+    it("should invoke error handler when error returning claims", async () => {
+      const mockApiResponse: ApiResponse<Paginated<Claim>> = {
+        status: "error",
+        message: "not found"
       };
       claimServiceStub.resolves(mockApiResponse);
 
@@ -116,7 +118,9 @@ describe("view claims Controller", () => {
       // Assert
       expect(claimServiceStub.calledOnce).to.be.true;
       expect(claimServiceStub.calledWith(req.axiosMiddleware)).to.be.true;
-      expect(renderStub.calledWith("main/error.njk")).to.be.true;
+      expect(next.calledOnce).to.be.true;
+      expect(next.firstCall.args[0]).to.be.instanceOf(HttpError);
+      expect(next.firstCall.args[0].message).to.include("not found");
     });
 
     it("should delegate API errors to Express error handling middleware with user-friendly message", async () => {

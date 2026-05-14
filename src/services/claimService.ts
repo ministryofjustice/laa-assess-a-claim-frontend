@@ -96,12 +96,20 @@ class ClaimService {
         client: apiClient,
       });
 
-      const parsed = ClaimResponseSchema.parse(response.data);
+      if (response.status === 200) {
+        const parsed = ClaimResponseSchema.parse(response.data);
 
-      return {
-        body: parsed,
-        status: "success",
-      };
+        return {
+          body: parsed,
+          status: "success",
+        };
+      } else {
+        return {
+          status: "error",
+          statusCode: response.status,
+          message: response.error?.detail ?? "Something went wrong",
+        };
+      }
     } catch (error) {
       const errorMessage = extractAndLogError(error, "API error");
 

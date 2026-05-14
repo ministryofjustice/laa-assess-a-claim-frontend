@@ -113,6 +113,7 @@ describe("Claim Service", () => {
         createClient: sinon.stub().returns({}),
         getClaims: sinon.stub(),
         getClaim: sinon.stub().resolves({
+          status: 200,
           data: {
             id: 123,
             ufn: "UFN-123",

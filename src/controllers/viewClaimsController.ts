@@ -1,12 +1,10 @@
-import { createProcessedError } from "#src/helpers/errorHandler.js";
+import { createProcessedApiError, createProcessedError } from "#src/helpers/errorHandler.js";
 import { claimService } from "#src/services/claimService.js";
-import type { Request, Response, NextFunction } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { ClaimsTableViewModel } from "#src/viewmodels/claimsViewModel.js";
 import { InvalidPageError } from "#src/types/errors.js";
 import { parseNumberQueryParam } from "#src/helpers/queryParsers.js";
 import { ROUTES } from "#routes/index.js";
-
-const NOT_FOUND = 404;
 
 /**
  * Handle claim view with API data
@@ -38,10 +36,7 @@ export async function handleYourClaimsPage(
         pagination: claimsTableViewModel.pagination,
       });
     } else {
-      res.status(NOT_FOUND).render("main/error.njk", {
-        status: "404",
-        error: response.message,
-      });
+      next(createProcessedApiError(response));
     }
   } catch (error) {
     if (error instanceof InvalidPageError) {
