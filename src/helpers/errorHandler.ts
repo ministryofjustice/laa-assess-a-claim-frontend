@@ -11,6 +11,8 @@
 import { devError } from './index.js';
 import createHttpError, { type HttpError } from "http-errors";
 import type { ApiError } from "#src/types/api-types.js";
+import { AxiosError } from "axios";
+import { ApiErrorResponse } from "#src/generated/claim-api/index.js";
 
 // HTTP Status Code Constants
 const HTTP_BAD_REQUEST = 400;

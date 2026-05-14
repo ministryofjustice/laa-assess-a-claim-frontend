@@ -51,17 +51,25 @@ class ClaimService {
         query: { limit, page },
       });
 
-      const parsed = ClaimsResponseSchema.parse(response.data);
-      const { claims: data } = parsed;
-      const meta = parsed;
+      if (response.status === 200) {
+        const parsed = ClaimsResponseSchema.parse(response.data);
+        const { claims: data } = parsed;
+        const meta = parsed;
 
-      return {
-        body: {
-          data,
-          meta,
-        },
-        status: "success",
-      };
+        return {
+          body: {
+            data,
+            meta,
+          },
+          status: "success",
+        };
+      } else {
+        return {
+          status: "error",
+          statusCode: response.status,
+          message: response.error?.detail ?? "Something went wrong",
+        };
+      }
     } catch (error) {
       const errorMessage = extractAndLogError(error, "API error");
 
