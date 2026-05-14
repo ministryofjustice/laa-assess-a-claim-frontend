@@ -1,11 +1,7 @@
-import {
-  createProcessedApiError,
-  createProcessedError,
-} from "#src/helpers/errorHandler.js";
+import { createProcessedApiError, createProcessedError } from "#src/helpers/errorHandler.js";
 import { claimService } from "#src/services/claimService.js";
 import type { NextFunction, Request, Response } from "express";
 import { ClaimViewModel } from "#src/viewmodels/claimViewModel.js";
-import createHttpError, { HttpError } from "http-errors";
 
 /**
  * Handle claim view with API data
