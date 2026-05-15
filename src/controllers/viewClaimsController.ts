@@ -1,4 +1,4 @@
-import { createProcessedApiError, createProcessedError } from "#src/helpers/errorHandler.js";
+import { processApiError, processError } from "#src/helpers/index.js";
 import { claimService } from "#src/services/claimService.js";
 import type { NextFunction, Request, Response } from "express";
 import { ClaimsTableViewModel } from "#src/viewmodels/claimsViewModel.js";
@@ -36,18 +36,14 @@ export async function handleYourClaimsPage(
         pagination: claimsTableViewModel.pagination,
       });
     } else {
-      next(createProcessedApiError(response));
+      next(processApiError(response, `fetching claims details for user`));
     }
   } catch (error) {
     if (error instanceof InvalidPageError) {
       console.info(error.message);
       res.redirect(`${ROUTES.CLAIMS}?page=${error.pageToRedirectTo}`);
     } else {
-      // Use the error processing utility
-      const processedError = createProcessedError(error, `fetching claims details for user`);
-
-      // Pass the processed error to the global error handler
-      next(processedError);
+      next(processError(error, `fetching claims details for user`));
     }
   }
 }

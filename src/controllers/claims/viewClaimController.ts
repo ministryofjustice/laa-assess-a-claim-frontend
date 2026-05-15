@@ -1,4 +1,4 @@
-import { createProcessedApiError, createProcessedError } from "#src/helpers/errorHandler.js";
+import { processApiError, processError } from "#src/helpers/index.js";
 import { claimService } from "#src/services/claimService.js";
 import type { NextFunction, Request, Response } from "express";
 import { ClaimViewModel } from "#src/viewmodels/claimViewModel.js";
@@ -25,9 +25,9 @@ export async function viewClaimPage(
 
       res.render("main/claims/view.njk", { vm });
     } else {
-      next(createProcessedApiError(response));
+      next(processApiError(response, `fetching claim details for user`));
     }
   } catch (error) {
-    next(createProcessedError(error, `fetching claim details for user`));
+    next(processError(error, `fetching claim details for user`));
   }
 }

@@ -109,6 +109,7 @@ describe("view claims Controller", () => {
     it("should invoke error handler when error returning claims", async () => {
       const mockApiResponse: ApiResponse<Paginated<Claim>> = {
         status: "error",
+        statusCode: 500,
         message: "not found"
       };
       claimServiceStub.resolves(mockApiResponse);
@@ -134,7 +135,7 @@ describe("view claims Controller", () => {
       // Assert - the controller should call next with a processed error
       expect(next.calledOnce).to.be.true;
       expect(next.firstCall.args[0]).to.be.instanceOf(Error);
-      expect(next.firstCall.args[0].message).to.include("An unexpected error occurred");
+      expect(next.firstCall.args[0].message).to.include("API Error");
     });
   });
 });
