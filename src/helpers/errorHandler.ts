@@ -11,6 +11,8 @@
 import { devError } from "./index.js";
 import createHttpError, { type HttpError } from "http-errors";
 import type { ApiError } from "#src/types/api-types.js";
+import { ApiErrorResponse } from "#src/generated/claim-api/index.js";
+import axios from "axios";
 
 // HTTP Status Code Constants
 const HTTP_BAD_REQUEST = 400;
@@ -166,6 +168,23 @@ export function extractErrorMessage(error: unknown): string {
 }
 
 /**
+ * Extract error message from various error types with user-friendly messages
+ * @param {unknown} error - Error object
+ * @returns {string} User-friendly error message
+ */
+export function extractErrorMessage2(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (typeof error === 'string') {
+    return error;
+  }
+
+  return String(error);
+}
+
+/**
  * Check if an error is a specific HTTP status code
  * @param {unknown} error - Error to check
  * @param {number} status - HTTP status code to check for
@@ -252,4 +271,54 @@ export function extractAndLogError(error: unknown, context: string): string {
 export function createProcessedApiError(originalError: ApiError): HttpError {
   devError(`Error: ${originalError.message}`);
   return createHttpError(originalError.statusCode ?? 500, originalError.message);
+}
+
+/**
+ * Create API error
+ * @param {unknown} error - Original error object
+ * @returns {ApiError} API error
+ */
+export function createApiError(error: unknown): ApiError {
+  if (axios.isAxiosError<ApiErrorResponse>(error)) {
+    if (error.response != null) {
+      const { response } = error;
+      return {
+        status: "error",
+        statusCode: response.status,
+        message: response.data.detail ?? getHttpErrorMessage(response.status),
+      };
+    } else {
+      switch (error.code) {
+        case "ECONNABORTED":
+        case "ETIMEDOUT":
+          return {
+            status: "error",
+            statusCode: HTTP_GATEWAY_TIMEOUT,
+            message: "Request timed out",
+          };
+
+        case "ECONNREFUSED":
+        case "ENOTFOUND":
+        case "ECONNRESET":
+          return {
+            status: "error",
+            statusCode: HTTP_SERVICE_UNAVAILABLE,
+            message: "Unable to reach upstream service",
+          };
+
+        default:
+          return {
+            status: "error",
+            statusCode: HTTP_INTERNAL_SERVER_ERROR,
+            message: error.message,
+          };
+      }
+    }
+  }
+
+  return {
+    status: "error",
+    statusCode: HTTP_INTERNAL_SERVER_ERROR,
+    message: extractErrorMessage2(error),
+  };
 }

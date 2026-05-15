@@ -71,10 +71,13 @@ describe("Claim Service", () => {
     it("returns error for a non-200 response", async () => {
       const deps = {
         createClient: sinon.stub().returns({}),
-        getClaims: sinon.stub().resolves({
-          status: 500,
-          error: {
-            detail: "An error occurred",
+        getClaims: sinon.stub().rejects({
+          isAxiosError: true,
+          response: {
+            status: 500,
+            data: {
+              detail: "An error occurred",
+            },
           },
         }),
         getClaim: sinon.stub(),
@@ -180,15 +183,18 @@ describe("Claim Service", () => {
       const deps = {
         createClient: sinon.stub().returns({}),
         getClaims: sinon.stub(),
-        getClaim: sinon.stub().resolves({
-          status: 404,
-          error: {
-            detail: "Resource not found",
-            instance: "/api/v1/claims/123",
+        getClaim: sinon.stub().rejects({
+          isAxiosError: true,
+          response: {
             status: 404,
-            title: "Not found",
-            correlationId: "b7d7c91f-950a-43f6-a8de-ffb37f1001c1",
-            errorCode: "NOT_FOUND",
+            data: {
+              detail: "Resource not found",
+              instance: "/api/v1/claims/123",
+              status: 404,
+              title: "Not found",
+              correlationId: "b7d7c91f-950a-43f6-a8de-ffb37f1001c1",
+              errorCode: "NOT_FOUND",
+            },
           },
         }),
       };

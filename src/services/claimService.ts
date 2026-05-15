@@ -8,6 +8,7 @@ import type { ApiResponse, Paginated } from "#src/types/api-types.js";
 import type { AxiosInstanceWrapper } from "#src/types/axios-instance-wrapper.js";
 import { type Claim, ClaimResponseSchema, ClaimsResponseSchema } from "#src/types/Claim.js";
 import config from "../../config.js";
+import { createApiError } from "#src/helpers/errorHandler.js";
 
 interface ClaimServiceDeps {
   createClient: typeof createClient;
@@ -43,6 +44,7 @@ class ClaimService {
     const apiClient = deps.createClient({
       baseURL: config.api.baseUrl,
       axios: axiosMiddleware.axiosInstance,
+      throwOnError: true,
     });
 
     try {
@@ -51,32 +53,19 @@ class ClaimService {
         query: { limit, page },
       });
 
-      if (response.status === 200) {
-        const parsed = ClaimsResponseSchema.parse(response.data);
-        const { claims: data } = parsed;
-        const meta = parsed;
-
-        return {
-          body: {
-            data,
-            meta,
-          },
-          status: "success",
-        };
-      } else {
-        return {
-          status: "error",
-          statusCode: response.status,
-          message: response.error?.detail ?? "Something went wrong",
-        };
-      }
-    } catch (error) {
-      const errorMessage = extractAndLogError(error, "API error");
+      const parsed = ClaimsResponseSchema.parse(response.data);
+      const { claims: data } = parsed;
+      const meta = parsed;
 
       return {
-        status: "error",
-        message: errorMessage,
+        body: {
+          data,
+          meta,
+        },
+        status: "success",
       };
+    } catch (error) {
+      return createApiError(error);
     }
   }
 
@@ -96,6 +85,7 @@ class ClaimService {
     const apiClient = deps.createClient({
       baseURL: config.api.baseUrl,
       axios: axiosMiddleware.axiosInstance,
+      throwOnError: true,
     });
 
     try {
@@ -104,27 +94,14 @@ class ClaimService {
         client: apiClient,
       });
 
-      if (response.status === 200) {
-        const parsed = ClaimResponseSchema.parse(response.data);
-
-        return {
-          body: parsed,
-          status: "success",
-        };
-      } else {
-        return {
-          status: "error",
-          statusCode: response.status,
-          message: response.error?.detail ?? "Something went wrong",
-        };
-      }
-    } catch (error) {
-      const errorMessage = extractAndLogError(error, "API error");
+      const parsed = ClaimResponseSchema.parse(response.data);
 
       return {
-        status: "error",
-        message: errorMessage,
+        body: parsed,
+        status: "success",
       };
+    } catch (error) {
+      return createApiError(error);
     }
   }
 }
