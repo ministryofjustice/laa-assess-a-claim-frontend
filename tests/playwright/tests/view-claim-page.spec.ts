@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/index.js';
+import { expect, test } from "../fixtures/index.js";
 
 test('homepage should have the correct title', async ({ page }) => {
 	// Navigate to the homepage
@@ -12,18 +12,15 @@ test('home page displays service name and table', async ({ pages, checkAccessibi
   const page = pages.viewClaimPage(1);
   await page.navigate();
   await page.waitForLoad();
-  
+
   // Test the service name heading is present
   await expect(page.heading).toBeVisible();
-  const serviceName = await page.getServiceName();
-  expect(serviceName).toBeTruthy();
-
-  await expect(page.heading).toContainText('Fixed fee: Special Children Act (Care)')
+  await expect(page.heading).toHaveText('Fixed fee: Special Children Act (Care)');
 
   const primaryBttn = page.primaryButton
   await expect(primaryBttn).toBeVisible();
   await expect(primaryBttn).toContainText('Make a decision');
-    
+
   // Run accessibility check
   await checkAccessibility();
 });
