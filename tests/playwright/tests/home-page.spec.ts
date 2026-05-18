@@ -5,7 +5,7 @@ test('homepage should have the correct title', async ({ page }) => {
 	await page.goto('/');
 
 	// Check for the title of the application
-	await expect(page).toHaveTitle(/Assess Claim for Civil Work – GOV.UK/);
+	await expect(page).toHaveTitle('Your Assessments – Assess claim for civil work – GOV.UK');
 });
 
 test('home page displays service name and table', async ({ pages, checkAccessibility }) => {

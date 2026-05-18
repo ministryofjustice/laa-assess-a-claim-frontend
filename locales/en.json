@@ -16,7 +16,10 @@
     "granted": "{amount} granted",
     "available": "{amount} (of {available})",
     "discharged": "Discharged {date}",
-    "startDate": "Start date {date}"
+    "startDate": "Start date {date}",
+    "title": "{title} – {service} – GOV.UK",
+    "service": "Assess claim for civil work",
+    "department": "Ministry of Justice"
   },
   "navigation": {
     "mainNav": {},
@@ -44,7 +47,15 @@
       "title": "English"
     },
     "error": {
-      "pageTitle": "Sorry, there is a problem with the service – {SERVICE_NAME} – GOV.UK"
+      "notFound": {
+        "title": "Page not found",
+        "p1": "If you typed the web address, check it is correct.",
+        "p2": "If you pasted the web address, check you copied the entire address."
+      },
+      "internalServerError": {
+        "title": "Sorry, there is a problem with the service",
+        "p1": "Try again later."
+      }
     },
     "claim": {
       "assignmentStatus": {
@@ -109,7 +120,7 @@
         "location": "Location",
         "status": "Status"
       }
-    }, 
+    },
     "case": {
       "summary": {
         "title": "Case",
@@ -132,8 +143,8 @@
         "careOrder": "Care order",
         "supervisionOrder": "Supervision order"
       }
-  } 
-},
+    }
+  },
   "forms": {
     "name": {
       "label": "Full name",
