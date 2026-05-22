@@ -45,7 +45,7 @@ router.get(
 
 /* TEST show user properties */
 router.get('/user', function (req: Request, res: Response): void {
-	res.render('main/user');
+	res.render('main/user.njk');
 });
 
 export default router;
