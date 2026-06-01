@@ -1,0 +1,35 @@
+.demo-pdf-stage {
+  border: 1px solid #b1b4b6;
+  padding: 0 !important;
+  overflow: auto;
+}
+
+.demo-evidence-panel {
+  border: 1px solid #b1b4b6;
+  padding: 20px;
+  margin-bottom: 30px;
+  background: #f8f8f8;
+}
+
+.demo-pdf-stage {
+  position: relative;
+  border: 1px solid #b1b4b6;
+  background: #f8f8f8;
+  padding: 20px;
+  margin-bottom: 30px;
+  max-width: 900px;
+  overflow: auto;
+}
+
+.demo-pdf-stage canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.demo-evidence-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}

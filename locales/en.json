@@ -86,7 +86,7 @@
       "subNavigation": {
         "ariaLabel": "Sub navigation",
         "claimSummary": "Claim summary",
-        "reviewAndAssess": "Review and assess",
+        "reviewAndAssess": "Line items",
         "claimHistory": "Claim history",
         "allEvidence": "All evidence"
       },

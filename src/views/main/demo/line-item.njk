@@ -1,0 +1,76 @@
+{% from "components/backLink.njk" import backLink %}
+{% extends "base.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block content %}
+
+  {{ backLink(t) }}
+
+  <span class="govuk-caption-l">Demo</span>
+  <h1 class="govuk-heading-xl">Review evidence matches</h1>
+
+  <p class="govuk-body">
+    AI has found likely evidence matches for this line item. Review the highlighted evidence before making an assessment.
+  </p>
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-6">Travel expense</h2>
+
+  <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Date</dt>
+      <dd class="govuk-summary-list__value">14 March 2024</dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Amount</dt>
+      <dd class="govuk-summary-list__value">£27.00</dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Description</dt>
+      <dd class="govuk-summary-list__value">Subsistence</dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Category</dt>
+      <dd class="govuk-summary-list__value">Travel</dd>
+    </div>
+  </dl>
+
+  <h3 class="govuk-heading-s">Potential evidence matches</h3>
+
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">Snippet</th>
+        <th class="govuk-table__header">Document</th>
+        <th class="govuk-table__header">Page(s)</th>
+        <th class="govuk-table__header">Action</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      {% for result in results %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            {{ result._source.chunk_text }}
+          </td>
+          <td class="govuk-table__cell">
+            {{ result._source.document_id }}
+          </td>
+          <td class="govuk-table__cell">
+            {% if result._source.pages %}
+              {{ result._source.pages | join(", ") }}
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td class="govuk-table__cell">
+            <a
+              class="govuk-link"
+              href="/demo/evidence?evidenceId={{ result._id }}"
+            >
+              Review evidence
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

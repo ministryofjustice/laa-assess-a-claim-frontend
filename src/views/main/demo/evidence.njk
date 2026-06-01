@@ -1,0 +1,65 @@
+{% from "components/backLink.njk" import backLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% extends "base.njk" %}
+
+{% block content %}
+
+  {{ backLink(t) }}
+
+  <span class="govuk-caption-l">Demo</span>
+  <h1 class="govuk-heading-xl">Evidence review</h1>
+
+  <div class="demo-evidence-panel">
+    <h2 class="govuk-heading-m">Line item</h2>
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Description</dt>
+        <dd class="govuk-summary-list__value">Subsistence</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Amount</dt>
+        <dd class="govuk-summary-list__value">£8.75</dd>
+      </div>
+    </dl>
+  </div>
+
+  <h2 class="govuk-heading-m">Potential match identified</h2>
+
+  {{ govukInsetText({
+    text: "M&S receipt containing food purchases including raisins."
+  }) }}
+
+  <p class="govuk-body">
+    The highlighted section below was identified as a potential match for this line item.
+  </p>
+
+  <h2 class="govuk-heading-m">Document evidence</h2>
+
+  <div
+    class="demo-pdf-stage"
+    data-pdf-url="{{ pdfUrl }}"
+    data-page-number="{{ pageNumber }}"
+    {% if highlightBox %}
+    data-highlight='{{ highlightBox | dump | safe }}'
+    {% endif %}
+  >
+    <div class="govuk-body govuk-!-margin-0">
+      PDF will render here.
+    </div>
+  </div>
+
+  <div class="demo-evidence-actions">
+    {{ govukButton({
+      text: "Evidence supports line item"
+    }) }}
+  </div>
+
+  <p class="govuk-body">
+    <a href="/demo/line-item" class="govuk-link">View other potential matches</a>
+  </p>
+
+{% endblock %}

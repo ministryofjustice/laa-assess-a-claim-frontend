@@ -1,0 +1,53 @@
+{% from "components/backLink.njk" import backLink %}
+{% extends "base.njk" %}
+
+{% block content %}
+
+  {{ backLink(t) }}
+
+  <span class="govuk-caption-l">Demo</span>
+  <h1 class="govuk-heading-xl">Line items</h1>
+
+  <div class="govuk-summary-card govuk-!-margin-bottom-6">
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">Subsistence</h2>
+    </div>
+
+    <div class="govuk-summary-card__content">
+      <p class="govuk-body">
+        £27.00<br>
+        14 March 2024
+      </p>
+
+      <p class="govuk-body">
+        <strong>1 potential evidence match found</strong>
+      </p>
+
+      <a
+        class="govuk-button govuk-button--secondary"
+        href="/demo/line-item"
+      >
+        View matches
+      </a>
+    </div>
+  </div>
+
+  <div class="govuk-summary-card">
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">Taxi fare</h2>
+    </div>
+
+    <div class="govuk-summary-card__content">
+      <p class="govuk-body">
+        £25.00<br>
+        14 March 2024
+      </p>
+
+      <p class="govuk-body">
+        <strong>No evidence matches found</strong>
+      </p>
+
+      <p class="govuk-body" ><a href="#">view all evidence for this claim</a></p>
+    </div>
+  </div>
+{% endblock %}
