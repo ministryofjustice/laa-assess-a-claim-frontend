@@ -3,6 +3,7 @@ import { handleYourClaimsPage } from "#src/controllers/viewClaimsController.js";
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import { rateLimit } from "express-rate-limit";
+import { lineItemsPage, evidencePage, lineItemPage } from "#src/controllers/demo/demoController.js"
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -26,6 +27,15 @@ router.get(ROUTES.CLAIMS, limiter, async function (req: Request, res: Response, 
 router.get(ROUTES.VIEW_CLAIM, limiter, async function (req: Request, res: Response, next: NextFunction): Promise<void> {
   await viewClaimPage(req, res, next);
 });
+
+/* GET line items page. */
+router.get("/demo/line-items", lineItemsPage);
+
+/* GET line item page. */
+router.get("/demo/line-item", lineItemPage);
+
+/* GET evidence page. */
+router.get("/demo/evidence", evidencePage);
 
 // Make an API call with `Axios` and `middleware-axios`
 // GET users from external API

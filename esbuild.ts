@@ -43,6 +43,14 @@ const copyAssets = async (): Promise<void> => {
     console.log(
       "✅ GOV.UK assets (including rebrand) & MOJ Frontend assets copied successfully.",
     );
+    // Copy PDFT dist assets
+    await fs.copy(
+      path.resolve("./node_modules/pdfjs-dist/build/pdf.worker.min.mjs"),
+      path.resolve("./public/js/pdf.worker.min.mjs"),
+    );
+    console.log(
+      "✅ PDF dist assets copied successfully.",
+    );
   } catch (error) {
     console.error("❌ Failed to copy assets:", error);
     process.exit(UNCAUGHT_FATAL_EXCEPTION);

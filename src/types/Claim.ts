@@ -1,5 +1,37 @@
 import { z } from "zod";
 
+export const EvidenceItemSchema = z.object({
+  fileKey: z.string(),
+  fileSize: z.number(),
+  id: z.number(),
+});
+
+export type EvidenceItem = z.infer<typeof EvidenceItemSchema>;
+
+export const LinkedEvidenceItemSchema = z.object({
+  id: z.number(),
+});
+
+export type LinkedEvidenceItem = z.infer<typeof LinkedEvidenceItemSchema>;
+
+export enum Category {
+  BILL_NARRATIVE = "Bill Narrative",
+  WORK_ITEM = "Work Item",
+  DISBURSEMENT = "Disbursement",
+}
+
+export const CategorySchema = z.enum(Category);
+
+export const LineItemSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  category: CategorySchema,
+  date: z.string().transform(val => new Date(val)),
+  evidenceItems: z.array(LinkedEvidenceItemSchema),
+});
+
+export type LineItem = z.infer<typeof LineItemSchema>;
+
 export const ClaimResponseSchema = z.object({
   id: z.number(),
   ufn: z.string().optional(),
@@ -11,7 +43,9 @@ export const ClaimResponseSchema = z.object({
   claimed: z.number().optional(),
   submissionId: z.string().optional(),
   escaped: z.boolean(),
-  counselPayment: z.string().nullish()
+  counselPayment: z.string().nullish(),
+  lineItems: z.array(LineItemSchema).optional(),
+  evidence: z.array(EvidenceItemSchema).optional(),
 });
 
 export type Claim = z.infer<typeof ClaimResponseSchema>;
