@@ -37,40 +37,61 @@
   <h3 class="govuk-heading-s">Potential evidence matches</h3>
 
   <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header">Snippet</th>
-        <th class="govuk-table__header">Document</th>
-        <th class="govuk-table__header">Page(s)</th>
-        <th class="govuk-table__header">Action</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      {% for result in results %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">
-            {{ result._source.chunk_text }}
-          </td>
-          <td class="govuk-table__cell">
-            {{ result._source.document_id }}
-          </td>
-          <td class="govuk-table__cell">
-            {% if result._source.pages %}
-              {{ result._source.pages | join(", ") }}
-            {% else %}
-              —
+<thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header">Potential match</th>
+    <th class="govuk-table__header">Page</th>
+    <th class="govuk-table__header">Action</th>
+  </tr>
+</thead>
+<tbody class="govuk-table__body">
+  {% for result in results %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">
+        {% if result.enrichment %}
+          <strong class="govuk-!-display-block">
+            {% if result.enrichment.source_title %}
+              {{ result.enrichment.source_title }}
             {% endif %}
-          </td>
-          <td class="govuk-table__cell">
-            <a
-              class="govuk-link"
-              href="/demo/evidence?evidenceId={{ result._id }}"
-            >
-              Review evidence
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
+            {{ result.enrichment.document_type }}
+          </strong>
+
+          <span class="govuk-body-s govuk-!-display-block govuk-!-margin-top-1">
+            {{ result.enrichment.key_details }}
+          </span>
+
+          <span class="govuk-body-s govuk-!-display-block govuk-!-margin-top-2">
+            Likely purpose: {{ result.enrichment.likely_purpose }}
+          </span>
+        {% else %}
+          <strong class="govuk-!-display-block">
+            {{ result._source.document_id }}
+          </strong>
+
+          <span class="govuk-body-s">
+            {{ result._source.chunk_text }}
+          </span>
+        {% endif %}
+      </td>
+
+      <td class="govuk-table__cell">
+        {% if result._source.pages %}
+          {{ result._source.pages | join(", ") }}
+        {% else %}
+          —
+        {% endif %}
+      </td>
+
+      <td class="govuk-table__cell">
+        <a
+          class="govuk-link"
+          href="/demo/evidence?evidenceId={{ result._id }}"
+        >
+          Review evidence
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
   </table>
 {% endblock %}

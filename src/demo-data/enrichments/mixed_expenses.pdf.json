@@ -1,0 +1,68 @@
+{
+    "items": [
+        {
+            "pages": [
+                1
+            ],
+            "document_type": "Train Ticket",
+            "source_title": null,
+            "start_date": "2023-05-03",
+            "end_date": "2023-05-15",
+            "key_details": "Anytime Day Return, Adult Standard Class, Refundable and exchangeable for a fee",
+            "likely_purpose": "Travel",
+            "confidence": "high"
+        },
+        {
+            "pages": [
+                2
+            ],
+            "document_type": "Train Ticket",
+            "source_title": null,
+            "start_date": "2022-09-27",
+            "end_date": null,
+            "key_details": "Advance Single, London Kings Cross to Leeds",
+            "likely_purpose": "Travel",
+            "confidence": "high"
+        },
+        {
+            "pages": [
+                3
+            ],
+            "document_type": "Receipt",
+            "source_title": "M&S",
+            "start_date": "2024-03-14",
+            "end_date": "2024-03-13",
+            "key_details": "Items: 10, Balance to Pay: £27.00, Card Tendered: Visa Debit",
+            "likely_purpose": "Shopping",
+            "confidence": "high"
+        },
+        {
+            "pages": [
+                4
+            ],
+            "document_type": "Receipt",
+            "source_title": "The Transcription Agency",
+            "start_date": "2024-01-10",
+            "end_date": null,
+            "key_details": "Case Date: 10.01.24, Total cost: £141.50",
+            "likely_purpose": "Legal Transcription",
+            "confidence": "high"
+        },
+        {
+            "pages": [
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "document_type": "Financial Proceedings Directions Order",
+            "source_title": null,
+            "start_date": "2024-02-21",
+            "end_date": null,
+            "key_details": "Case No: 678123PO, Hearing date: 21st February 2024",
+            "likely_purpose": "Legal Proceedings",
+            "confidence": "high"
+        }
+    ]
+}

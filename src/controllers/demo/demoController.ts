@@ -2,6 +2,7 @@ import { processError } from "#src/helpers/index.js";
 import {
   getAllSearchResults,
   getAnalysisDoc,
+  getEnrichmentForSearchResult,
   getSearchResult,
 } from "#src/services/demo/evidenceService.js";
 import type { NextFunction, Request, Response } from "express";
@@ -18,13 +19,9 @@ export function lineItemsPage(
   next: NextFunction,
 ): void {
   try {
-    const results = getAllSearchResults();
-
-    res.render("main/demo/line-items.njk", {
-      results,
-    });
+    res.render("main/demo/line-items.njk", {});
   } catch (error) {
-    next(processError(error, `fetching claims details for user`));
+    next(processError(error, `Demo Line items:`));
   }
 }
 
@@ -40,13 +37,18 @@ export function lineItemPage(
   next: NextFunction,
 ): void {
   try {
-    const results = getAllSearchResults();
+    const results = getAllSearchResults().map((result) => ({
+      ...result,
+      enrichment: getEnrichmentForSearchResult(result),
+    }));
 
+
+    console.log(JSON.stringify(results, null, 2));
     res.render("main/demo/line-item.njk", {
       results,
     });
   } catch (error) {
-    next(processError(error, `fetching claims details for user`));
+    next(processError(error, `DEMO line item:`));
   }
 }
 
@@ -147,6 +149,6 @@ export function evidencePage(
       highlightBox: mergedBox,
     });
   } catch (error) {
-    next(processError(error, `fetching claims details for user`));
+    next(processError(error, `Demo view evidence:`));
   }
 }

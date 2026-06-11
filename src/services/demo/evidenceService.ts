@@ -2,9 +2,11 @@ import fs from "node:fs";
 import path from "node:path";
 import type { AnalysisDoc } from "./analysisDoc.js";
 import type { SearchResult } from "./searchResult.js";
+import { type EnrichmentDoc, type EnrichmentItem, isEnrichmentDoc } from "./enrichmentDoc.js";
 
 const SEARCH_DATA_DIR = path.resolve(process.cwd(), "src/demo-data/search");
 const ANALYSIS_DATA_DIR = path.resolve(process.cwd(), "src/demo-data/analysis");
+const ENRICHMENT_DATA_DIR = path.resolve(process.cwd(), "src/demo-data/enrichments");
 
 /**
  * Parse JSON from a local file.
@@ -114,4 +116,52 @@ export function getAllSearchResults(): SearchResult[] {
 
     return parsed;
   });
+}
+
+/**
+ * Get enrichment data for a document.
+ * @param {string} documentFileName PDF filename from the search result.
+ * @returns {EnrichmentDoc} Enrichment JSON.
+ */
+function getEnrichmentDoc(documentFileName: string): EnrichmentDoc {
+  if (documentFileName === "") {
+    throw new Error("Missing documentFileName");
+  }
+
+  const filePath = path.join(ENRICHMENT_DATA_DIR, `${documentFileName}.json`);
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Enrichment doc not found for ${documentFileName}`);
+  }
+
+  const parsed = readJsonFile(filePath);
+
+  if (!isEnrichmentDoc(parsed)) {
+    throw new Error(`Invalid enrichment JSON for ${documentFileName}`);
+  }
+
+  return parsed;
+}
+
+/**
+ * Get enrichment item matching a search result page.
+ * @param {SearchResult} searchResult Search result JSON.
+ * @returns {EnrichmentItem | null} Matching enrichment item.
+ */
+export function getEnrichmentForSearchResult(
+  searchResult: SearchResult,
+): EnrichmentItem | null {
+  const searchPages = searchResult._source.pages ?? [];
+
+  if (searchPages.length === 0) {
+    return null;
+  }
+
+  const enrichmentDoc = getEnrichmentDoc(searchResult._source.document_id);
+
+  return (
+    enrichmentDoc.items.find((item: { pages: number[]; }) =>
+      item.pages.some((page) => searchPages.includes(page)),
+    ) ?? null
+  );
 }
