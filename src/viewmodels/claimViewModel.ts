@@ -1,6 +1,6 @@
 import type { Claim } from "#src/types/Claim.js";
 import { formatClaimed } from "#src/helpers/index.js";
-import type { SummaryListRow } from "./components/summaryList.js";
+import  { buildSummaryListWithCard, type SummaryList, type SummaryListRow } from "./components/summaryList.js";
 import {
   AssignmentStatusTagClass,
   FeeStatusTagClass,
@@ -23,12 +23,12 @@ export class ClaimViewModel {
   readonly assignmentStatus: AssignmentStatus;
   readonly feeStatus: FeeStatus;
   readonly summaryRows: SummaryListRow[];
-  readonly costsAndAllocationsRows: SummaryListRow[];
-  readonly providerRows: SummaryListRow[];
-  readonly clientRows: SummaryListRow[];
-  readonly caseRows: SummaryListRow[];
-  readonly certificateScopeRows: SummaryListRow[];
-  readonly proceedingsRows: SummaryListRow[];
+  readonly costsAndAllocationsSummaryList: SummaryList;
+  readonly providersSummaryList: SummaryList;
+  readonly clientSummaryList: SummaryList;
+  readonly caseSummaryList: SummaryList;
+  readonly certificateScopeSummaryList: SummaryList;
+  readonly proceedingsSummaryList: SummaryList;
 
   /**
    * Creates a view model containing the summary rows derived from the claim data
@@ -42,12 +42,51 @@ export class ClaimViewModel {
     this.feeStatus = claim.escaped ? FeeStatus.Escaped : FeeStatus.Fixed;
 
     this.summaryRows = ClaimViewModel.buildSummaryRows();
-    this.costsAndAllocationsRows = ClaimViewModel.buildCostsAndAllocationsRows(this.feeStatus);
-    this.providerRows = ClaimViewModel.buildProviderRows(claim);
-    this.clientRows = ClaimViewModel.buildClientRows();
-    this.caseRows = ClaimViewModel.buildCaseRows();
-    this.certificateScopeRows = ClaimViewModel.buildCertificateScopeRows();
-    this.proceedingsRows = ClaimViewModel.buildProceedingsRows();
+
+    this.costsAndAllocationsSummaryList = buildSummaryListWithCard(
+      "pages.claim.costsAndAllocations.title",
+      "costs-and-allocations",
+      ClaimViewModel.buildCostsAndAllocationsRows(this.feeStatus),
+      {
+        href: "#",
+        text: {
+          key: "pages.claim.costsAndAllocations.action"
+        },
+        visuallyHiddenText: {
+          key: "pages.claim.costsAndAllocations.title"
+        }
+      }
+    );
+
+    this.providersSummaryList = buildSummaryListWithCard(
+      "pages.claim.providers.title",
+      "providers",
+      ClaimViewModel.buildProviderRows(claim)
+    );
+
+    this.clientSummaryList = buildSummaryListWithCard(
+      "pages.claim.client.title",
+      "client",
+      ClaimViewModel.buildClientRows()
+    );
+
+    this.caseSummaryList = buildSummaryListWithCard(
+      "pages.case.summary.title",
+      "case",
+      ClaimViewModel.buildCaseRows()
+    );
+
+    this.certificateScopeSummaryList = buildSummaryListWithCard(
+      "pages.case.certificateScope.title",
+      "certificate",
+      ClaimViewModel.buildCertificateScopeRows()
+    );
+
+    this.proceedingsSummaryList = buildSummaryListWithCard(
+      "pages.case.proceedings.title",
+      "proceedings",
+      ClaimViewModel.buildProceedingsRows()
+    );
   }
 
   /**

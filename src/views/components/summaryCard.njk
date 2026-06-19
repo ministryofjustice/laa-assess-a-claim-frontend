@@ -1,17 +1,17 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "components/renderSummaryValue.njk" import renderSummaryValue %}
 
-{% macro summaryCard(id, title, rows, action) %}
+{% macro summaryCard(summaryList) %}
 
-{% set govukRows = [] %}
+{% set rows = [] %}
 
-{% for row in rows %}
+{% for row in summaryList.rows %}
 
   {% set valueHtml %}
-    {{ renderSummaryValue(t, row.value) }}
+    {{ renderSummaryValue(row.value) }}
   {% endset %}
 
-  {% set govukRow = {
+  {% set row = {
     key: {
       text: row.key | translate
     },
@@ -21,35 +21,14 @@
     actions: row.actions
   } %}
 
-  {% set govukRows = govukRows.concat([govukRow]) %}
+  {% set rows = rows.concat([row]) %}
 
 {% endfor %}
 
-{% set card = {
-  title: {
-    text: title | translate
-  },
-  attributes: {
-    "id": id
-  }
-} %}
-
-{% if action %}
-  {% set card = {
-    title: card.title,
-    actions: {
-      items: [ action | translate ]
-    },
-    attributes: card.attributes
-  } %}
-{% endif %}
-
 {{ govukSummaryList({
-  card: card,
-  rows: govukRows,
-  attributes: {
-    "id": id + "-rows"
-  }
+  card: summaryList.card | translate,
+  rows: rows,
+  attributes: summaryList.attributes
 }) }}
 
 {% endmacro %}

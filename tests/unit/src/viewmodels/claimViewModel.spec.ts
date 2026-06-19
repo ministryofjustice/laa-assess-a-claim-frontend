@@ -49,202 +49,290 @@ describe("ClaimViewModel constructor()", () => {
   it("builds the costs and allocations rows when escaped", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.costsAndAllocationsSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.costsAndAllocationsRows[0].key.key).to.equal("pages.claim.costsAndAllocations.claimType");
-    expect(vm.costsAndAllocationsRows[0].value).to.deep.equal({type: "text", value: "Solicitor final bill"});
-    expect(vm.costsAndAllocationsRows[0].actions).to.be.undefined;
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.claim.costsAndAllocations.title" });
+    expect(summaryListCard?.attributes.id).to.equal("costs-and-allocations");
+    expect(summaryListCard?.actions).to.exist;
 
-    expect(vm.costsAndAllocationsRows[1].key.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
-    expect(vm.costsAndAllocationsRows[1].value).to.deep.equal({ type: "tag", value: "£9,176.36", tag: { text: { key: "pages.claim.feeStatus.escaped"}, classes: "govuk-tag--blue" }});
+    expect(summaryList.attributes.id).to.equal("costs-and-allocations-rows");
 
-    expect(vm.costsAndAllocationsRows[2].key.key).to.equal("pages.claim.costsAndAllocations.fixedFeeAmountGranted");
-    expect(vm.costsAndAllocationsRows[2].value).to.deep.equal({type: "text", value: "£3,000"});
-    expect(vm.costsAndAllocationsRows[2].actions).to.be.undefined;
+    expect(rows.length).to.equal(10);
+    
+    expect(rows[0].key.key).to.equal("pages.claim.costsAndAllocations.claimType");
+    expect(rows[0].value).to.deep.equal({type: "text", value: "Solicitor final bill"});
+    expect(rows[0].actions).to.be.undefined;
 
-    expect(vm.costsAndAllocationsRows[3].key.key).to.equal("pages.claim.costsAndAllocations.escapeThreshold");
-    expect(vm.costsAndAllocationsRows[3].value).to.deep.equal({type: "text", value: "£6,000"});
-    expect(vm.costsAndAllocationsRows[3].actions).to.be.undefined;
+    expect(rows[1].key.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
+    expect(rows[1].value).to.deep.equal({ type: "tag", value: "£9,176.36", tag: { text: { key: "pages.claim.feeStatus.escaped"}, classes: "govuk-tag--blue" }});
 
-    expect(vm.costsAndAllocationsRows[4].key.key).to.equal("pages.claim.costsAndAllocations.assessmentBasis");
-    expect(vm.costsAndAllocationsRows[4].value).to.deep.equal({type: "text", value: "Hourly rate, escaped"});
-    expect(vm.costsAndAllocationsRows[4].actions).to.be.undefined;
+    expect(rows[2].key.key).to.equal("pages.claim.costsAndAllocations.fixedFeeAmountGranted");
+    expect(rows[2].value).to.deep.equal({type: "text", value: "£3,000"});
+    expect(rows[2].actions).to.be.undefined;
 
-    expect(vm.costsAndAllocationsRows[5].key.key).to.equal("pages.claim.costsAndAllocations.counselCostAndAllocation");
-    expect(vm.costsAndAllocationsRows[5].value).to.deep.equal({type: "text", value: "£2,850"});
-    expect(vm.costsAndAllocationsRows[5].actions).to.be.undefined;
+    expect(rows[3].key.key).to.equal("pages.claim.costsAndAllocations.escapeThreshold");
+    expect(rows[3].value).to.deep.equal({type: "text", value: "£6,000"});
+    expect(rows[3].actions).to.be.undefined;
 
-    expect(vm.costsAndAllocationsRows[6].key.key).to.equal("pages.claim.costsAndAllocations.totalPaymentOnAccount");
-    expect(vm.costsAndAllocationsRows[6].value).to.deep.equal({type: "text", value: "£1,200"});
-    expect(vm.costsAndAllocationsRows[6].actions).to.be.undefined;
+    expect(rows[4].key.key).to.equal("pages.claim.costsAndAllocations.assessmentBasis");
+    expect(rows[4].value).to.deep.equal({type: "text", value: "Hourly rate, escaped"});
+    expect(rows[4].actions).to.be.undefined;
 
-    expect(vm.costsAndAllocationsRows[7].key.key).to.equal("pages.claim.costsAndAllocations.totalPOA");
-    expect(vm.costsAndAllocationsRows[7].value).to.deep.equal({type: "text", value: "£1,200"});
-    expect(vm.costsAndAllocationsRows[7].actions).to.be.undefined;
+    expect(rows[5].key.key).to.equal("pages.claim.costsAndAllocations.counselCostAndAllocation");
+    expect(rows[5].value).to.deep.equal({type: "text", value: "£2,850"});
+    expect(rows[5].actions).to.be.undefined;
 
-    expect(vm.costsAndAllocationsRows[8].key.key).to.equal("pages.claim.costsAndAllocations.priorAuthority");
-    expect(vm.costsAndAllocationsRows[8].value).to.deep.equal({ type: "text", value: { key: "common.granted", args: { "amount": "£3,200"} } });
-    expect(vm.costsAndAllocationsRows[8].actions).to.be.undefined;
+    expect(rows[6].key.key).to.equal("pages.claim.costsAndAllocations.totalPaymentOnAccount");
+    expect(rows[6].value).to.deep.equal({type: "text", value: "£1,200"});
+    expect(rows[6].actions).to.be.undefined;
 
-    expect(vm.costsAndAllocationsRows[9].key.key).to.equal("pages.claim.costsAndAllocations.availableCostLimit");
-    expect(vm.costsAndAllocationsRows[9].value).to.deep.equal({ type: "text", value: { key: "common.available", args:{ "amount": "£18,500", "available": "£25,000"} } });
-    expect(vm.costsAndAllocationsRows[9].actions).to.be.undefined;
+    expect(rows[7].key.key).to.equal("pages.claim.costsAndAllocations.totalPOA");
+    expect(rows[7].value).to.deep.equal({type: "text", value: "£1,200"});
+    expect(rows[7].actions).to.be.undefined;
+
+    expect(rows[8].key.key).to.equal("pages.claim.costsAndAllocations.priorAuthority");
+    expect(rows[8].value).to.deep.equal({ type: "text", value: { key: "common.granted", args: { "amount": "£3,200"} } });
+    expect(rows[8].actions).to.be.undefined;
+
+    expect(rows[9].key.key).to.equal("pages.claim.costsAndAllocations.availableCostLimit");
+    expect(rows[9].value).to.deep.equal({ type: "text", value: { key: "common.available", args:{ "amount": "£18,500", "available": "£25,000"} } });
+    expect(rows[9].actions).to.be.undefined;
   });
 
   it("builds the costs and allocations rows when fixed", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![1]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.costsAndAllocationsSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.costsAndAllocationsRows[0].key.key).to.equal("pages.claim.costsAndAllocations.claimType");
-    expect(vm.costsAndAllocationsRows[0].value).to.deep.equal({type: "text", value: "Solicitor final bill"});
-    expect(vm.costsAndAllocationsRows[0].actions).to.be.undefined;
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.claim.costsAndAllocations.title" });
+    expect(summaryListCard?.attributes.id).to.equal("costs-and-allocations");
+    expect(summaryListCard?.actions).to.exist;
+    expect(summaryListCard?.actions?.items).to.have.length(1);
+    expect(summaryListCard?.actions?.items[0].href).to.equal("#");
+    expect(summaryListCard?.actions?.items[0].text).to.deep.equal({ key: "pages.claim.costsAndAllocations.action" });
+    expect(summaryListCard?.actions?.items[0].visuallyHiddenText).to.deep.equal({ key: "pages.claim.costsAndAllocations.title" });
 
-    expect(vm.costsAndAllocationsRows[1].key.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
-    expect(vm.costsAndAllocationsRows[1].value).to.deep.equal({ type: "text", value: "£3,480"});
+    expect(summaryList.attributes.id).to.equal("costs-and-allocations-rows");
 
-    expect(vm.costsAndAllocationsRows[2].key.key).to.equal("pages.claim.costsAndAllocations.assessmentBasis");
-    expect(vm.costsAndAllocationsRows[2].value).to.deep.equal({type: "text", value: "Fixed fee applies"});
-    expect(vm.costsAndAllocationsRows[2].actions).to.be.undefined;
+    expect(rows.length).to.equal(5);
+    
+    expect(rows[0].key.key).to.equal("pages.claim.costsAndAllocations.claimType");
+    expect(rows[0].value).to.deep.equal({type: "text", value: "Solicitor final bill"});
+    expect(rows[0].actions).to.be.undefined;
 
-    expect(vm.costsAndAllocationsRows[3].key.key).to.equal("pages.claim.costsAndAllocations.counselCostAndAllocation");
-    expect(vm.costsAndAllocationsRows[3].value).to.deep.equal({type: "text", value: "£900"});
-    expect(vm.costsAndAllocationsRows[3].actions).to.be.undefined;
+    expect(rows[1].key.key).to.equal("pages.claim.costsAndAllocations.totalClaimAmount");
+    expect(rows[1].value).to.deep.equal({ type: "text", value: "£3,480"});
 
-    expect(vm.costsAndAllocationsRows[4].key.key).to.equal("pages.claim.costsAndAllocations.availableCostLimit");
-    expect(vm.costsAndAllocationsRows[4].value).to.deep.equal({ type: "text", value: { key: "common.available", args:{ "amount": "£24,100", "available": "£25,000"} } });
-    expect(vm.costsAndAllocationsRows[4].actions).to.be.undefined;
+    expect(rows[2].key.key).to.equal("pages.claim.costsAndAllocations.assessmentBasis");
+    expect(rows[2].value).to.deep.equal({type: "text", value: "Fixed fee applies"});
+    expect(rows[2].actions).to.be.undefined;
+
+    expect(rows[3].key.key).to.equal("pages.claim.costsAndAllocations.counselCostAndAllocation");
+    expect(rows[3].value).to.deep.equal({type: "text", value: "£900"});
+    expect(rows[3].actions).to.be.undefined;
+
+    expect(rows[4].key.key).to.equal("pages.claim.costsAndAllocations.availableCostLimit");
+    expect(rows[4].value).to.deep.equal({ type: "text", value: { key: "common.available", args:{ "amount": "£24,100", "available": "£25,000"} } });
+    expect(rows[4].actions).to.be.undefined;
   });
 
   it("builds the provider rows when counsel payment is defined", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.providersSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.providerRows.length).to.equal(5);
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.claim.providers.title" });
+    expect(summaryListCard?.attributes.id).to.equal("providers");
+    expect(summaryListCard?.actions).to.not.exist;
 
-    expect(vm.providerRows[0].key.key).to.equal("pages.claim.providers.solicitorName");
-    expect(vm.providerRows[0].value).to.deep.equal({type: "text", value: "Smith & Co Solicitors"});
-    expect(vm.providerRows[0].actions).to.be.undefined;
+    expect(summaryList.attributes.id).to.equal("providers-rows");
 
-    expect(vm.providerRows[1].key.key).to.equal("pages.claim.providers.solicitorRegion");
-    expect(vm.providerRows[1].value).to.deep.equal({type: "text", value: "North West"});
-    expect(vm.providerRows[1].actions).to.be.undefined;
+    expect(rows.length).to.equal(5);
 
-    expect(vm.providerRows[2].key.key).to.equal("pages.claim.providers.numberOfSolicitors");
-    expect(vm.providerRows[2].value).to.deep.equal({type: "text", value: "1"});
-    expect(vm.providerRows[2].actions).to.be.undefined;
+    expect(rows[0].key.key).to.equal("pages.claim.providers.solicitorName");
+    expect(rows[0].value).to.deep.equal({type: "text", value: "Smith & Co Solicitors"});
+    expect(rows[0].actions).to.be.undefined;
 
-    expect(vm.providerRows[3].key.key).to.equal("pages.claim.providers.counselInvolved");
-    expect(vm.providerRows[3].value).to.deep.equal({type: "text", value: { key: "common.yes" }});
-    expect(vm.providerRows[3].actions).to.be.undefined;
+    expect(rows[1].key.key).to.equal("pages.claim.providers.solicitorRegion");
+    expect(rows[1].value).to.deep.equal({type: "text", value: "North West"});
+    expect(rows[1].actions).to.be.undefined;
 
-    expect(vm.providerRows[4].key.key).to.equal("pages.claim.providers.counselPayment");
-    expect(vm.providerRows[4].value).to.deep.equal({type: "text", value: "Paid and reconciled"});
-    expect(vm.providerRows[4].actions).to.be.undefined;
+    expect(rows[2].key.key).to.equal("pages.claim.providers.numberOfSolicitors");
+    expect(rows[2].value).to.deep.equal({type: "text", value: "1"});
+    expect(rows[2].actions).to.be.undefined;
+
+    expect(rows[3].key.key).to.equal("pages.claim.providers.counselInvolved");
+    expect(rows[3].value).to.deep.equal({type: "text", value: { key: "common.yes" }});
+    expect(rows[3].actions).to.be.undefined;
+
+    expect(rows[4].key.key).to.equal("pages.claim.providers.counselPayment");
+    expect(rows[4].value).to.deep.equal({type: "text", value: "Paid and reconciled"});
+    expect(rows[4].actions).to.be.undefined;
   });
 
   it("builds the provider rows when counsel payment is undefined", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![1]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.providersSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.providerRows.length).to.equal(4);
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.claim.providers.title" });
+    expect(summaryListCard?.attributes.id).to.equal("providers");
+    expect(summaryListCard?.actions).to.not.exist;
 
-    expect(vm.providerRows[0].key.key).to.equal("pages.claim.providers.solicitorName");
-    expect(vm.providerRows[0].value).to.deep.equal({type: "text", value: "Smith & Co Solicitors"});
-    expect(vm.providerRows[0].actions).to.be.undefined;
+    expect(summaryList.attributes.id).to.equal("providers-rows");
 
-    expect(vm.providerRows[1].key.key).to.equal("pages.claim.providers.solicitorRegion");
-    expect(vm.providerRows[1].value).to.deep.equal({type: "text", value: "North West"});
-    expect(vm.providerRows[1].actions).to.be.undefined;
+    expect(rows.length).to.equal(4);
 
-    expect(vm.providerRows[2].key.key).to.equal("pages.claim.providers.numberOfSolicitors");
-    expect(vm.providerRows[2].value).to.deep.equal({type: "text", value: "1"});
-    expect(vm.providerRows[2].actions).to.be.undefined;
+    expect(rows[0].key.key).to.equal("pages.claim.providers.solicitorName");
+    expect(rows[0].value).to.deep.equal({type: "text", value: "Smith & Co Solicitors"});
+    expect(rows[0].actions).to.be.undefined;
 
-    expect(vm.providerRows[3].key.key).to.equal("pages.claim.providers.counselInvolved");
-    expect(vm.providerRows[3].value).to.deep.equal({type: "text", value: { key: "common.no" }});
-    expect(vm.providerRows[3].actions).to.be.undefined;
+    expect(rows[1].key.key).to.equal("pages.claim.providers.solicitorRegion");
+    expect(rows[1].value).to.deep.equal({type: "text", value: "North West"});
+    expect(rows[1].actions).to.be.undefined;
+
+    expect(rows[2].key.key).to.equal("pages.claim.providers.numberOfSolicitors");
+    expect(rows[2].value).to.deep.equal({type: "text", value: "1"});
+    expect(rows[2].actions).to.be.undefined;
+
+    expect(rows[3].key.key).to.equal("pages.claim.providers.counselInvolved");
+    expect(rows[3].value).to.deep.equal({type: "text", value: { key: "common.no" }});
+    expect(rows[3].actions).to.be.undefined;
   });
 
   it("builds the client rows", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.clientSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.clientRows[0].key.key).to.equal("pages.claim.client.name");
-    expect(vm.clientRows[0].value).to.deep.equal({type: "text", value: "Liam Oldfield"});
-    expect(vm.clientRows[0].actions).to.be.undefined;
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.claim.client.title" });
+    expect(summaryListCard?.attributes.id).to.equal("client");
+    expect(summaryListCard?.actions).to.not.exist;
 
-    expect(vm.clientRows[1].key.key).to.equal("pages.claim.client.dateOfBirth");
-    expect(vm.clientRows[1].value).to.deep.equal({type: "text", value: "27 March 1996"});
-    expect(vm.clientRows[1].actions).to.be.undefined;
+    expect(summaryList.attributes.id).to.equal("client-rows");
 
-    expect(vm.clientRows[2].key.key).to.equal("pages.claim.client.location");
-    expect(vm.clientRows[2].value).to.deep.equal({type: "text", value: "Manchester"});
-    expect(vm.clientRows[2].actions).to.be.undefined;
+    expect(rows.length).to.equal(4);
 
-    expect(vm.clientRows[3].key.key).to.equal("pages.claim.client.status");
-    expect(vm.clientRows[3].value).to.deep.equal({type: "text", value: "Parent"});
-    expect(vm.clientRows[3].actions).to.be.undefined;
+    expect(rows[0].key.key).to.equal("pages.claim.client.name");
+    expect(rows[0].value).to.deep.equal({type: "text", value: "Liam Oldfield"});
+    expect(rows[0].actions).to.be.undefined;
+
+    expect(rows[1].key.key).to.equal("pages.claim.client.dateOfBirth");
+    expect(rows[1].value).to.deep.equal({type: "text", value: "27 March 1996"});
+    expect(rows[1].actions).to.be.undefined;
+
+    expect(rows[2].key.key).to.equal("pages.claim.client.location");
+    expect(rows[2].value).to.deep.equal({type: "text", value: "Manchester"});
+    expect(rows[2].actions).to.be.undefined;
+
+    expect(rows[3].key.key).to.equal("pages.claim.client.status");
+    expect(rows[3].value).to.deep.equal({type: "text", value: "Parent"});
+    expect(rows[3].actions).to.be.undefined;
   });
 
   it("builds the case rows", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.caseSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.caseRows[0].key.key).to.equal("pages.case.summary.matterType");
-    expect(vm.caseRows[0].value).to.deep.equal({type: "text", value: "Special Children Act"});
-    expect(vm.caseRows[0].actions).to.be.undefined;
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.case.summary.title" });
+    expect(summaryListCard?.attributes.id).to.equal("case");
+    expect(summaryListCard?.actions).to.not.exist;
 
-    expect(vm.caseRows[1].key.key).to.equal("pages.case.summary.leadProceeding");
-    expect(vm.caseRows[1].value).to.deep.equal({type: "text", value: "Care order"});
-    expect(vm.caseRows[1].actions).to.be.undefined;
+    expect(summaryList.attributes.id).to.equal("case-rows");
 
-    expect(vm.caseRows[2].key.key).to.equal("pages.case.summary.linkedCases");
-    expect(vm.caseRows[2].value).to.deep.equal({ type: "link", value: { text: "1 linked case", href: "#" }});
-    expect(vm.caseRows[2].actions).to.be.undefined;
+    expect(rows.length).to.equal(4);
 
-    expect(vm.caseRows[3].key.key).to.equal("pages.case.summary.outcome");
-    expect(vm.caseRows[3].value).to.deep.equal({type: "text", value: "Final hearing completed"});
-    expect(vm.caseRows[3].actions).to.be.undefined;
+    expect(rows[0].key.key).to.equal("pages.case.summary.matterType");
+    expect(rows[0].value).to.deep.equal({type: "text", value: "Special Children Act"});
+    expect(rows[0].actions).to.be.undefined;
+
+    expect(rows[1].key.key).to.equal("pages.case.summary.leadProceeding");
+    expect(rows[1].value).to.deep.equal({type: "text", value: "Care order"});
+    expect(rows[1].actions).to.be.undefined;
+
+    expect(rows[2].key.key).to.equal("pages.case.summary.linkedCases");
+    expect(rows[2].value).to.deep.equal({ type: "link", value: { text: "1 linked case", href: "#" }});
+    expect(rows[2].actions).to.be.undefined;
+
+    expect(rows[3].key.key).to.equal("pages.case.summary.outcome");
+    expect(rows[3].value).to.deep.equal({type: "text", value: "Final hearing completed"});
+    expect(rows[3].actions).to.be.undefined;
   });
 
   it("builds the certificate scope rows", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.certificateScopeSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.certificateScopeRows[0].key.key).to.equal("pages.case.certificateScope.type");
-    expect(vm.certificateScopeRows[0].value).to.deep.equal({type: "text", value: "Substantive Certificate"});
-    expect(vm.certificateScopeRows[0].actions).to.be.undefined;
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.case.certificateScope.title" });
+    expect(summaryListCard?.attributes.id).to.equal("certificate");
+    expect(summaryListCard?.actions).to.not.exist;
 
-    expect(vm.certificateScopeRows[1].key.key).to.equal("pages.case.certificateScope.description");
-    expect(vm.certificateScopeRows[1].value).to.deep.equal({type: "text", value: "To be represented on an application for Care Order"});
-    expect(vm.certificateScopeRows[1].actions).to.be.undefined;
+    expect(summaryList.attributes.id).to.equal("certificate-rows");
 
-    expect(vm.certificateScopeRows[2].key.key).to.equal("pages.case.certificateScope.limitation");
-    expect(vm.certificateScopeRows[2].value).to.deep.equal({type: "text", value: "All steps up to and including final hearing, limited to family help"});
-    expect(vm.certificateScopeRows[2].actions).to.be.undefined;
+    expect(rows.length).to.equal(6);
 
-    expect(vm.certificateScopeRows[3].key.key).to.equal("pages.case.certificateScope.issueDate");
-    expect(vm.certificateScopeRows[3].value).to.deep.equal({type: "text", value: "27 February 2026"});
-    expect(vm.certificateScopeRows[3].actions).to.be.undefined;
+    expect(rows[0].key.key).to.equal("pages.case.certificateScope.type");
+    expect(rows[0].value).to.deep.equal({type: "text", value: "Substantive Certificate"});
+    expect(rows[0].actions).to.be.undefined;
 
-    expect(vm.certificateScopeRows[4].key.key).to.equal("pages.case.certificateScope.status");
-    expect(vm.certificateScopeRows[4].value).to.deep.equal({ type:"text", value: { key: "common.discharged", args: { date: "28 February 2026" }}});
-    expect(vm.certificateScopeRows[4].actions).to.be.undefined;
+    expect(rows[1].key.key).to.equal("pages.case.certificateScope.description");
+    expect(rows[1].value).to.deep.equal({type: "text", value: "To be represented on an application for Care Order"});
+    expect(rows[1].actions).to.be.undefined;
 
-    expect(vm.certificateScopeRows[5].key.key).to.equal("pages.case.certificateScope.levelOfService");
-    expect(vm.certificateScopeRows[5].value).to.deep.equal({type: "text", value: "Full representation"});
-    expect(vm.certificateScopeRows[5].actions).to.be.undefined;
+    expect(rows[2].key.key).to.equal("pages.case.certificateScope.limitation");
+    expect(rows[2].value).to.deep.equal({type: "text", value: "All steps up to and including final hearing, limited to family help"});
+    expect(rows[2].actions).to.be.undefined;
+
+    expect(rows[3].key.key).to.equal("pages.case.certificateScope.issueDate");
+    expect(rows[3].value).to.deep.equal({type: "text", value: "27 February 2026"});
+    expect(rows[3].actions).to.be.undefined;
+
+    expect(rows[4].key.key).to.equal("pages.case.certificateScope.status");
+    expect(rows[4].value).to.deep.equal({ type:"text", value: { key: "common.discharged", args: { date: "28 February 2026" }}});
+    expect(rows[4].actions).to.be.undefined;
+
+    expect(rows[5].key.key).to.equal("pages.case.certificateScope.levelOfService");
+    expect(rows[5].value).to.deep.equal({type: "text", value: "Full representation"});
+    expect(rows[5].actions).to.be.undefined;
   });
 
   it("builds the proceedings rows", () => {
     const claim: Claim = getClaimsSuccessResponseData.body!.data![0]!;
     const vm = new ClaimViewModel(claim);
+    const summaryList = vm.proceedingsSummaryList;
+    const summaryListCard = summaryList.card;
+    const rows = summaryList.rows;
 
-    expect(vm.proceedingsRows[0].key.key).to.equal("pages.case.proceedings.careOrder");
-    expect(vm.proceedingsRows[0].value).to.deep.equal({ type: "texts", values: [{key: "common.startDate", args: { date: "25 February 2026" }}, "Final hearing completed (PB0057)"] });
-    expect(vm.proceedingsRows[0].actions).to.be.undefined;
+    expect(summaryListCard?.title.text).to.deep.equal({ key: "pages.case.proceedings.title" });
+    expect(summaryListCard?.attributes.id).to.equal("proceedings");
+    expect(summaryListCard?.actions).to.not.exist;
 
-    expect(vm.proceedingsRows[1].key.key).to.equal("pages.case.proceedings.supervisionOrder");
-    expect(vm.proceedingsRows[1].value).to.deep.equal({ type: "texts", values: ["12 November 2025", "Withdrawn (PB0142)"] });
-    expect(vm.proceedingsRows[1].actions).to.be.undefined;
+    expect(summaryList.attributes.id).to.equal("proceedings-rows");
+
+    expect(rows.length).to.equal(2);
+
+    expect(rows[0].key.key).to.equal("pages.case.proceedings.careOrder");
+    expect(rows[0].value).to.deep.equal({ type: "texts", values: [{key: "common.startDate", args: { date: "25 February 2026" }}, "Final hearing completed (PB0057)"] });
+    expect(rows[0].actions).to.be.undefined;
+
+    expect(rows[1].key.key).to.equal("pages.case.proceedings.supervisionOrder");
+    expect(rows[1].value).to.deep.equal({ type: "texts", values: ["12 November 2025", "Withdrawn (PB0142)"] });
+    expect(rows[1].actions).to.be.undefined;
   });
 });

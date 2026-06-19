@@ -26,19 +26,19 @@
 
   {{ subNavigation(t, 1) }}
 
-  {{ summaryCard("costs-and-allocations", t("pages.claim.costsAndAllocations.title"), vm.costsAndAllocationsRows, { href: "#", text: t("pages.claim.costsAndAllocations.action")}) }}
+  {{ summaryCard(vm.costsAndAllocationsSummaryList) }}
 
   <h2 class="govuk-heading-m" id="provider-and-client-details">{{ t('pages.claim.providerAndClientDetails') }}</h2>
 
-  {{ summaryCard("providers", t('pages.claim.providers.title'), vm.providerRows )}}
+  {{ summaryCard(vm.providersSummaryList) }}
 
-  {{ summaryCard("client", t('pages.claim.client.title'), vm.clientRows )}}
+  {{ summaryCard(vm.clientSummaryList) }}
 
-  {{ summaryCard("case", t("pages.case.summary.title"), vm.caseRows) }}
+  {{ summaryCard(vm.caseSummaryList) }}
 
-  {{ summaryCard("certificate", t("pages.case.certificateScope.title"), vm.certificateScopeRows) }}
+  {{ summaryCard(vm.certificateScopeSummaryList) }}
 
-  {{ summaryCard("proceedings", t("pages.case.proceedings.title"), vm.proceedingsRows) }}
+  {{ summaryCard(vm.proceedingsSummaryList) }}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>
