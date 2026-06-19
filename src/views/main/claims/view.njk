@@ -1,7 +1,7 @@
 {% from "components/backLink.njk" import backLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
-{% from "components/summaryList.njk" import summaryList %}
+{% from "components/customSummaryList.njk" import customSummaryList %}
 {% from "components/linkButton.njk" import linkButton %}
 {% from "components/subNavigation.njk" import subNavigation %}
 {% from "components/summaryCard.njk" import summaryCard %}
@@ -20,7 +20,7 @@
 
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ vm.title }}</h1>
 
-  {{ summaryList("summary", vm.summaryRows) }}
+  {{ customSummaryList("summary", vm.summaryRows) }}
 
   {{ linkButton(t, vm.assignmentButton, "assignment", "govuk-button--secondary") }}
 

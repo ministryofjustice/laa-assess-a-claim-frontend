@@ -1,5 +1,5 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "components/renderSummaryValue.njk" import renderSummaryValue %}
+{% from "components/customSummaryListRowValue.njk" import customSummaryListRowValue %}
 
 {% macro summaryCard(summaryList) %}
 
@@ -8,7 +8,7 @@
 {% for row in summaryList.rows %}
 
   {% set valueHtml %}
-    {{ renderSummaryValue(row.value) }}
+    {{ customSummaryListRowValue(row.value) }}
   {% endset %}
 
   {% set row = {
