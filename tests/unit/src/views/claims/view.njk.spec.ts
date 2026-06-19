@@ -2,7 +2,7 @@ import { Claim } from "#src/types/Claim.js";
 import { ClaimViewModel } from "#src/viewmodels/claimViewModel.js";
 import { getClaimsSuccessResponseData } from "#tests/assets/getClaimsResponseData.js";
 import { config as chaiConfig, expect } from "chai";
-import { CheerioAPI, load } from "cheerio";
+import { CheerioAPI } from "cheerio";
 import { renderView } from "#tests/unit/src/views/base/renderView.js";
 
 // Show full strings in diffs if something fails

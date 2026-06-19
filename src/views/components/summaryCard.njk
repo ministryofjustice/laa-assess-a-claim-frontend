@@ -1,5 +1,4 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "components/renderMessage.njk" import renderMessage %}
 {% from "components/renderSummaryValue.njk" import renderSummaryValue %}
 
 {% macro summaryCard(t, id, cardTitleKey, rows, cardAction) %}
@@ -10,7 +9,7 @@
 
 {% for row in rows %}
 
-  {% set keyText = renderMessage(t, row.key) %}
+  {% set keyText = row.key | translate %}
 
   {% set valueHtml %}
     {{ renderSummaryValue(t, row.value) }}

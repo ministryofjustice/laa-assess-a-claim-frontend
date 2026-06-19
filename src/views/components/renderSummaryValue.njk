@@ -1,16 +1,15 @@
 {% from "govuk/components/tag/macro.njk" import govukTag %}
-{% from "components/renderTextOrMessage.njk" import renderTextOrMessage %}
 
 {% macro renderSummaryValue(t, value) %}
 
   {% if value.type == "text" %}
 
-    {{ renderTextOrMessage(t, value.value) }}
+    {{ value.value | translate }}
 
   {% elseif value.type == "texts" %}
 
     {% for value in value.values %}
-      {{ renderTextOrMessage(t, value) }}{% if not loop.last %}<br>{% endif %}
+      {{ value | translate }}{% if not loop.last %}<br>{% endif %}
     {% endfor %}
 
   {% elseif value.type == "tag" %}
@@ -18,7 +17,7 @@
     {% set tag = govukTag(value.tag | translate) %}
 
     <div class="govuk-summary-list__value-split">
-      <span>{{ renderTextOrMessage(t, value.value) }}</span>
+      <span>{{ value.value | translate }}</span>
       <span class="govuk-summary-list__value-split-right">
         {{ tag | safe }}
       </span>
@@ -26,7 +25,7 @@
 
   {% elseif value.type == "link" %}
 
-    <a class="govuk-link" href="{{ value.value.href }}">{{ renderTextOrMessage(t, value.value.text) }}</a>
+    <a class="govuk-link" href="{{ value.value.href }}">{{ value.value.text | translate }}</a>
 
   {% endif %}
 

@@ -12,6 +12,7 @@ import {
 import type { Message } from "#src/viewmodels/components/message.js";
 import { AssignmentStatus } from "#src/models/assignmentStatus.js";
 import { FeeStatus } from "#src/models/feeStatus.js";
+import { Tag } from "#src/viewmodels/components/tag.js";
 
 /**
  *
@@ -47,6 +48,17 @@ export class ClaimViewModel {
     this.caseRows = ClaimViewModel.buildCaseRows();
     this.certificateScopeRows = ClaimViewModel.buildCertificateScopeRows();
     this.proceedingsRows = ClaimViewModel.buildProceedingsRows();
+  }
+
+  /**
+   * Gets the assignment status tag
+   * @returns {Tag} the tag for the given assignment status
+   */
+  get assignmentStatusTag(): Tag {
+    return {
+      text: this.assignmentStatusText,
+      classes: this.assignmentStatusTagClass
+    };
   }
 
   /**
