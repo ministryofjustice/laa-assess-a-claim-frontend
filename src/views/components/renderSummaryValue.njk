@@ -15,10 +15,7 @@
 
   {% elseif value.type == "tag" %}
 
-    {% set tag = govukTag({
-      text: renderTextOrMessage(t, value.tag.text),
-      classes: value.tag.classes
-    }) %}
+    {% set tag = govukTag(value.tag | translate) %}
 
     <div class="govuk-summary-list__value-split">
       <span>{{ renderTextOrMessage(t, value.value) }}</span>
