@@ -1,19 +1,20 @@
 {% macro summaryRow(t, row) %}
   <p class="govuk-body govuk-!-margin-0">
-    {% set keyText = t(row.key.key, row.key.args) %}
-    <strong>{{ keyText }}:</strong>
+    <strong>{{ row.key | translate }}:</strong>
 
     {% if row.value.type == "text" %}
       {{ row.value.value | translate }}
     {% endif %}
 
-    {% if row.action %}
-      <span class="govuk-body-s">
-        <a class="govuk-link" href="{{ row.action.href }}">
-          {{ t('common.change') }}
-          <span class="govuk-visually-hidden"> {{ keyText }}</span>
-        </a>
-      </span>
+    {% if row.actions.items.length %}
+      {% for item in row.actions.items %}
+        <span class="govuk-body-s">
+          <a class="govuk-link" href="{{ item.href }}">
+            {{ item.text | translate }}
+            <span class="govuk-visually-hidden"> {{ item.visuallyHiddenText | translate }}</span>
+          </a>
+        </span>
+      {% endfor %}
     {% endif %}
   </p>
 {% endmacro %}

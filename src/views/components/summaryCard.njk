@@ -1,15 +1,11 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "components/renderSummaryValue.njk" import renderSummaryValue %}
 
-{% macro summaryCard(t, id, cardTitleKey, rows, cardAction) %}
+{% macro summaryCard(id, title, rows, action) %}
 
 {% set govukRows = [] %}
 
-{% set rowId = [id, '-rows'] | join %}
-
 {% for row in rows %}
-
-  {% set keyText = row.key | translate %}
 
   {% set valueHtml %}
     {{ renderSummaryValue(t, row.value) }}
@@ -17,28 +13,13 @@
 
   {% set govukRow = {
     key: {
-      text: keyText
+      text: row.key | translate
     },
     value: {
-      html: valueHtml
-    }
+      html: valueHtml | safe
+    },
+    actions: row.actions
   } %}
-
-  {% if row.action %}
-    {% set govukRow = {
-      key: govukRow.key,
-      value: govukRow.value,
-      actions: {
-        items: [
-          {
-            href: row.action.href,
-            text: t('common.change'),
-            visuallyHiddenText: keyText
-          }
-        ]
-      }
-    } %}
-  {% endif %}
 
   {% set govukRows = govukRows.concat([govukRow]) %}
 
@@ -46,27 +27,20 @@
 
 {% set card = {
   title: {
-    text: t(cardTitleKey)
+    text: title | translate
   },
   attributes: {
-      "id": id
-    }
+    "id": id
+  }
 } %}
 
-{% if cardAction %}
+{% if action %}
   {% set card = {
     title: card.title,
     actions: {
-      items: [
-        {
-          href: cardAction.href,
-          text: t(cardAction.text)
-        }
-      ]
+      items: [ action | translate ]
     },
-    attributes: {
-      "id": id
-    }
+    attributes: card.attributes
   } %}
 {% endif %}
 
@@ -74,7 +48,7 @@
   card: card,
   rows: govukRows,
   attributes: {
-    "id": rowId 
+    "id": id + "-rows"
   }
 }) }}
 

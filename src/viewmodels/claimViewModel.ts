@@ -12,7 +12,7 @@ import {
 import type { Message } from "#src/viewmodels/components/message.js";
 import { AssignmentStatus } from "#src/models/assignmentStatus.js";
 import { FeeStatus } from "#src/models/feeStatus.js";
-import { Tag } from "#src/viewmodels/components/tag.js";
+import type { Tag } from "#src/viewmodels/components/tag.js";
 
 /**
  *
@@ -127,7 +127,7 @@ export class ClaimViewModel {
       {
         key: { key: "pages.claim.summary.providerRisk" },
         value: { type: "text", value: "Low" }, // TODO - default to 'Low' if 'provider risk' is undefined
-        action: { href: "#" },
+        actions: { items: [ { href: "#", text: { key: "common.change" }, visuallyHiddenText: { key: "pages.claim.summary.providerRisk" } } ] },
       },
       {
         key: { key: "pages.claim.summary.claimTimeStandard" },

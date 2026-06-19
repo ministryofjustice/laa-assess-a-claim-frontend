@@ -26,19 +26,19 @@
 
   {{ subNavigation(t, 1) }}
 
-  {{ summaryCard(t, "costs-and-allocations", "pages.claim.costsAndAllocations.title", vm.costsAndAllocationsRows, { href: "#", text: "pages.claim.costsAndAllocations.action"}) }}
+  {{ summaryCard("costs-and-allocations", t("pages.claim.costsAndAllocations.title"), vm.costsAndAllocationsRows, { href: "#", text: t("pages.claim.costsAndAllocations.action")}) }}
 
   <h2 class="govuk-heading-m" id="provider-and-client-details">{{ t('pages.claim.providerAndClientDetails') }}</h2>
 
-  {{ summaryCard(t, "providers", 'pages.claim.providers.title', vm.providerRows )}}
+  {{ summaryCard("providers", t('pages.claim.providers.title'), vm.providerRows )}}
 
-  {{ summaryCard(t, "client", 'pages.claim.client.title', vm.clientRows )}}
+  {{ summaryCard("client", t('pages.claim.client.title'), vm.clientRows )}}
 
-  {{ summaryCard(t, "case", "pages.case.summary.title", vm.caseRows) }}
+  {{ summaryCard("case", t("pages.case.summary.title"), vm.caseRows) }}
 
-  {{ summaryCard(t, "certificate", "pages.case.certificateScope.title", vm.certificateScopeRows) }}
+  {{ summaryCard("certificate", t("pages.case.certificateScope.title"), vm.certificateScopeRows) }}
 
-  {{ summaryCard(t, "proceedings", "pages.case.proceedings.title", vm.proceedingsRows) }}
+  {{ summaryCard("proceedings", t("pages.case.proceedings.title"), vm.proceedingsRows) }}
 
   <div class="govuk-button-group">
     <a class="govuk-button" href={{vm.assessLink}}>{{ t('pages.claim.button.access') }}</a>
