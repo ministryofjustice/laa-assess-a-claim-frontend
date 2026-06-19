@@ -1,10 +1,10 @@
 {% from "components/summaryRow.njk" import summaryRow %}
 
-{% macro summaryList(t, id, rows) %}
+{% macro summaryList(id, rows) %}
   <ul class="govuk-list" id="{{ id }}">
     {% for row in rows %}
       <li class="govuk-!-margin-0">
-        {{ summaryRow(t, row) }}
+        {{ summaryRow(row) }}
       </li>
     {% endfor %}
   </ul>
