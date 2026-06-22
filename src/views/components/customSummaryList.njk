@@ -1,0 +1,11 @@
+{% from "components/customSummaryListRow.njk" import customSummaryListRow %}
+
+{% macro customSummaryList(id, rows) %}
+  <ul class="govuk-list" id="{{ id }}">
+    {% for row in rows %}
+      <li class="govuk-!-margin-0">
+        {{ customSummaryListRow(row) }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}

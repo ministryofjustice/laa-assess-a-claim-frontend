@@ -1,6 +1,6 @@
 import type { Claim } from "#src/types/Claim.js";
 import { formatClaimed } from "#src/helpers/index.js";
-import type { SummaryListRow } from "./components/summaryList.js";
+import  { buildSummaryListWithCard, type SummaryList, type SummaryListRow } from "./components/summaryList.js";
 import {
   AssignmentStatusTagClass,
   FeeStatusTagClass,
@@ -12,6 +12,7 @@ import {
 import type { Message } from "#src/viewmodels/components/message.js";
 import { AssignmentStatus } from "#src/models/assignmentStatus.js";
 import { FeeStatus } from "#src/models/feeStatus.js";
+import type { Tag } from "#src/viewmodels/components/tag.js";
 
 /**
  *
@@ -22,12 +23,12 @@ export class ClaimViewModel {
   readonly assignmentStatus: AssignmentStatus;
   readonly feeStatus: FeeStatus;
   readonly summaryRows: SummaryListRow[];
-  readonly costsAndAllocationsRows: SummaryListRow[];
-  readonly providerRows: SummaryListRow[];
-  readonly clientRows: SummaryListRow[];
-  readonly caseRows: SummaryListRow[];
-  readonly certificateScopeRows: SummaryListRow[];
-  readonly proceedingsRows: SummaryListRow[];
+  readonly costsAndAllocationsSummaryList: SummaryList;
+  readonly providersSummaryList: SummaryList;
+  readonly clientSummaryList: SummaryList;
+  readonly caseSummaryList: SummaryList;
+  readonly certificateScopeSummaryList: SummaryList;
+  readonly proceedingsSummaryList: SummaryList;
 
   /**
    * Creates a view model containing the summary rows derived from the claim data
@@ -41,12 +42,62 @@ export class ClaimViewModel {
     this.feeStatus = claim.escaped ? FeeStatus.Escaped : FeeStatus.Fixed;
 
     this.summaryRows = ClaimViewModel.buildSummaryRows();
-    this.costsAndAllocationsRows = ClaimViewModel.buildCostsAndAllocationsRows(this.feeStatus);
-    this.providerRows = ClaimViewModel.buildProviderRows(claim);
-    this.clientRows = ClaimViewModel.buildClientRows();
-    this.caseRows = ClaimViewModel.buildCaseRows();
-    this.certificateScopeRows = ClaimViewModel.buildCertificateScopeRows();
-    this.proceedingsRows = ClaimViewModel.buildProceedingsRows();
+
+    this.costsAndAllocationsSummaryList = buildSummaryListWithCard(
+      "pages.claim.costsAndAllocations.title",
+      "costs-and-allocations",
+      ClaimViewModel.buildCostsAndAllocationsRows(this.feeStatus),
+      {
+        href: "#",
+        text: {
+          key: "pages.claim.costsAndAllocations.action"
+        },
+        visuallyHiddenText: {
+          key: "pages.claim.costsAndAllocations.title"
+        }
+      }
+    );
+
+    this.providersSummaryList = buildSummaryListWithCard(
+      "pages.claim.providers.title",
+      "providers",
+      ClaimViewModel.buildProviderRows(claim)
+    );
+
+    this.clientSummaryList = buildSummaryListWithCard(
+      "pages.claim.client.title",
+      "client",
+      ClaimViewModel.buildClientRows()
+    );
+
+    this.caseSummaryList = buildSummaryListWithCard(
+      "pages.case.summary.title",
+      "case",
+      ClaimViewModel.buildCaseRows()
+    );
+
+    this.certificateScopeSummaryList = buildSummaryListWithCard(
+      "pages.case.certificateScope.title",
+      "certificate",
+      ClaimViewModel.buildCertificateScopeRows()
+    );
+
+    this.proceedingsSummaryList = buildSummaryListWithCard(
+      "pages.case.proceedings.title",
+      "proceedings",
+      ClaimViewModel.buildProceedingsRows()
+    );
+  }
+
+  /**
+   * Gets the assignment status tag
+   * @returns {Tag} the tag for the given assignment status
+   */
+  get assignmentStatusTag(): Tag {
+    return {
+      text: this.assignmentStatusText,
+      classes: this.assignmentStatusTagClass
+    };
   }
 
   /**
@@ -90,35 +141,35 @@ export class ClaimViewModel {
   private static buildSummaryRows(): SummaryListRow[] {
     return [
       {
-        key: { key: "pages.claim.summary.totalClaimAmount" },
+        key: { text: { key: "pages.claim.summary.totalClaimAmount" } },
         value: { type: "text", value: formatClaimed(3480) }, // TODO - default to 'No data available' if 'total claim amount' is undefined
       },
       {
-        key: { key: "pages.claim.summary.dateReceived" },
+        key: { text: { key: "pages.claim.summary.dateReceived" } },
         value: {
           type: "text",
           value: formatDateReadable(new Date("2026-02-27")),
         },
       },
       {
-        key: { key: "pages.claim.summary.caseReferenceNumber" },
+        key: { text: { key: "pages.claim.summary.caseReferenceNumber" } },
         value: { type: "text", value: "300001820960" }, // TODO - default to 'No data available' if 'case reference number' is undefined
       },
       {
-        key: { key: "pages.claim.summary.laaReferenceNumber" },
+        key: { text: { key: "pages.claim.summary.laaReferenceNumber" } },
         value: { type: "text", value: "LAA-90d26c" }, // TODO - default to 'No data available' if 'LAA reference number' is undefined
       },
       {
-        key: { key: "pages.claim.summary.assignedTo" },
+        key: { text: { key: "pages.claim.summary.assignedTo" } },
         value: { type: "text", value: "Caseworker name" }, // TODO - default to 'Not yet assigned' if 'assigned to' is undefined
       },
       {
-        key: { key: "pages.claim.summary.providerRisk" },
+        key: { text: { key: "pages.claim.summary.providerRisk" } },
         value: { type: "text", value: "Low" }, // TODO - default to 'Low' if 'provider risk' is undefined
-        action: { href: "#" },
+        actions: { items: [ { href: "#", text: { key: "common.change" }, visuallyHiddenText: { key: "pages.claim.summary.providerRisk" } } ] },
       },
       {
-        key: { key: "pages.claim.summary.claimTimeStandard" },
+        key: { text: { key: "pages.claim.summary.claimTimeStandard" } },
         value: { type: "text", value: formatMinutes(15) },
       },
     ];
@@ -130,11 +181,11 @@ export class ClaimViewModel {
     if (feeStatus === FeeStatus.Escaped) {
       return [
         {
-          key: { key: "pages.claim.costsAndAllocations.claimType" },
+          key: { text: { key: "pages.claim.costsAndAllocations.claimType" } },
           value: { type: "text", value: "Solicitor final bill" },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" },
+          key: { text: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } },
           value: {
             type: "tag",
             value: formatClaimed(9176.36),
@@ -145,33 +196,31 @@ export class ClaimViewModel {
           },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" },
+          key: { text: { key: "pages.claim.costsAndAllocations.fixedFeeAmountGranted" } },
           value: { type: "text", value: formatClaimed(3000) },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.escapeThreshold" },
+          key: { text: { key: "pages.claim.costsAndAllocations.escapeThreshold" } },
           value: { type: "text", value: formatClaimed(6000) },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.assessmentBasis" },
+          key: { text: { key: "pages.claim.costsAndAllocations.assessmentBasis" } },
           value: { type: "text", value: "Hourly rate, escaped" },
         },
         {
-          key: {
-            key: "pages.claim.costsAndAllocations.counselCostAndAllocation",
-          },
+          key: { text: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" } },
           value: { type: "text", value: formatClaimed(2850) },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.totalPaymentOnAccount" },
+          key: { text: { key: "pages.claim.costsAndAllocations.totalPaymentOnAccount" } },
           value: { type: "text", value: formatClaimed(1200) },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.totalPOA" },
+          key: { text: { key: "pages.claim.costsAndAllocations.totalPOA" } },
           value: { type: "text", value: formatClaimed(1200) },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.priorAuthority" },
+          key: { text: { key: "pages.claim.costsAndAllocations.priorAuthority" } },
           value: {
             type: "text",
             value: {
@@ -181,7 +230,7 @@ export class ClaimViewModel {
           },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.availableCostLimit" },
+          key: { text: { key: "pages.claim.costsAndAllocations.availableCostLimit" } },
           value: {
             type: "text",
             value: {
@@ -197,25 +246,23 @@ export class ClaimViewModel {
     } else {
       return [
         {
-          key: { key: "pages.claim.costsAndAllocations.claimType" },
+          key: { text: { key: "pages.claim.costsAndAllocations.claimType" } },
           value: { type: "text", value: "Solicitor final bill" },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.totalClaimAmount" },
+          key: { text: { key: "pages.claim.costsAndAllocations.totalClaimAmount" } },
           value: { type: "text", value: formatClaimed(3480) },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.assessmentBasis" },
+          key: { text: { key: "pages.claim.costsAndAllocations.assessmentBasis" } },
           value: { type: "text", value: "Fixed fee applies" },
         },
         {
-          key: {
-            key: "pages.claim.costsAndAllocations.counselCostAndAllocation",
-          },
+          key: { text: { key: "pages.claim.costsAndAllocations.counselCostAndAllocation" } },
           value: { type: "text", value: formatClaimed(900) },
         },
         {
-          key: { key: "pages.claim.costsAndAllocations.availableCostLimit" },
+          key: { text: { key: "pages.claim.costsAndAllocations.availableCostLimit" } },
           value: {
             type: "text",
             value: {
@@ -234,15 +281,15 @@ export class ClaimViewModel {
   private static buildProviderRows(claim: Claim): SummaryListRow[] {
     const solicitorRows: SummaryListRow[] = [
       {
-        key: { key: "pages.claim.providers.solicitorName" },
+        key: { text: { key: "pages.claim.providers.solicitorName" } },
         value: { type: "text", value: "Smith & Co Solicitors" },
       },
       {
-        key: { key: "pages.claim.providers.solicitorRegion" },
+        key: { text: { key: "pages.claim.providers.solicitorRegion" } },
         value: { type: "text", value: "North West" },
       },
       {
-        key: { key: "pages.claim.providers.numberOfSolicitors" },
+        key: { text: { key: "pages.claim.providers.numberOfSolicitors" } },
         value: { type: "text", value: "1" },
       },
     ];
@@ -250,17 +297,17 @@ export class ClaimViewModel {
       claim.counselPayment != null
         ? [
             {
-              key: { key: "pages.claim.providers.counselInvolved" },
+              key: { text: { key: "pages.claim.providers.counselInvolved" } },
               value: { type: "text", value: { key: "common.yes" } },
             },
             {
-              key: { key: "pages.claim.providers.counselPayment" },
+              key: { text: { key: "pages.claim.providers.counselPayment" } },
               value: { type: "text", value: claim.counselPayment },
             },
           ]
         : [
             {
-              key: { key: "pages.claim.providers.counselInvolved" },
+              key: { text: { key: "pages.claim.providers.counselInvolved" } },
               value: { type: "text", value: { key: "common.no" } },
             },
           ];
@@ -270,22 +317,22 @@ export class ClaimViewModel {
   private static buildClientRows(): SummaryListRow[] {
     return [
       {
-        key: { key: "pages.claim.client.name" },
+        key: { text: { key: "pages.claim.client.name" } },
         value: { type: "text", value: "Liam Oldfield" },
       },
       {
-        key: { key: "pages.claim.client.dateOfBirth" },
+        key: { text: { key: "pages.claim.client.dateOfBirth" } },
         value: {
           type: "text",
           value: formatDateReadable(new Date("1996-03-27")),
         },
       },
       {
-        key: { key: "pages.claim.client.location" },
+        key: { text: { key: "pages.claim.client.location" } },
         value: { type: "text", value: "Manchester" },
       },
       {
-        key: { key: "pages.claim.client.status" },
+        key: { text: { key: "pages.claim.client.status" } },
         value: { type: "text", value: "Parent" },
       },
     ];
@@ -294,19 +341,19 @@ export class ClaimViewModel {
   private static buildCaseRows(): SummaryListRow[] {
     return [
       {
-        key: { key: "pages.case.summary.matterType" },
+        key: { text: { key: "pages.case.summary.matterType" } },
         value: { type: "text", value: "Special Children Act" },
       },
       {
-        key: { key: "pages.case.summary.leadProceeding" },
+        key: { text: { key: "pages.case.summary.leadProceeding" } },
         value: { type: "text", value: "Care order" },
       },
       {
-        key: { key: "pages.case.summary.linkedCases" },
+        key: { text: { key: "pages.case.summary.linkedCases" } },
         value: { type: "link", value: { text: "1 linked case", href: "#" } },
       },
       {
-        key: { key: "pages.case.summary.outcome" },
+        key: { text: { key: "pages.case.summary.outcome" } },
         value: { type: "text", value: "Final hearing completed" },
       },
     ];
@@ -315,18 +362,18 @@ export class ClaimViewModel {
   private static buildCertificateScopeRows(): SummaryListRow[] {
     return [
       {
-        key: { key: "pages.case.certificateScope.type" },
+        key: { text: { key: "pages.case.certificateScope.type" } },
         value: { type: "text", value: "Substantive Certificate" },
       },
       {
-        key: { key: "pages.case.certificateScope.description" },
+        key: { text: { key: "pages.case.certificateScope.description" } },
         value: {
           type: "text",
           value: "To be represented on an application for Care Order",
         },
       },
       {
-        key: { key: "pages.case.certificateScope.limitation" },
+        key: { text: { key: "pages.case.certificateScope.limitation" } },
         value: {
           type: "text",
           value:
@@ -334,14 +381,14 @@ export class ClaimViewModel {
         },
       },
       {
-        key: { key: "pages.case.certificateScope.issueDate" },
+        key: { text: { key: "pages.case.certificateScope.issueDate" } },
         value: {
           type: "text",
           value: formatDateReadable(new Date("2026-02-27")),
         },
       },
       {
-        key: { key: "pages.case.certificateScope.status" },
+        key: { text: { key: "pages.case.certificateScope.status" } },
         value: {
           type: "text",
           value: {
@@ -351,7 +398,7 @@ export class ClaimViewModel {
         },
       },
       {
-        key: { key: "pages.case.certificateScope.levelOfService" },
+        key: { text: { key: "pages.case.certificateScope.levelOfService" } },
         value: { type: "text", value: "Full representation" },
       },
     ];
@@ -360,7 +407,7 @@ export class ClaimViewModel {
   private static buildProceedingsRows(): SummaryListRow[] {
     return [
       {
-        key: { key: "pages.case.proceedings.careOrder" },
+        key: { text: { key: "pages.case.proceedings.careOrder" } },
         value: {
           type: "texts",
           values: [
@@ -373,7 +420,7 @@ export class ClaimViewModel {
         },
       },
       {
-        key: { key: "pages.case.proceedings.supervisionOrder" },
+        key: { text: { key: "pages.case.proceedings.supervisionOrder" } },
         value: {
           type: "texts",
           values: [

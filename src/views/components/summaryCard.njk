@@ -1,82 +1,34 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "components/renderMessage.njk" import renderMessage %}
-{% from "components/renderSummaryValue.njk" import renderSummaryValue %}
+{% from "components/customSummaryListRowValue.njk" import customSummaryListRowValue %}
 
-{% macro summaryCard(t, id, cardTitleKey, rows, cardAction) %}
+{% macro summaryCard(summaryList) %}
 
-{% set govukRows = [] %}
+{% set rows = [] %}
 
-{% set rowId = [id, '-rows'] | join %}
-
-{% for row in rows %}
-
-  {% set keyText = renderMessage(t, row.key) %}
+{% for row in summaryList.rows %}
 
   {% set valueHtml %}
-    {{ renderSummaryValue(t, row.value) }}
+    {{ customSummaryListRowValue(row.value) }}
   {% endset %}
 
-  {% set govukRow = {
+  {% set row = {
     key: {
-      text: keyText
+      text: row.key.text | translate
     },
     value: {
-      html: valueHtml
-    }
+      html: valueHtml | safe
+    },
+    actions: row.actions
   } %}
 
-  {% if row.action %}
-    {% set govukRow = {
-      key: govukRow.key,
-      value: govukRow.value,
-      actions: {
-        items: [
-          {
-            href: row.action.href,
-            text: t('common.change'),
-            visuallyHiddenText: keyText
-          }
-        ]
-      }
-    } %}
-  {% endif %}
-
-  {% set govukRows = govukRows.concat([govukRow]) %}
+  {% set rows = rows.concat([row]) %}
 
 {% endfor %}
 
-{% set card = {
-  title: {
-    text: t(cardTitleKey)
-  },
-  attributes: {
-      "id": id
-    }
-} %}
-
-{% if cardAction %}
-  {% set card = {
-    title: card.title,
-    actions: {
-      items: [
-        {
-          href: cardAction.href,
-          text: t(cardAction.text)
-        }
-      ]
-    },
-    attributes: {
-      "id": id
-    }
-  } %}
-{% endif %}
-
 {{ govukSummaryList({
-  card: card,
-  rows: govukRows,
-  attributes: {
-    "id": rowId 
-  }
+  card: summaryList.card | translate,
+  rows: rows,
+  attributes: summaryList.attributes
 }) }}
 
 {% endmacro %}

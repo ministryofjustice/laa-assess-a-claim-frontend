@@ -1,0 +1,20 @@
+{% macro customSummaryListRow(row) %}
+  <p class="govuk-body govuk-!-margin-0">
+    <strong>{{ row.key.text | translate }}:</strong>
+
+    {% if row.value.type == "text" %}
+      {{ row.value.value | translate }}
+    {% endif %}
+
+    {% if row.actions.items.length %}
+      {% for item in row.actions.items %}
+        <span class="govuk-body-s">
+          <a class="govuk-link" href="{{ item.href }}">
+            {{ item.text | translate }}
+            <span class="govuk-visually-hidden"> {{ item.visuallyHiddenText | translate }}</span>
+          </a>
+        </span>
+      {% endfor %}
+    {% endif %}
+  </p>
+{% endmacro %}
