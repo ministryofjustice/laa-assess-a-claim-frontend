@@ -1,6 +1,6 @@
 {% macro customSummaryListRow(row) %}
   <p class="govuk-body govuk-!-margin-0">
-    <strong>{{ row.key | translate }}:</strong>
+    <strong>{{ row.key.text | translate }}:</strong>
 
     {% if row.value.type == "text" %}
       {{ row.value.value | translate }}

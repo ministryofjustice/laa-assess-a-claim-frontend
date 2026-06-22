@@ -13,7 +13,7 @@
 
   {% set row = {
     key: {
-      text: row.key | translate
+      text: row.key.text | translate
     },
     value: {
       html: valueHtml | safe

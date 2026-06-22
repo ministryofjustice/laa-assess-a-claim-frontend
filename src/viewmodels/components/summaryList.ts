@@ -11,7 +11,7 @@ export interface SummaryList {
 }
 
 export interface SummaryListRow {
-  key: Message;
+  key: { text: Message };
   value: SummaryListRowValue;
   actions?: SummaryListRowActions;
 }
