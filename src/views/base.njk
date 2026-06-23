@@ -1,9 +1,11 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "moj/components/header/macro.njk" import mojHeader %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% set govukRebrand = true %}
+{% set showBackLink = showBackLink | default(false) %}
 
 {% block pageTitle %}
   {{ t('common.title', { title: title, service: t('common.service') }) }}
@@ -22,44 +24,63 @@
 {% endblock %}
 
 {% block header %}
-{{ mojHeader({
+  {{ mojHeader({
     organisationLabel: {
       text: t('common.department'),
       href: config.DEPARTMENT_URL
     },
     navigation: {
       label: "Account navigation",
-      items: [{
-        text: user.email,
-        href: "#",
-        active: true
-      }, {
-        text: t('common.signOut'),
-        href: "/logout"
-      }]
+      items: [
+        {
+          text: user.email,
+          href: "#",
+          active: true
+        },
+        {
+          text: t('common.signOut'),
+          href: "/logout"
+        }
+      ]
     }
   }) }}
-   {{ govukServiceNavigation({
-    serviceName: t('common.service'),
-    serviceUrl: "#",
-    navigation: [
-      {
-        href: "#",
-        text: "Your Assessments",
-        active: true
-      }
-    ]
-  }) }}
+
+  {% block govukServiceNavigation %}
+    {{ govukServiceNavigation({
+      serviceName: t('common.service'),
+      serviceUrl: "#",
+      navigation: [
+        {
+          href: "#",
+          text: "Your Assessments",
+          active: true
+        }
+      ]
+    }) }}
+  {% endblock %}
+
+  {% block headerEnd %}
+    <div class="govuk-width-container">
+      {{ govukPhaseBanner({
+        tag: {
+          text: config.SERVICE_PHASE
+        },
+        html: 'This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.'
+      }) }}
+    </div>
+  {% endblock %}
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: config.SERVICE_PHASE
-    },
-    html: 'This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.'
-  }) }}
-
+  {% if showBackLink %}
+    {{ govukBackLink({
+      text: t('common.back'),
+      href: "#",
+      attributes: {
+        "data-module": "back-link"
+      }
+    }) }}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
