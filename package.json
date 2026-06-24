@@ -62,7 +62,7 @@
     "@axe-core/playwright": "^4.11.0",
     "@eslint/js": "^9.32.0",
     "@hey-api/openapi-ts": "0.95.0",
-    "@playwright/test": "^1.55.0",
+    "@playwright/test": "^1.59.0",
     "@types/chai": "^5.2.2",
     "@types/compression": "^1.7.5",
     "@types/connect-livereload": "^0.6.3",
