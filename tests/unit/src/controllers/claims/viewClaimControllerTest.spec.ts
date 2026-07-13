@@ -21,8 +21,8 @@ describe("View Claim Controller", () => {
   beforeEach(() => {
     req = {
       axiosMiddleware: {} as any,
-      path: "/claims/1",
-      params: { claimId: "1" }
+      path: "/claims/019f5b7d-e090-7097-8a74-aa5a23a5a03a",
+      params: { claimId: "019f5b7d-e090-7097-8a74-aa5a23a5a03a" }
     };
 
     renderStub = sinon.stub();

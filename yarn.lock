@@ -5594,6 +5594,7 @@ __metadata:
     tsx: "npm:^4.21.0"
     typescript: "npm:^5.9.2"
     typescript-eslint: "npm:^8.44.1"
+    uuidv7: "npm:^1.2.1"
     zod: "npm:^4.3.6"
   languageName: unknown
   linkType: soft
@@ -8341,6 +8342,15 @@ __metadata:
   version: 2.2.0
   resolution: "url-value-parser@npm:2.2.0"
   checksum: 10c0/774987d219ace10a023af1f361f9ff092d706adc2e2901694e7a23bdb7544a9576ecc98305839c84d4e50e80ce88f6f1703f5240bcd4e7f2fd39a1033100ff8e
+  languageName: node
+  linkType: hard
+
+"uuidv7@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "uuidv7@npm:1.2.1"
+  bin:
+    uuidv7: cli.js
+  checksum: 10c0/adaf3387f10435efccf5ab6bb23344228c5737f98137619dc53521d2325522536218449175a0f2b1b13c4ffb846448cbcc4fb667bebf0457392a0b7bb35004a8
   languageName: node
   linkType: hard
 

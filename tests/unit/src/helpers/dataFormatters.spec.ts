@@ -4,7 +4,6 @@
 
 import {
   formatClaimed,
-  formatClaimId,
   formatDate,
   formatDateReadable,
   formatMinutes,
@@ -69,20 +68,6 @@ describe('formatMinutes()', () => {
 });
 
 describe("Data Transformation Helpers", () => {
-  describe("formatClaimed", () => {
-    it("should format 1 -> LAA-001", async () => {
-      expect(formatClaimId(1)).to.equal("LAA-001");
-    });
-
-    it("should format 12 -> LAA-012", async () => {
-      expect(formatClaimId(12)).to.equal("LAA-012");
-    });
-
-    it("should format 123 -> LAA-123", async () => {
-      expect(formatClaimId(123)).to.equal("LAA-123");
-    });
-  });
-
   describe("formatClaimed", () => {
     it("should format 1 -> £1", async () => {
       expect(formatClaimed(1)).to.equal("£1");

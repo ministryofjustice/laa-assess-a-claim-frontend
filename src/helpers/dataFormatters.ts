@@ -54,16 +54,6 @@ export function formatMinutes(minutes: number | undefined): Message {
 }
 
 /**
- * Format claim ID for display in table cells and UI components
- * @param {number} value claim ID
- * @returns {string} Transformed claim ID
- */
-export function formatClaimId(value: number): string {
-  const maxPaddingLength = 3;
-  return `LAA-${value.toString().padStart(maxPaddingLength, "0")}`;
-}
-
-/**
  * Format claimed amount for display in table cells and UI components
  * @param {number | undefined} value optional value representing the claimed amount
  * @returns {string} Transformed currency value

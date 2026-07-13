@@ -2,7 +2,6 @@ import type { Claim } from "#src/types/Claim.js";
 import type { TableCell, TableHeader } from "#src/viewmodels/components/index.js";
 import {
   formatClaimed,
-  formatClaimId,
   formatDate,
   formatOptionalString,
 } from "#src/helpers/index.js";
@@ -39,11 +38,11 @@ export class ClaimsTableViewModel {
 
     this.rows = claims.map((claim) => [
       {
-        html: `<a class="govuk-link" href="/claims/${encodeURIComponent(claim.id)}">
-                ${formatClaimId(claim.id)}
+        html: `<a class="govuk-link" href="/claims/${encodeURIComponent(claim.id.toString())}">
+                ${claim.id.toString()}
                 <span class="govuk-visually-hidden"> – view claim</span>
               </a>`,
-        attributes: { "data-sort-value": claim.id }
+        attributes: { "data-sort-value": claim.id.toString() }
       },
       { text: formatOptionalString(claim.client) },
       { text: formatOptionalString(claim.category) },

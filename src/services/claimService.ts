@@ -12,6 +12,7 @@ import {
 } from "#src/types/Claim.js";
 import config from "../../config.js";
 import { createApiError } from "#src/helpers/index.js";
+import type { UUID } from "uuidv7";
 
 interface ClaimServiceDeps {
   createClient: typeof createClient;
@@ -82,7 +83,7 @@ class ClaimService {
    */
   static async getClaim(
     axiosMiddleware: AxiosInstanceWrapper,
-    claimId: number,
+    claimId: UUID,
     deps: ClaimServiceDeps = defaultDeps,
   ): Promise<ApiResponse<Claim>> {
     const apiClient = deps.createClient({
@@ -93,7 +94,7 @@ class ClaimService {
 
     try {
       const response = await deps.getClaim({
-        path: { claimId },
+        path: { claimId: claimId.toString() },
         client: apiClient,
       });
 
