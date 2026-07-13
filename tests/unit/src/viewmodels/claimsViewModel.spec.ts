@@ -86,7 +86,7 @@ describe("constructor()", () => {
     const $a = load(firstRow[0].html as string)("a.govuk-link");
     expect($a).to.have.length(1);
     expect($a.attr("href")).to.equal(`/claims/${encodeURIComponent(String(claims[0].id))}`);
-    expect($a.clone().find(".govuk-visually-hidden").remove().end().text().trim()).to.equal(claim1Id.toString());
+    expect($a.clone().find(".govuk-visually-hidden").remove().end().text().trim()).to.equal("LAA-001");
     expect(firstRow[0].attributes).to.deep.equal({ 'data-sort-value': claim1Id.toString() });
     expect(firstRow[0].classes).to.deep.equal(undefined);
 
@@ -116,7 +116,7 @@ describe("constructor()", () => {
     const $a2 = load(secondRow[0].html as string)("a.govuk-link");
     expect($a2).to.have.length(1);
     expect($a2.attr("href")).to.equal(`/claims/${encodeURIComponent(String(claims[1].id))}`);
-    expect($a2.clone().find(".govuk-visually-hidden").remove().end().text().trim()).to.equal(claim2Id.toString());
+    expect($a2.clone().find(".govuk-visually-hidden").remove().end().text().trim()).to.equal("LAA-002");
     expect(secondRow[0].attributes).to.deep.equal({ 'data-sort-value': claim2Id.toString() });
     expect(secondRow[0].classes).to.equal(undefined);
 

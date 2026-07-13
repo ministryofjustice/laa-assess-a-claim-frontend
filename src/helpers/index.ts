@@ -14,6 +14,7 @@ export { devLog, devWarn, devError, devDebug, isDevelopment } from "./devLogger.
 // Data formatting utilities
 export {
   formatClaimed,
+  formatClaimId,
   formatDate,
   formatOptionalString,
 } from "./dataFormatters.js";
