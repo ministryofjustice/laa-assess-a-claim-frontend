@@ -36,7 +36,7 @@ export class ClaimViewModel {
    */
   constructor(claim: Claim) {
     this.title = "Fixed fee: Special Children Act (Care)";
-    this.assessLink = `/claim/${claim.id}/assess`;
+    this.assessLink = `/claim/${claim.id.toString()}/assess`;
     // eslint-disable-next-line @typescript-eslint/prefer-destructuring -- temporary while we hardcode values
     this.assignmentStatus = AssignmentStatus.InProgress; // TODO - derive from claim
     this.feeStatus = claim.escaped ? FeeStatus.Escaped : FeeStatus.Fixed;

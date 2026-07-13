@@ -1,4 +1,9 @@
 import { test, expect } from '../fixtures/index.js';
+import {
+  claim1Id,
+  claim2Id,
+  claim3Id,
+} from "#tests/playwright/factories/handlers/api.js";
 
 test('homepage should have the correct title', async ({ page }) => {
 	// Navigate to the homepage
@@ -21,7 +26,7 @@ test('home page displays service name and table', async ({ pages, checkAccessibi
   
   // The table is displayed
   await expect(page.table).toBeVisible();
-  const row = page.getTableRow('LAA-001');
+  const row = page.getTableRow(claim1Id.toString());
   await expect(row).toBeVisible();
   await expect(row).toContainText('Family');
   await expect(row).toContainText('18/03/2025');
@@ -29,9 +34,9 @@ test('home page displays service name and table', async ({ pages, checkAccessibi
   await expect(row).toContainText('£234.56');
   
   //the other rows are displayed
-  const row2 = page.getTableRow('LAA-002');
+  const row2 = page.getTableRow(claim2Id.toString());
   await expect(row2).toBeVisible();
-  const row3 = page.getTableRow('LAA-003');
+  const row3 = page.getTableRow(claim3Id.toString());
   await expect(row3).toBeVisible();
 
   // Run accessibility check
