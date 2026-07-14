@@ -2,7 +2,7 @@ import { z } from "zod";
 import { UUID } from "uuidv7";
 
 export const ClaimResponseSchema = z.object({
-  id: z.uuidv7().transform(val => UUID.parse(val)),
+  id: z.uuidv7(),
   ufn: z.string().optional(),
   providerUserId: z.string().optional(),
   client: z.string().optional(),
