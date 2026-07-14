@@ -1359,11 +1359,6 @@
           "claimed": {
             "type": "number",
             "description": "amount claimed"
-          },
-          "submissionId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "id of the submission this claim links to"
           }
         },
         "required": [
