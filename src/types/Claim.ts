@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { UUID } from "uuidv7";
 
 export const ClaimResponseSchema = z.object({
   id: z.uuidv7(),

@@ -39,11 +39,11 @@ export class ClaimsTableViewModel {
 
     this.rows = claims.map((claim, index) => [
       {
-        html: `<a class="govuk-link" href="/claims/${encodeURIComponent(claim.id.toString())}">
+        html: `<a class="govuk-link" href="/claims/${encodeURIComponent(claim.id)}">
                 ${formatClaimId(index + 1)}
                 <span class="govuk-visually-hidden"> – view claim</span>
               </a>`,
-        attributes: { "data-sort-value": claim.id.toString() }
+        attributes: { "data-sort-value": claim.id }
       },
       { text: formatOptionalString(claim.client) },
       { text: formatOptionalString(claim.category) },

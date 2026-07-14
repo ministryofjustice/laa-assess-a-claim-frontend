@@ -77,7 +77,7 @@ class ClaimService {
    * Get a single claim from the API and return it in the app response shape.
    *
    * @param {AxiosInstanceWrapper} axiosMiddleware - Wrapped Axios client from request middleware.
-   * @param {number} claimId - Claim identifier.
+   * @param {UUID} claimId - Claim identifier.
    * @param {ClaimServiceDeps} deps - Service dependencies used to create the client and call the generated API.
    * @returns {Promise<ApiResponse<Claim>>} Parsed claim response in app response format.
    */

@@ -8,7 +8,6 @@ import { getClaimsSuccessResponseData } from "#tests/assets/getClaimsResponseDat
 import { expect } from "chai";
 import { PaginationMeta } from "#src/types/api-types.js";
 import { load } from "cheerio";
-import { UUID } from "uuidv7";
 
 describe("constructor()", () => {
   it("creates a series of headers", () => {
@@ -48,8 +47,8 @@ describe("constructor()", () => {
   });
 
   it("creates a series of rows", () => {
-    const claim1Id = UUID.parse("019f5b84-5470-76dd-a4c1-d494bb899338");
-    const claim2Id = UUID.parse("019f5b84-6a6c-7605-877f-632854d618de");
+    const claim1Id = "019f5b84-5470-76dd-a4c1-d494bb899338";
+    const claim2Id = "019f5b84-6a6c-7605-877f-632854d618de";
 
     const claims: Claim[] = [
       {
@@ -143,7 +142,7 @@ describe("constructor()", () => {
 
   it("paginates the data", () => {
     const claim: Claim = {
-      id: UUID.parse("019f5b84-5470-76dd-a4c1-d494bb899338"),
+      id: "019f5b84-5470-76dd-a4c1-d494bb899338",
       client: "Giordano",
       category: "Family",
       concluded: new Date("2025-03-18"),
