@@ -1,4 +1,9 @@
 import { http, HttpResponse } from 'msw';
+import { UUID } from "uuidv7";
+
+export const claim1Id = UUID.parse("019f5ba6-1dfc-7caf-b276-75ac6373525a");
+export const claim2Id = UUID.parse("019f5ba6-4c9f-7b54-9f44-a625db7adeab");
+export const claim3Id = UUID.parse("019f5ba6-6849-7214-9436-af6269d2d0fd");
 
 /**
  * create a stub claim helper method
@@ -6,7 +11,7 @@ import { http, HttpResponse } from 'msw';
  * @param { object } overrides any overrides to be 
  * @returns { object } object for stubbed API response
  */
-export function makeFakeClaim(id: number, overrides = {}): object {
+export function makeFakeClaim(id: UUID, overrides = {}): object {
   return {
     id,
     client: "Giordano",
@@ -14,7 +19,6 @@ export function makeFakeClaim(id: number, overrides = {}): object {
     concluded: "2025-03-18",
     feeType: "Escape",
     claimed: 234.56,
-    submissionId: "550e8400-e29b-41d4-a716-446655440000",
     escaped: true,
     ...overrides
   }
@@ -31,7 +35,12 @@ export const apiHandlers = [
     const limit = Number(url.searchParams.get('limit'));
 
     console.log('🧩 MSW matched: GET /api/v1/claims');
-    const claims = [makeFakeClaim(1), makeFakeClaim(2), makeFakeClaim(3)];
+
+    const claims = [
+      makeFakeClaim(claim1Id),
+      makeFakeClaim(claim2Id),
+      makeFakeClaim(claim3Id)
+    ];
 
     return HttpResponse.json({
       claims,
@@ -48,10 +57,10 @@ export const apiHandlers = [
       throw new Error('URL missing a valid string id param.');
     }
     console.log('🧩 MSW matched: GET /api/v1/claims/%s', id);
-    if (id === '2') {
+    if (id === claim2Id.toString()) {
       return HttpResponse.error();
     } else {
-      const claim = makeFakeClaim(Number(params.id));
+      const claim = makeFakeClaim(UUID.parse(id));
       return HttpResponse.json(claim);
     }
   }),

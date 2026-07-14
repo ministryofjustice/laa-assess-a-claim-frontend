@@ -47,25 +47,26 @@ describe("constructor()", () => {
   });
 
   it("creates a series of rows", () => {
+    const claim1Id = "019f5b84-5470-76dd-a4c1-d494bb899338";
+    const claim2Id = "019f5b84-6a6c-7605-877f-632854d618de";
+
     const claims: Claim[] = [
       {
-        id: 1,
+        id: claim1Id,
         client: "Giordano",
         category: "Family",
         concluded: new Date("2025-03-18"),
         feeType: "Escape",
         claimed: 234.56,
-        submissionId: "550e8400-e29b-41d4-a716-446655440000",
         escaped: true
       },
       {
-        id: 2,
+        id: claim2Id,
         client: undefined,
         category: undefined,
         concluded: undefined,
         feeType: undefined,
         claimed: undefined,
-        submissionId: undefined,
         escaped: false
       },
     ];
@@ -85,7 +86,7 @@ describe("constructor()", () => {
     expect($a).to.have.length(1);
     expect($a.attr("href")).to.equal(`/claims/${encodeURIComponent(String(claims[0].id))}`);
     expect($a.clone().find(".govuk-visually-hidden").remove().end().text().trim()).to.equal("LAA-001");
-    expect(firstRow[0].attributes).to.deep.equal({ 'data-sort-value': 1 });
+    expect(firstRow[0].attributes).to.deep.equal({ 'data-sort-value': claim1Id.toString() });
     expect(firstRow[0].classes).to.deep.equal(undefined);
 
     expect(firstRow[1].text).to.equal("Giordano");
@@ -115,7 +116,7 @@ describe("constructor()", () => {
     expect($a2).to.have.length(1);
     expect($a2.attr("href")).to.equal(`/claims/${encodeURIComponent(String(claims[1].id))}`);
     expect($a2.clone().find(".govuk-visually-hidden").remove().end().text().trim()).to.equal("LAA-002");
-    expect(secondRow[0].attributes).to.deep.equal({ 'data-sort-value': 2 });
+    expect(secondRow[0].attributes).to.deep.equal({ 'data-sort-value': claim2Id.toString() });
     expect(secondRow[0].classes).to.equal(undefined);
 
     expect(secondRow[1].text).to.equal("");
@@ -141,13 +142,12 @@ describe("constructor()", () => {
 
   it("paginates the data", () => {
     const claim: Claim = {
-      id: 1,
+      id: "019f5b84-5470-76dd-a4c1-d494bb899338",
       client: "Giordano",
       category: "Family",
       concluded: new Date("2025-03-18"),
       feeType: "Escape",
       claimed: 234.56,
-      submissionId: "550e8400-e29b-41d4-a716-446655440000",
       escaped: true
     };
 

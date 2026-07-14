@@ -1,4 +1,9 @@
 import { test, expect } from '../fixtures/index.js';
+import {
+  claim1Id,
+  claim2Id,
+  claim3Id,
+} from "#tests/playwright/factories/handlers/api.js";
 
 test('homepage should have the correct title', async ({ page }) => {
 	// Navigate to the homepage

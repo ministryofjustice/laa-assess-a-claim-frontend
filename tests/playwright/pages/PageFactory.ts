@@ -3,6 +3,7 @@ import { HomePage } from './HomePage.js';
 import { ViewClaimPage } from './ViewClaimPage.js'
 import { NotFoundPage } from "#tests/playwright/pages/NotFoundPage.js";
 import { InternalServerErrorPage } from "#tests/playwright/pages/InternalServerErrorPage.js";
+import type { UUID } from "uuidv7";
 
 /**
  * Factory class for creating page objects
@@ -31,7 +32,7 @@ export class PageFactory {
    * @param { number } id the claim id
    * @returns { ViewClaimPage } the claim page for given id
    */
-  viewClaimPage(id: number): ViewClaimPage {
+  viewClaimPage(id: UUID): ViewClaimPage {
     return new ViewClaimPage(this.page, id);
   }
 

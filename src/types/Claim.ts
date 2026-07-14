@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const ClaimResponseSchema = z.object({
-  id: z.number(),
+  id: z.uuidv7(),
   ufn: z.string().optional(),
   providerUserId: z.string().optional(),
   client: z.string().optional(),
@@ -9,7 +9,6 @@ export const ClaimResponseSchema = z.object({
   concluded: z.string().nullish().transform(val => (val == null ? undefined : new Date(val))),
   feeType: z.string().optional(),
   claimed: z.number().optional(),
-  submissionId: z.string().optional(),
   escaped: z.boolean(),
   counselPayment: z.string().nullish()
 });

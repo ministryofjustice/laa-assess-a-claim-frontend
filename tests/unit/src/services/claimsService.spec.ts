@@ -2,6 +2,7 @@ import { expect } from "chai";
 import sinon from "sinon";
 import { claimService } from "#src/services/claimService.js";
 import { ApiError } from "#src/types/api-types.js";
+import { V7Generator } from "uuidv7";
 
 describe("Claim Service", () => {
   afterEach(() => {
@@ -10,6 +11,8 @@ describe("Claim Service", () => {
 
   describe("getClaims", () => {
     it("returns success with paginated claims data", async () => {
+      const claimId = new V7Generator().generate();
+
       const deps = {
         createClient: sinon.stub().returns({}),
         getClaims: sinon.stub().resolves({
@@ -17,7 +20,7 @@ describe("Claim Service", () => {
           data: {
             claims: [
               {
-                id: 1,
+                id: claimId.toString(),
                 ufn: "UFN-1",
                 providerUserId: "3fa85f64-5717-4567-b3fc-2c963f66afa6",
                 client: "Jane Doe",
@@ -25,7 +28,6 @@ describe("Claim Service", () => {
                 concluded: "2026-03-12",
                 feeType: "Fixed",
                 claimed: 123.45,
-                submissionId: "3fa85f64-5717-4567-b3fc-2c963f66afa7",
                 escaped: false,
               },
             ],
@@ -42,7 +44,7 @@ describe("Claim Service", () => {
         { axiosInstance: {} } as any,
         2,
         10,
-        deps as any
+        deps as any,
       );
 
       expect(result.status).to.equal("success");
@@ -54,7 +56,7 @@ describe("Claim Service", () => {
       });
       expect(result.body?.data).to.deep.equal([
         {
-          id: 1,
+          id: claimId.toString(),
           ufn: "UFN-1",
           providerUserId: "3fa85f64-5717-4567-b3fc-2c963f66afa6",
           client: "Jane Doe",
@@ -62,7 +64,6 @@ describe("Claim Service", () => {
           concluded: new Date("2026-03-12"),
           feeType: "Fixed",
           claimed: 123.45,
-          submissionId: "3fa85f64-5717-4567-b3fc-2c963f66afa7",
           escaped: false,
         },
       ]);
@@ -83,12 +84,12 @@ describe("Claim Service", () => {
         getClaim: sinon.stub(),
       };
 
-      const result = await claimService.getClaims(
+      const result = (await claimService.getClaims(
         { axiosInstance: {} } as any,
         2,
         10,
-        deps as any
-      ) as ApiError;
+        deps as any,
+      )) as ApiError;
 
       expect(result.status).to.equal("error");
       expect(result.statusCode).to.equal(500);
@@ -106,7 +107,7 @@ describe("Claim Service", () => {
         { axiosInstance: {} } as any,
         1,
         10,
-        deps as any
+        deps as any,
       );
 
       expect(result.status).to.equal("error");
@@ -127,7 +128,7 @@ describe("Claim Service", () => {
         { axiosInstance: {} } as any,
         1,
         10,
-        deps as any
+        deps as any,
       );
 
       expect(result.status).to.equal("error");
@@ -138,13 +139,15 @@ describe("Claim Service", () => {
 
   describe("getClaim", () => {
     it("returns success with a claim", async () => {
+      const claimId = new V7Generator().generate();
+
       const deps = {
         createClient: sinon.stub().returns({}),
         getClaims: sinon.stub(),
         getClaim: sinon.stub().resolves({
           status: 200,
           data: {
-            id: 123,
+            id: claimId.toString(),
             ufn: "UFN-123",
             providerUserId: "3fa85f64-5717-4567-b3fc-2c963f66afa6",
             client: "Jane Doe",
@@ -152,7 +155,6 @@ describe("Claim Service", () => {
             concluded: "2024-01-02T10:00:00Z",
             feeType: "Fixed",
             claimed: 4500,
-            submissionId: "sub-1",
             escaped: false,
           },
         }),
@@ -160,13 +162,13 @@ describe("Claim Service", () => {
 
       const result = await claimService.getClaim(
         { axiosInstance: {} } as any,
-        123,
-        deps as any
+        claimId,
+        deps as any,
       );
 
       expect(result.status).to.equal("success");
       expect(result.body).to.deep.equal({
-        id: 123,
+        id: claimId.toString(),
         ufn: "UFN-123",
         providerUserId: "3fa85f64-5717-4567-b3fc-2c963f66afa6",
         client: "Jane Doe",
@@ -174,12 +176,13 @@ describe("Claim Service", () => {
         concluded: new Date("2024-01-02T10:00:00Z"),
         feeType: "Fixed",
         claimed: 4500,
-        submissionId: "sub-1",
         escaped: false,
       });
     });
 
     it("returns error for a non-200 response", async () => {
+      const claimId = new V7Generator().generate();
+
       const deps = {
         createClient: sinon.stub().returns({}),
         getClaims: sinon.stub(),
@@ -189,7 +192,7 @@ describe("Claim Service", () => {
             status: 404,
             data: {
               detail: "Resource not found",
-              instance: "/api/v1/claims/123",
+              instance: `/api/v1/claims/${claimId}`,
               status: 404,
               title: "Not found",
               correlationId: "b7d7c91f-950a-43f6-a8de-ffb37f1001c1",
@@ -199,11 +202,11 @@ describe("Claim Service", () => {
         }),
       };
 
-      const result = await claimService.getClaim(
+      const result = (await claimService.getClaim(
         { axiosInstance: {} } as any,
-        123,
-        deps as any
-      ) as ApiError;
+        claimId,
+        deps as any,
+      )) as ApiError;
 
       expect(result.status).to.equal("error");
       expect(result.statusCode).to.equal(404);
@@ -211,6 +214,8 @@ describe("Claim Service", () => {
     });
 
     it("returns error shape when the API call fails", async () => {
+      const claimId = new V7Generator().generate();
+
       const deps = {
         createClient: sinon.stub().returns({}),
         getClaims: sinon.stub(),
@@ -219,8 +224,8 @@ describe("Claim Service", () => {
 
       const result = await claimService.getClaim(
         { axiosInstance: {} } as any,
-        999,
-        deps as any
+        claimId,
+        deps as any,
       );
 
       expect(result.status).to.equal("error");
@@ -229,6 +234,8 @@ describe("Claim Service", () => {
     });
 
     it("returns error shape when the response shape is invalid", async () => {
+      const claimId = new V7Generator().generate();
+
       const deps = {
         createClient: sinon.stub().returns({}),
         getClaims: sinon.stub(),
@@ -239,8 +246,8 @@ describe("Claim Service", () => {
 
       const result = await claimService.getClaim(
         { axiosInstance: {} } as any,
-        123,
-        deps as any
+        claimId,
+        deps as any,
       );
 
       expect(result.status).to.equal("error");
