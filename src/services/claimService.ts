@@ -54,7 +54,7 @@ class ClaimService {
     try {
       const response = await deps.getClaims({
         client: apiClient,
-        query: { limit, page },
+        query: { limit, page, status: "SUBMITTED" },
       });
 
       const parsed = ClaimsResponseSchema.parse(response.data);
