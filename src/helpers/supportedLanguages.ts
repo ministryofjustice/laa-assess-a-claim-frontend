@@ -1,1 +1,1 @@
-export const SUPPORTED_LANGUAGES: readonly string[] = ["en", "cy"];
+export const SUPPORTED_LANGUAGES: readonly string[] = ["en"];
