@@ -14,11 +14,11 @@ const router = express.Router();
 /* GET home page. */
 router.get(
   ROUTES.CLAIMS,
-  async function (
+  async (
     req: Request,
     res: Response,
     next: NextFunction,
-  ): Promise<void> {
+  ): Promise<void> => {
     await handleYourClaimsPage(req, res, next);
   },
 );
@@ -26,11 +26,11 @@ router.get(
 /* GET view claim page. */
 router.get(
   ROUTES.VIEW_CLAIM,
-  async function (
+  async (
     req: Request,
     res: Response,
     next: NextFunction,
-  ): Promise<void> {
+  ): Promise<void> => {
     await viewClaimPage(req, res, next);
   },
 );
@@ -39,11 +39,11 @@ router.get(
 // GET users from external API
 router.get(
   "/users",
-  async function (
+  async (
     req: Request,
     res: Response,
     next: NextFunction,
-  ): Promise<void> {
+  ): Promise<void> => {
     try {
       // Use the Axios instance attached to the request object
       const response = await req.axiosMiddleware.get(
@@ -57,7 +57,7 @@ router.get(
 );
 
 /* TEST show user properties */
-router.get("/user", function (req: Request, res: Response): void {
+router.get("/user", (req: Request, res: Response): void => {
   res.render("main/user.njk");
 });
 

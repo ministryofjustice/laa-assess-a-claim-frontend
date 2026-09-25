@@ -1,33 +1,50 @@
 /* eslint-disable
-  @typescript-eslint/no-unsafe-assignment,
-  @typescript-eslint/no-unsafe-argument -- JSON locale loader; data shape is trusted static content
+@typescript-eslint/no-unsafe-assignment -- JSON locale loader; data shape is trusted static content
 */
+
 /**
  * Simple i18next loader following official best practices
  * Provides i18next.t("common.back") syntax in TypeScript
  * and {{ t("common.back") }} syntax in Nunjucks templates
  */
-
-import i18next, { type i18n as I18nInstance } from 'i18next';
+import i18next, {
+  type i18n as I18nInstance,
+  type Resource,
+  type ResourceLanguage,
+} from 'i18next';
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
-import { LanguageDetector } from '#node_modules/i18next-http-middleware/esm/index.js';
+import { LanguageDetector } from 'i18next-http-middleware';
+import { SUPPORTED_LANGUAGES } from "#src/helpers/supportedLanguages.js";
 
 /**
  * Initialise i18next synchronously using Node.js fs methods
  * This ensures i18next is ready before any modules that use translations are loaded
  */
 export function initializeI18nextSync(): void {
-  const enPath = path.join(process.cwd(), 'locales', 'en.json');
-  // const cyPath = path.join(process.cwd(), 'locales', 'cy.json');
+  const resources: Resource = {};
 
-  const en = JSON.parse(readFileSync(enPath, 'utf8'));
-  // const cy = JSON.parse(readFileSync(cyPath, 'utf8'));
+  for (const locale of SUPPORTED_LANGUAGES) {
+    const localePath = path.join(
+      process.cwd(),
+      "locales",
+      `${locale}.json`,
+    );
+
+    const localeResource: ResourceLanguage = JSON.parse(
+      readFileSync(localePath, "utf8"),
+    );
+
+    resources[locale] = localeResource;
+  }
+
+  const {en} = resources;
 
   void i18next
     .use(LanguageDetector)
     .init({
       fallbackLng: 'en',
+      supportedLngs: SUPPORTED_LANGUAGES,
       debug: process.env.NODE_ENV === 'development',
 
       detection: {
@@ -36,7 +53,7 @@ export function initializeI18nextSync(): void {
         lookupCookie: 'i18next',
         caches: ['cookie'],
         cookieSecure: process.env.NODE_ENV === 'production',
-        cookieHttpOnly: true
+        cookieHttpOnly: true,
       },
 
       ns: Object.keys(en),
@@ -50,10 +67,7 @@ export function initializeI18nextSync(): void {
         suffix: '}',
       },
 
-      resources: {
-        en,
-        // cy
-      }
+      resources,
     });
 }
 

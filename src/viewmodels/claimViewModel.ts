@@ -294,8 +294,14 @@ export class ClaimViewModel {
       },
     ];
     const counselRows: SummaryListRow[] =
-      claim.counselPayment != null
+      claim.counselPayment == null
         ? [
+            {
+              key: { text: { key: "pages.claim.providers.counselInvolved" } },
+              value: { type: "text", value: { key: "common.no" } },
+            },
+          ]
+        : [
             {
               key: { text: { key: "pages.claim.providers.counselInvolved" } },
               value: { type: "text", value: { key: "common.yes" } },
@@ -303,12 +309,6 @@ export class ClaimViewModel {
             {
               key: { text: { key: "pages.claim.providers.counselPayment" } },
               value: { type: "text", value: claim.counselPayment },
-            },
-          ]
-        : [
-            {
-              key: { text: { key: "pages.claim.providers.counselInvolved" } },
-              value: { type: "text", value: { key: "common.no" } },
             },
           ];
     return [...solicitorRows, ...counselRows];

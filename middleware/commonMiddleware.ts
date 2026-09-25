@@ -2,8 +2,8 @@ import type { Application } from 'express';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import config from '../config.js';
 import i18next, { type i18n } from "i18next";
+import config from '../config.js';
 import { handle } from "i18next-http-middleware";
 
 /**
@@ -28,7 +28,7 @@ export const setupMiddlewares = (app: Application): void => {
   // Parses URL-encoded bodies
   app.use(express.urlencoded({ extended: false }));
 
-  /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- i18next default export becomes the singleton i18n instance after init(), so narrowing is correct */
+  /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion, @typescript-eslint/no-unnecessary-type-assertion -- i18next default export becomes the singleton i18n instance after init(), so narrowing is correct */
   const i18nInstance = i18next as unknown as i18n;
   app.use(handle(i18nInstance));
 };
